@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7E85D91B-1BEF-4973-9A76-5091E6A70D86}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GraphicsEngine</RootNamespace>
+    <AssemblyName>GraphicsEngine</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\Extensions\StringExtensions.cs" />
+    <Compile Include="Graphics\IMesh.cs" />
+    <Compile Include="Graphics\IRasterizer.cs" />
+    <Compile Include="Graphics\IScreenBuffer.cs" />
+    <Compile Include="Graphics\IWavefrontObjToMeshConverter.cs" />
+    <Compile Include="Graphics\Mesh.cs" />
+    <Compile Include="Graphics\Rasterizer.cs" />
+    <Compile Include="Graphics\Renderer.cs" />
+    <Compile Include="Graphics\ScreenBuffer.cs" />
+    <Compile Include="Graphics\WavefrontObjToMeshConverter.cs" />
+    <Compile Include="Math\MathUtil.cs" />
+    <Compile Include="Math\Matrix.cs" />
+    <Compile Include="Math\Quaternion.cs" />
+    <Compile Include="Math\Vector2.cs" />
+    <Compile Include="Math\Vector3.cs" />
+    <Compile Include="Math\Vector4.cs" />
+    <Compile Include="Wavefront\Datastore\DataStore.cs" />
+    <Compile Include="Wavefront\Datastore\IDataStore.cs" />
+    <Compile Include="Wavefront\Datastore\IElementGroup.cs" />
+    <Compile Include="Wavefront\Datastore\IFaceGroup.cs" />
+    <Compile Include="Wavefront\Datastore\IGroupDataStore.cs" />
+    <Compile Include="Wavefront\Datastore\IMaterialLibrary.cs" />
+    <Compile Include="Wavefront\Datastore\IVertexNormalDataStore.cs" />
+    <Compile Include="Wavefront\Datastore\ITextureCoordinateDataStore.cs" />
+    <Compile Include="Wavefront\Datastore\IGeometricVertexDataStore.cs" />
+    <Compile Include="Wavefront\Loaders\IMaterialLibraryLoader.cs" />
+    <Compile Include="Wavefront\Loaders\IMaterialLibraryLoaderFacade.cs" />
+    <Compile Include="Wavefront\Loaders\IMaterialStreamProvider.cs" />
+    <Compile Include="Wavefront\Loaders\IWavefrontObj.cs" />
+    <Compile Include="Wavefront\Loaders\IWavefrontObjLoader.cs" />
+    <Compile Include="Wavefront\Loaders\IWavefrontObjLoaderFactory.cs" />
+    <Compile Include="Wavefront\Loaders\LoaderBase.cs" />
+    <Compile Include="Wavefront\Loaders\WavefrontObj.cs" />
+    <Compile Include="Wavefront\Loaders\MaterialLibraryLoader.cs" />
+    <Compile Include="Wavefront\Loaders\MaterialLibraryLoaderFacade.cs" />
+    <Compile Include="Wavefront\Loaders\MaterialStreamProvider.cs" />
+    <Compile Include="Wavefront\Loaders\WavefrontObjLoader.cs" />
+    <Compile Include="Wavefront\Loaders\WavefrontObjLoaderFactory.cs" />
+    <Compile Include="Wavefront\Models\Colour.cs" />
+    <Compile Include="Wavefront\Models\Face.cs" />
+    <Compile Include="Wavefront\Models\FaceVertex.cs" />
+    <Compile Include="Wavefront\Models\Group.cs" />
+    <Compile Include="Wavefront\Models\Material.cs" />
+    <Compile Include="Wavefront\Models\VertexNormal.cs" />
+    <Compile Include="Wavefront\Models\TextureCoordinate.cs" />
+    <Compile Include="Wavefront\Models\GeometricVertex.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Wavefront\Parsers\FaceParser.cs" />
+    <Compile Include="Wavefront\Parsers\GroupParser.cs" />
+    <Compile Include="Wavefront\Parsers\Interfaces\IFaceParser.cs" />
+    <Compile Include="Wavefront\Parsers\Interfaces\IGroupParser.cs" />
+    <Compile Include="Wavefront\Parsers\Interfaces\IMaterialLibraryParser.cs" />
+    <Compile Include="Wavefront\Parsers\Interfaces\IVertexNormalParser.cs" />
+    <Compile Include="Wavefront\Parsers\Interfaces\ITextureCoordinateParser.cs" />
+    <Compile Include="Wavefront\Parsers\Interfaces\ITypeParser.cs" />
+    <Compile Include="Wavefront\Parsers\Interfaces\IUseMaterialParser.cs" />
+    <Compile Include="Wavefront\Parsers\Interfaces\IGeometricVertexParser.cs" />
+    <Compile Include="Wavefront\Parsers\MaterialLibraryParser.cs" />
+    <Compile Include="Wavefront\Parsers\VertexNormalParser.cs" />
+    <Compile Include="Wavefront\Parsers\TextureCoordinateParser.cs" />
+    <Compile Include="Wavefront\Parsers\TypeParserBase.cs" />
+    <Compile Include="Wavefront\Parsers\UseMaterialParser.cs" />
+    <Compile Include="Wavefront\Parsers\GeometricVertexParser.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <Content Include="triangle.obj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="link.obj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="triangle.mtl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
