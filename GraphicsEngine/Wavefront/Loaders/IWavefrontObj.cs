@@ -1,6 +1,6 @@
 #region Imports
 
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using GraphicsEngine.Wavefront.Models;
 
 #endregion
@@ -9,10 +9,10 @@ namespace GraphicsEngine.Wavefront.Loaders
 {
 	public interface IWavefrontObj
 	{
-		IReadOnlyList<GeometricVertex> Vertices { get; }
-		IReadOnlyList<TextureCoordinate> Textures { get; }
-		IReadOnlyList<VertexNormal> Normals { get; }
-		IReadOnlyList<Group> Groups { get; }
-		IReadOnlyList<Material> Materials { get; }
+		ReadOnlyCollection<GeometricVertex> Vertices { get; }
+		ReadOnlyCollection<TextureCoordinate> Textures { get; }
+		ReadOnlyCollection<VertexNormal> Normals { get; }
+		ReadOnlyCollection<Group> Groups { get; }
+		ReadOnlyCollection<Material> Materials { get; }
 	}
 }

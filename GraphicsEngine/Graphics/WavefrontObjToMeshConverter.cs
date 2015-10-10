@@ -55,7 +55,7 @@ namespace GraphicsEngine.Graphics
 				throw new DataException("Only triangles are supported");
 			}
 
-			for (int i = 0; i < face.Count; i++)
+			for (var i = 0; i < face.Count; i++)
 			{
 				var faceVertex = face[i];
 
@@ -66,7 +66,7 @@ namespace GraphicsEngine.Graphics
 
 		private void CalculateNormals(Mesh mesh)
 		{
-			for (int i = 0; i < mesh.Triangles.Count; i += 3)
+			for (var i = 0; i < mesh.Triangles.Count; i += 3)
 			{
 				var a = mesh.Triangles[i];
 				var b = mesh.Triangles[i + 1];

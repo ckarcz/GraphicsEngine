@@ -26,10 +26,10 @@ namespace GraphicsEngine.Wavefront.Parsers
 
 		public override void Parse(string line)
 		{
-			string[] parts = line.Split(' ');
+			var parts = line.Split(' ');
 
-			float x = parts[0].ParseInvariantFloat();
-			float y = parts[1].ParseInvariantFloat();
+			var x = parts[0].ParseInvariantFloat();
+			var y = parts[1].ParseInvariantFloat();
 
 			var texture = new TextureCoordinate(x, y);
 			_textureDataStore.AddTexture(texture);

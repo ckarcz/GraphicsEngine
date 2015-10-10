@@ -20,7 +20,7 @@ namespace GraphicsEngine.Wavefront.Loaders
 			Materials = new ReadOnlyCollection<Material>(materials);
 		}
 
-		public WavefrontObj(IReadOnlyList<GeometricVertex> vertices, IReadOnlyList<TextureCoordinate> textures, IReadOnlyList<VertexNormal> normals, IReadOnlyList<Group> groups, IReadOnlyList<Material> materials)
+		public WavefrontObj(ReadOnlyCollection<GeometricVertex> vertices, ReadOnlyCollection<TextureCoordinate> textures, ReadOnlyCollection<VertexNormal> normals, ReadOnlyCollection<Group> groups, ReadOnlyCollection<Material> materials)
 		{
 			Vertices = vertices;
 			Textures = textures;
@@ -29,10 +29,10 @@ namespace GraphicsEngine.Wavefront.Loaders
 			Materials = materials;
 		}
 
-		public IReadOnlyList<GeometricVertex> Vertices { get; }
-		public IReadOnlyList<TextureCoordinate> Textures { get; }
-		public IReadOnlyList<VertexNormal> Normals { get; }
-		public IReadOnlyList<Group> Groups { get; }
-		public IReadOnlyList<Material> Materials { get; }
+		public ReadOnlyCollection<GeometricVertex> Vertices { get; }
+		public ReadOnlyCollection<TextureCoordinate> Textures { get; }
+		public ReadOnlyCollection<VertexNormal> Normals { get; }
+		public ReadOnlyCollection<Group> Groups { get; }
+		public ReadOnlyCollection<Material> Materials { get; }
 	}
 }

@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Linq;
 using GraphicsEngine.Graphics;
+using GraphicsEngine.Graphics.Console;
 using GraphicsEngine.Wavefront.Loaders;
 
 #endregion
@@ -14,28 +15,7 @@ namespace GraphicsEngine
 	{
 		private static void Main(string[] args)
 		{
-			var width = 300;
-			var height = 100;
-
-			Console.Title = "Graphics Engine Test";
-			Console.CursorVisible = false;
-			Console.BackgroundColor = ConsoleColor.Black;
-			reTry:
-			try
-			{
-				Console.SetWindowSize(width, height + 15);
-				Console.SetBufferSize(width, height + 15);
-			}
-			catch (ArgumentOutOfRangeException)
-			{
-				Console.WriteLine("Decrease your font size and press enter");
-				Console.ReadLine();
-				goto reTry;
-			}
-			Console.Clear(); //clear colors from user preset.
-			Console.SetCursorPosition(0, height);
-			Console.Write(new String('▄', width));
-			Console.ForegroundColor = ConsoleColor.Cyan;
+			var consoleScreenConfig = new ConsoleScreenConfig(300, 100);
 
 			var wavefrontObjLoaderFactory = new WavefrontObjLoaderFactory();
 			var wavefrontObjLoader = wavefrontObjLoaderFactory.Create();
@@ -49,11 +29,11 @@ namespace GraphicsEngine
 
 			var mesh = meshes.First();
 
-			var rasterizer = new Rasterizer(300, 100);
-			var rasterizedMesh = rasterizer.RasterizeVertices(mesh);
+			var rasterizer = new MeshRasterizer(consoleScreenConfig);
+			var rasterizedImage = rasterizer.RasterizeAsVertices(mesh);
 
-			var renderer = new Renderer();
-			renderer.Render(rasterizedMesh);
+			var consoleImageRenderer = new MonochromeConsoleImageRenderer(consoleScreenConfig);
+			consoleImageRenderer.RenderImage(rasterizedImage);
 
 			Console.ReadLine();
 		}

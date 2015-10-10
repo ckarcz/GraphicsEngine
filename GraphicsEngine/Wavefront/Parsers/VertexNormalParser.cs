@@ -27,11 +27,11 @@ namespace GraphicsEngine.Wavefront.Parsers
 
 		public override void Parse(string line)
 		{
-			string[] parts = line.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+			var parts = line.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
 
-			float x = parts[0].ParseInvariantFloat();
-			float y = parts[1].ParseInvariantFloat();
-			float z = parts[2].ParseInvariantFloat();
+			var x = parts[0].ParseInvariantFloat();
+			var y = parts[1].ParseInvariantFloat();
+			var z = parts[2].ParseInvariantFloat();
 
 			var normal = new VertexNormal(x, y, z);
 			_normalDataStore.AddNormal(normal);

@@ -14,7 +14,6 @@ namespace GraphicsEngine.Wavefront.Loaders
 	public class MaterialLibraryLoader
 		: LoaderBase, IMaterialLibraryLoader
 	{
-		private Material _currentMaterial;
 		private readonly IMaterialLibrary _materialLibrary;
 		private readonly Dictionary<string, Action<string>> _parseActionDictionary = new Dictionary<string, Action<string>>();
 		private readonly List<string> _unrecognizedLines = new List<string>();
@@ -50,10 +49,7 @@ namespace GraphicsEngine.Wavefront.Loaders
 			AddParseAction("decal", m => CurrentMaterial.StencilDecalMap = m);
 		}
 
-		private Material CurrentMaterial
-		{
-			get { return _currentMaterial; }
-		}
+		private Material CurrentMaterial { get; set; }
 
 		public void Load(Stream lineStream)
 		{
@@ -88,17 +84,17 @@ namespace GraphicsEngine.Wavefront.Loaders
 
 		private void PushMaterial(string materialName)
 		{
-			_currentMaterial = new Material(materialName);
-			_materialLibrary.Push(_currentMaterial);
+			CurrentMaterial = new Material(materialName);
+			_materialLibrary.Push(CurrentMaterial);
 		}
 
 		private Colour ParseColour(string data)
 		{
-			string[] parts = data.Split(' ');
+			var parts = data.Split(' ');
 
-			float r = parts[0].ParseInvariantFloat();
-			float g = parts[1].ParseInvariantFloat();
-			float b = parts[2].ParseInvariantFloat();
+			var r = parts[0].ParseInvariantFloat();
+			var g = parts[1].ParseInvariantFloat();
+			var b = parts[2].ParseInvariantFloat();
 
 			return new Colour(r, g, b);
 		}
