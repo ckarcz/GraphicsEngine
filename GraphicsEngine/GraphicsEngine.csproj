@@ -47,12 +47,12 @@
     <Compile Include="Common\Extensions\StringExtensions.cs" />
     <Compile Include="Graphics\Console\IConsoleImageRenderer.cs" />
     <Compile Include="Graphics\IMesh.cs" />
-    <Compile Include="Graphics\IRasterizedImage.cs" />
+    <Compile Include="Graphics\Console\IConsoleGraphicsBuffer.cs" />
     <Compile Include="Graphics\Console\IConsoleCharacterBuffer.cs" />
     <Compile Include="Graphics\Console\IConsoleColorBuffer.cs" />
     <Compile Include="Graphics\IWavefrontObjToMeshConverter.cs" />
     <Compile Include="Graphics\Mesh.cs" />
-    <Compile Include="Graphics\RasterizedImage.cs" />
+    <Compile Include="Graphics\Console\ConsoleGraphicsBuffer.cs" />
     <Compile Include="Graphics\MeshRasterizer.cs" />
     <Compile Include="Graphics\Console\SimpleConsoleImageRenderer.cs" />
     <Compile Include="Graphics\Console\ConsoleCharacterBuffer.cs" />

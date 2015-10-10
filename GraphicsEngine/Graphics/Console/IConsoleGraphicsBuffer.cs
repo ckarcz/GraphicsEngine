@@ -1,8 +1,6 @@
-﻿using GraphicsEngine.Graphics.Console;
-
-namespace GraphicsEngine.Graphics
+﻿namespace GraphicsEngine.Graphics.Console
 {
-	public interface IRasterizedImage
+	public interface IConsoleGraphicsBuffer
 	{
 		int Width { get; }
 		int Height { get; }

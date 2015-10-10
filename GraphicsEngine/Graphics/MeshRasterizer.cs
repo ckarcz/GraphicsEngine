@@ -1,4 +1,6 @@
-﻿namespace GraphicsEngine.Graphics
+﻿using GraphicsEngine.Graphics.Console;
+
+namespace GraphicsEngine.Graphics
 {
 	public class MeshRasterizer
 	{
@@ -11,9 +13,9 @@
 			this.height = height;
 		}
 
-		public IRasterizedImage RasterizeAsVertices(IMesh mesh)
+		public IConsoleGraphicsBuffer RasterizeAsVertices(IMesh mesh)
 		{
-			var rasterizedImage = new RasterizedImage(width, height);
+			var rasterizedImage = new ConsoleGraphicsBuffer(width, height);
 
 			return rasterizedImage;
 		}

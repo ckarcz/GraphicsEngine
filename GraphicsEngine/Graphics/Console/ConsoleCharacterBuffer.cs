@@ -3,30 +3,30 @@
 	public class ConsoleCharacterBuffer
 		: IConsoleCharacterBuffer
 	{
-		private readonly byte[,] screenCharacterBuffer;
+		private readonly byte[,] consoleCharacterBuffer;
 
 		public ConsoleCharacterBuffer(int width, int height)
 		{
-			screenCharacterBuffer = new byte[width, height];
+			consoleCharacterBuffer = new byte[width, height];
 			Width = width;
 			Height = height;
 		}
 
 		public byte this[int x, int y]
 		{
-			get { return screenCharacterBuffer[x, y]; }
-			set { screenCharacterBuffer[x, y] = value; }
+			get { return consoleCharacterBuffer[x, y]; }
+			set { consoleCharacterBuffer[x, y] = value; }
 		}
 
 		public int Width { get; }
 		public int Height { get; }
 
-		public byte[,] GetScreenCharacterBufferCopy()
+		public byte[,] GetMultiArrayAsCopy()
 		{
-			var screenBufferCopy = new byte[Width, Height];
-			screenCharacterBuffer.CopyTo(screenBufferCopy, 0);
+			var copy = new byte[Width, Height];
+			consoleCharacterBuffer.CopyTo(copy, 0);
 
-			return screenBufferCopy;
+			return copy;
 		}
 
 		public byte[] GetBytesCopy()
@@ -36,7 +36,7 @@
 			{
 				for (var y = 0; y < Height; y++)
 				{
-					screenBufferBytes[x + y * Width] = screenCharacterBuffer[x, y];
+					screenBufferBytes[x + y * Width] = consoleCharacterBuffer[x, y];
 				}
 			}
 

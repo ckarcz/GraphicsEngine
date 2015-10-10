@@ -6,7 +6,7 @@
 		int Width { get; }
 		int Height { get; }
 
-		byte[,] GetScreenCharacterBufferCopy();
+		byte[,] GetMultiArrayAsCopy();
 
 		byte[] GetBytesCopy();
 	}

@@ -35,13 +35,14 @@ namespace GraphicsEngine.Graphics.Console
 				System.Console.ReadLine();
 				goto reTry;
 			}
-			System.Console.Clear(); //clear colors from user preset.
+			System.Console.Clear();
 			System.Console.SetCursorPosition(0, height);
+			System.Console.ForegroundColor = ConsoleColor.Magenta;
 			System.Console.Write(new String('▄', width));
 			System.Console.ForegroundColor = ConsoleColor.Cyan;
 		}
 
-		public void RenderImage(IRasterizedImage rasterizedImage)
+		public void RenderImage(IConsoleGraphicsBuffer rasterizedImage)
 		{
 			var bufImg = new byte[rasterizedImage.Width * rasterizedImage.Height];
 			for (var x = 0; x < rasterizedImage.Width; x++)

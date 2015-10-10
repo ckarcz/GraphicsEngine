@@ -1,13 +1,9 @@
 ﻿#region Imports
 
 using System;
-using System.IO;
-using System.Linq;
-using System.Runtime.Remoting.Channels;
 using GraphicsEngine.Graphics;
 using GraphicsEngine.Graphics.Console;
 using GraphicsEngine.Math;
-using GraphicsEngine.Wavefront.Loaders;
 
 #endregion
 
@@ -20,26 +16,97 @@ namespace GraphicsEngine
 			var consoleScreenWidth = 300;
 			var consoleScreenHeight = 100;
 
-			var wavefrontObjLoaderFactory = new WavefrontObjLoaderFactory();
-			var wavefrontObjLoader = wavefrontObjLoaderFactory.Create();
+			var renderer = new SimpleConsoleImageRenderer(consoleScreenWidth, consoleScreenHeight);
+			var rasterizer = new SimpleRasterizer(consoleScreenWidth, consoleScreenHeight);
 
-			var wavefrontObjFilePathString = "triangle.obj";
-			var wavefrontObjFileStream = File.Open(wavefrontObjFilePathString, FileMode.Open, FileAccess.Read);
-			var wavefrontObj = wavefrontObjLoader.LoadWavefrontObj(wavefrontObjFileStream);
+			Console.ReadLine();
 
-			var wavefrontObjToMeshConverter = new WavefrontObjToMeshConverter();
-			var meshes = wavefrontObjToMeshConverter.ConvertToMesh(wavefrontObj);
+			rasterizer.DrawLine(new Vector2(0, 0), new Vector2(0, consoleScreenWidth - 1), false);
+			renderer.RenderImage(rasterizer.RasterizeImage());
 
-			var mesh = meshes.First();
+			Console.ReadLine();
 
-			var simpleRasterizer = new SimpleRasterizer(consoleScreenWidth, consoleScreenHeight);
-			var rasterizedPoints = simpleRasterizer.RasterizePoints(new[] {new Vector2(0, 0), new Vector2(60, 50) , new Vector2(70, 50) , new Vector2(80, 50) });
+			rasterizer.DrawLine(new Vector2(0, 0), new Vector2(consoleScreenWidth - 1, 0), false);
+			renderer.RenderImage(rasterizer.RasterizeImage());
 
-			var meshRasterizer = new MeshRasterizer(consoleScreenWidth, consoleScreenHeight);
-			var meshRasterizedAsVertices = meshRasterizer.RasterizeAsVertices(mesh);
+			Console.ReadLine();
 
-			var consoleImageRenderer = new SimpleConsoleImageRenderer(consoleScreenWidth, consoleScreenHeight);
-			consoleImageRenderer.RenderImage(rasterizedPoints);
+			rasterizer.DrawLine(new Vector2(consoleScreenWidth - 1, 0), new Vector2(consoleScreenWidth - 1, consoleScreenHeight - 1), false);
+			renderer.RenderImage(rasterizer.RasterizeImage());
+
+			Console.ReadLine();
+
+			rasterizer.DrawLine(new Vector2(0, consoleScreenHeight - 1), new Vector2(consoleScreenWidth - 1, consoleScreenHeight - 1), false);
+			renderer.RenderImage(rasterizer.RasterizeImage());
+
+			Console.ReadLine();
+
+			rasterizer.DrawLine(new Vector2(0, 0), new Vector2(consoleScreenWidth - 1, consoleScreenHeight - 1), false);
+			renderer.RenderImage(rasterizer.RasterizeImage());
+
+			Console.ReadLine();
+
+			rasterizer.DrawLine(new Vector2(0, consoleScreenHeight - 1), new Vector2(consoleScreenWidth - 1, 0), false);
+			renderer.RenderImage(rasterizer.RasterizeImage());
+
+			Console.ReadLine();
+
+			rasterizer.DrawLine(new Vector2(0, 0), new Vector2(consoleScreenWidth / 2 - 1, consoleScreenHeight - 1), false);
+			renderer.RenderImage(rasterizer.RasterizeImage());
+
+			Console.ReadLine();
+
+			rasterizer.DrawLine(new Vector2(0, consoleScreenHeight - 1), new Vector2(consoleScreenWidth / 2 - 1, 0), false);
+			renderer.RenderImage(rasterizer.RasterizeImage());
+
+			Console.ReadLine();
+
+			rasterizer.DrawLine(new Vector2(0, 0), new Vector2(0, consoleScreenWidth - 1), true);
+			renderer.RenderImage(rasterizer.RasterizeImage());
+
+			Console.ReadLine();
+
+			rasterizer.DrawLine(new Vector2(0, 0), new Vector2(consoleScreenWidth - 1, 0), true);
+			renderer.RenderImage(rasterizer.RasterizeImage());
+
+			Console.ReadLine();
+
+			rasterizer.DrawLine(new Vector2(consoleScreenWidth - 1, 0), new Vector2(consoleScreenWidth - 1, consoleScreenHeight - 1), true);
+			renderer.RenderImage(rasterizer.RasterizeImage());
+
+			Console.ReadLine();
+
+			rasterizer.DrawLine(new Vector2(0, consoleScreenHeight - 1), new Vector2(consoleScreenWidth - 1, consoleScreenHeight - 1), true);
+			renderer.RenderImage(rasterizer.RasterizeImage());
+
+			Console.ReadLine();
+
+			rasterizer.DrawLine(new Vector2(0, 0), new Vector2(consoleScreenWidth - 1, consoleScreenHeight - 1), true);
+			renderer.RenderImage(rasterizer.RasterizeImage());
+
+			Console.ReadLine();
+
+			rasterizer.DrawLine(new Vector2(0, consoleScreenHeight - 1), new Vector2(consoleScreenWidth - 1, 0), true);
+			renderer.RenderImage(rasterizer.RasterizeImage());
+
+			Console.ReadLine();
+
+			rasterizer.DrawLine(new Vector2(0, 0), new Vector2(consoleScreenWidth / 2 - 1, consoleScreenHeight - 1), true);
+			renderer.RenderImage(rasterizer.RasterizeImage());
+
+			Console.ReadLine();
+
+			rasterizer.DrawLine(new Vector2(0, consoleScreenHeight - 1), new Vector2(consoleScreenWidth / 2 - 1, 0), true);
+			renderer.RenderImage(rasterizer.RasterizeImage());
+
+			// wavefront obj mesh test
+			//var wavefrontObjLoaderFactory = new WavefrontObjLoaderFactory();
+			//var wavefrontObjLoader = wavefrontObjLoaderFactory.Create();
+			//var wavefrontObjFilePathString = "triangle.obj";
+			//var wavefrontObjFileStream = File.Open(wavefrontObjFilePathString, FileMode.Open, FileAccess.Read);
+			//var wavefrontObj = wavefrontObjLoader.LoadWavefrontObj(wavefrontObjFileStream);
+			//var wavefrontObjToMeshConverter = new WavefrontObjToMeshConverter();
+			//var meshes = wavefrontObjToMeshConverter.ConvertToMesh(wavefrontObj);
 
 			Console.ReadLine();
 		}
