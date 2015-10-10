@@ -3,8 +3,10 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Channels;
 using GraphicsEngine.Graphics;
 using GraphicsEngine.Graphics.Console;
+using GraphicsEngine.Math;
 using GraphicsEngine.Wavefront.Loaders;
 
 #endregion
@@ -15,7 +17,8 @@ namespace GraphicsEngine
 	{
 		private static void Main(string[] args)
 		{
-			var consoleScreenConfig = new ConsoleScreenConfig(300, 100);
+			var consoleScreenWidth = 300;
+			var consoleScreenHeight = 100;
 
 			var wavefrontObjLoaderFactory = new WavefrontObjLoaderFactory();
 			var wavefrontObjLoader = wavefrontObjLoaderFactory.Create();
@@ -29,11 +32,14 @@ namespace GraphicsEngine
 
 			var mesh = meshes.First();
 
-			var rasterizer = new MeshRasterizer(consoleScreenConfig);
-			var rasterizedImage = rasterizer.RasterizeAsVertices(mesh);
+			var simpleRasterizer = new SimpleRasterizer(consoleScreenWidth, consoleScreenHeight);
+			var rasterizedPoints = simpleRasterizer.RasterizePoints(new[] {new Vector2(0, 0), new Vector2(60, 50) , new Vector2(70, 50) , new Vector2(80, 50) });
 
-			var consoleImageRenderer = new MonochromeConsoleImageRenderer(consoleScreenConfig);
-			consoleImageRenderer.RenderImage(rasterizedImage);
+			var meshRasterizer = new MeshRasterizer(consoleScreenWidth, consoleScreenHeight);
+			var meshRasterizedAsVertices = meshRasterizer.RasterizeAsVertices(mesh);
+
+			var consoleImageRenderer = new SimpleConsoleImageRenderer(consoleScreenWidth, consoleScreenHeight);
+			consoleImageRenderer.RenderImage(rasterizedPoints);
 
 			Console.ReadLine();
 		}

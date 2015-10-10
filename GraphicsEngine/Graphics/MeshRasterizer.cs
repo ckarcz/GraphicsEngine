@@ -2,16 +2,18 @@
 {
 	public class MeshRasterizer
 	{
-		private readonly IConsoleScreenConfig consoleScreenConfig;
+		private readonly int width;
+		private readonly int height;
 
-		public MeshRasterizer(IConsoleScreenConfig consoleScreenConfig)
+		public MeshRasterizer(int width, int height)
 		{
-			this.consoleScreenConfig = consoleScreenConfig;
+			this.width = width;
+			this.height = height;
 		}
 
 		public IRasterizedImage RasterizeAsVertices(IMesh mesh)
 		{
-			var rasterizedImage = new RasterizedImage(consoleScreenConfig.Width, consoleScreenConfig.Height);
+			var rasterizedImage = new RasterizedImage(width, height);
 
 			return rasterizedImage;
 		}

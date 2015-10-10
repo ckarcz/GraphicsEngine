@@ -45,9 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\Extensions\StringExtensions.cs" />
-    <Compile Include="Graphics\Console\ConsoleScreenConfig.cs" />
     <Compile Include="Graphics\Console\IConsoleImageRenderer.cs" />
-    <Compile Include="Graphics\Console\IConsoleScreenConfig.cs" />
     <Compile Include="Graphics\IMesh.cs" />
     <Compile Include="Graphics\IRasterizedImage.cs" />
     <Compile Include="Graphics\Console\IConsoleCharacterBuffer.cs" />
@@ -56,10 +54,10 @@
     <Compile Include="Graphics\Mesh.cs" />
     <Compile Include="Graphics\RasterizedImage.cs" />
     <Compile Include="Graphics\MeshRasterizer.cs" />
-    <Compile Include="Graphics\Console\MonochromeConsoleImageRenderer.cs" />
+    <Compile Include="Graphics\Console\SimpleConsoleImageRenderer.cs" />
     <Compile Include="Graphics\Console\ConsoleCharacterBuffer.cs" />
     <Compile Include="Graphics\Console\ConsoleColorBuffer.cs" />
-    <Compile Include="Graphics\ShapeRasterizer.cs" />
+    <Compile Include="Graphics\SimpleRasterizer.cs" />
     <Compile Include="Graphics\WavefrontObjToMeshConverter.cs" />
     <Compile Include="Math\MathUtil.cs" />
     <Compile Include="Math\Matrix.cs" />

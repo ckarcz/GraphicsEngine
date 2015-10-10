@@ -7,16 +7,18 @@ using System.IO;
 
 namespace GraphicsEngine.Graphics.Console
 {
-	public class MonochromeConsoleImageRenderer
+	public class SimpleConsoleImageRenderer
 	{
 		private int lastTime;
 		private int numRenderings;
-		private readonly IConsoleScreenConfig consoleScreenConfig;
+		private readonly int width;
+		private readonly int height;
 		private readonly Stream stdOutputStream = System.Console.OpenStandardOutput();
 
-		public MonochromeConsoleImageRenderer(IConsoleScreenConfig consoleScreenConfig)
+		public SimpleConsoleImageRenderer(int width, int height)
 		{
-			this.consoleScreenConfig = consoleScreenConfig;
+			this.width = width;
+			this.height = height;
 
 			System.Console.Title = "Graphics Engine Test";
 			System.Console.CursorVisible = false;
@@ -24,8 +26,8 @@ namespace GraphicsEngine.Graphics.Console
 			reTry:
 			try
 			{
-				System.Console.SetWindowSize(consoleScreenConfig.Width, consoleScreenConfig.Height + 15);
-				System.Console.SetBufferSize(consoleScreenConfig.Height, consoleScreenConfig.Height + 15);
+				System.Console.SetWindowSize(width, height + 15);
+				System.Console.SetBufferSize(width, height + 15);
 			}
 			catch (ArgumentOutOfRangeException)
 			{
@@ -34,8 +36,8 @@ namespace GraphicsEngine.Graphics.Console
 				goto reTry;
 			}
 			System.Console.Clear(); //clear colors from user preset.
-			System.Console.SetCursorPosition(0, consoleScreenConfig.Height);
-			System.Console.Write(new String('▄', consoleScreenConfig.Width));
+			System.Console.SetCursorPosition(0, height);
+			System.Console.Write(new String('▄', width));
 			System.Console.ForegroundColor = ConsoleColor.Cyan;
 		}
 

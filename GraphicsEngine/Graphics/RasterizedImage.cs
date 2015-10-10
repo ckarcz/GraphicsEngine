@@ -5,16 +5,13 @@ namespace GraphicsEngine.Graphics
 	public class RasterizedImage
 		: IRasterizedImage
 	{
-		public RasterizedImage(IConsoleScreenConfig consoleScreenConfig)
-		{
-			Width = consoleScreenConfig.Width;
-			Height = consoleScreenConfig.Height;
-		}
-
 		public RasterizedImage(int width, int height)
 		{
 			Width = width;
 			Height = height;
+
+			CharacterBuffer = new ConsoleCharacterBuffer(width, height);
+			ColorBuffer = new ConsoleColorBuffer(width, height);
 		}
 
 		public ConsoleCharacterBuffer CharacterBuffer { get; private set; }

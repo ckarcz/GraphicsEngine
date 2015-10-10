@@ -3,10 +3,10 @@
 	public class ConsoleColorBuffer
 		: IConsoleColorBuffer
 	{
-		public ConsoleColorBuffer(IConsoleScreenConfig consoleScreenConfig)
+		public ConsoleColorBuffer(int width, int height)
 		{
-			Width = consoleScreenConfig.Width;
-			Height = consoleScreenConfig.Height;
+			Width = width;
+			Height = height;
 		}
 
 		public int Width { get; }

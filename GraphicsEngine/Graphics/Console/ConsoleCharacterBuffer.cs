@@ -5,11 +5,11 @@
 	{
 		private readonly byte[,] screenCharacterBuffer;
 
-		public ConsoleCharacterBuffer(IConsoleScreenConfig consoleScreenConfig)
+		public ConsoleCharacterBuffer(int width, int height)
 		{
-			screenCharacterBuffer = new byte[consoleScreenConfig.Width, consoleScreenConfig.Height];
-			Width = consoleScreenConfig.Width;
-			Height = consoleScreenConfig.Height;
+			screenCharacterBuffer = new byte[width, height];
+			Width = width;
+			Height = height;
 		}
 
 		public byte this[int x, int y]
