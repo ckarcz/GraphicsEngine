@@ -43,18 +43,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\Extensions\StringExtensions.cs" />
-    <Compile Include="Graphics\Console\ConsoleScreen.cs" />
-    <Compile Include="Graphics\Console\IConsoleImageRenderer.cs" />
+    <Compile Include="Graphics\Console\Kernel32ConsoleScreen.cs" />
+    <Compile Include="Graphics\Console\IConsoleGraphicsRenderer.cs" />
+    <Compile Include="Graphics\Console\IConsoleScreen.cs" />
+    <Compile Include="Graphics\Console\SimpleConsoleScreen.cs" />
     <Compile Include="Graphics\IMesh.cs" />
-    <Compile Include="Graphics\Console\IConsoleGraphicsBuffer.cs" />
+    <Compile Include="Graphics\Console\IConsoleGraphicsFrame.cs" />
     <Compile Include="Graphics\Console\IConsoleCharacterBuffer.cs" />
     <Compile Include="Graphics\Console\IConsoleColorBuffer.cs" />
     <Compile Include="Graphics\ITriangle.cs" />
     <Compile Include="Graphics\IWavefrontObjToMeshConverter.cs" />
     <Compile Include="Graphics\Mesh.cs" />
-    <Compile Include="Graphics\Console\ConsoleGraphicsBuffer.cs" />
+    <Compile Include="Graphics\Console\ConsoleGraphicsFrame.cs" />
     <Compile Include="Graphics\MeshRasterizer.cs" />
-    <Compile Include="Graphics\Console\SimpleConsoleImageRenderer.cs" />
+    <Compile Include="Graphics\Console\ConsoleGraphicsRenderer.cs" />
     <Compile Include="Graphics\Console\ConsoleCharacterBuffer.cs" />
     <Compile Include="Graphics\Console\ConsoleColorBuffer.cs" />
     <Compile Include="Graphics\SimpleRasterizer.cs" />
@@ -143,6 +145,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="monkey.obj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="sphere.obj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="triangle.mtl">

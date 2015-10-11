@@ -13,9 +13,9 @@ namespace GraphicsEngine.Graphics
 			this.height = height;
 		}
 
-		public IConsoleGraphicsBuffer RasterizeAsVertices(IMesh mesh)
+		public IConsoleGraphicsFrame RasterizeAsVertices(IMesh mesh)
 		{
-			var rasterizedImage = new ConsoleGraphicsBuffer(width, height);
+			var rasterizedImage = new ConsoleGraphicsFrame(width, height);
 
 			return rasterizedImage;
 		}

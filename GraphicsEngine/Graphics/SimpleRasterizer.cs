@@ -14,7 +14,7 @@ namespace GraphicsEngine.Graphics
 		private readonly byte halfPixelChar = 219; // '▄'
 		private readonly int height;
 		private readonly byte horizontalWireFrameChar = 95; // '-'
-		private readonly ConsoleGraphicsBuffer rasterizedImage;
+		private readonly ConsoleGraphicsFrame rasterizedImage;
 		private readonly byte upLeftWireFrameChar = 92; // '|'
 		private readonly byte upRightWireFrameChar = 47; // '|'
 		private readonly byte verticleWireFrameChar = 124; // '|'
@@ -25,7 +25,7 @@ namespace GraphicsEngine.Graphics
 			this.width = width;
 			this.height = height;
 
-			rasterizedImage = new ConsoleGraphicsBuffer(width, height);
+			rasterizedImage = new ConsoleGraphicsFrame(width, height);
 		}
 
 		// old
@@ -332,7 +332,7 @@ namespace GraphicsEngine.Graphics
 			rasterizedImage.ClearBuffers();
 		}
 
-		public ConsoleGraphicsBuffer RasterizeImage()
+		public ConsoleGraphicsFrame RasterizeImage()
 		{
 			return rasterizedImage;
 		}

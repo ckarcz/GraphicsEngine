@@ -7,29 +7,9 @@ using GraphicsEngine.Win32;
 
 namespace GraphicsEngine.Graphics.Console
 {
-	public class ConsoleScreen
+	public class Kernel32ConsoleScreen
+		: IConsoleScreen
 	{
-		[Flags]
-		public enum Colors
-			: int
-		{
-			Black = 0x0000,
-			DarkBlue = 0x0001,
-			DarkGreen = 0x0002,
-			DarkRed = 0x0004,
-			Gray = DarkBlue | DarkGreen | DarkRed,
-			DarkYellow = DarkRed | DarkGreen,
-			DarkPurple = DarkRed | DarkBlue,
-			DarkCyan = DarkGreen | DarkBlue,
-			LightBlue = DarkBlue | Kernel32Console.HIGH_INTENSITY,
-			LightGreen = DarkGreen | Kernel32Console.HIGH_INTENSITY,
-			LightRed = DarkRed | Kernel32Console.HIGH_INTENSITY,
-			LightWhite = Gray | Kernel32Console.HIGH_INTENSITY,
-			LightYellow = DarkYellow | Kernel32Console.HIGH_INTENSITY,
-			LightPurple = DarkPurple | Kernel32Console.HIGH_INTENSITY,
-			LightCyan = DarkCyan | Kernel32Console.HIGH_INTENSITY
-		}
-
 		private Kernel32Console.SmallRect consoleScreenCoords;
 		private readonly Kernel32Console.CharInfo[] consoleScreenBuffer;
 		private readonly Kernel32Console.Coord consoleScreenBufferCoords;
@@ -37,7 +17,7 @@ namespace GraphicsEngine.Graphics.Console
 		private readonly Kernel32Console.Coord consoleScreenBufferSize;
 		private readonly IntPtr stdOutputHandle;
 
-		public ConsoleScreen(int width, int height, IntPtr stdOutputHandle)
+		public Kernel32ConsoleScreen(int width, int height, IntPtr stdOutputHandle)
 		{
 			Width = width;
 			Height = height;
@@ -55,7 +35,7 @@ namespace GraphicsEngine.Graphics.Console
 			consoleScreenBufferInfoEx.dwCursorPosition = new Kernel32Console.Coord(0, 0);
 
 			consoleScreenBuffer = new Kernel32Console.CharInfo[Width * (Height * 2)];
-			Kernel32Console.CharInfo chri = new Kernel32Console.CharInfo(new Kernel32Console.CharUnion(' '), 0);
+			var chri = new Kernel32Console.CharInfo(new Kernel32Console.CharUnion(' '), 0);
 
 			for (int i = 0; i < width * height; i++)
 			{
@@ -76,18 +56,35 @@ namespace GraphicsEngine.Graphics.Console
 			Kernel32Console.SetConsoleCursorPosition(stdOutputHandle, new Kernel32Console.Coord(x, y));
 		}
 
-		public void SetPixel(int x, int y, Colors color, char chr)
+		public void SetFrame(IConsoleGraphicsFrame consoleGraphicsBuffer)
+		{
+			var characterBuffer = consoleGraphicsBuffer.CharacterBuffer;
+			var colorBuffer = consoleGraphicsBuffer.ColorBuffer;
+
+			for (var x = 0; x < consoleGraphicsBuffer.Width; x++)
+			{
+				for (var y = 0; y < consoleGraphicsBuffer.Height; y++)
+				{
+					var character = characterBuffer[x, y];
+					var color = colorBuffer[x, y];
+
+					SetPixel(x, y, color, character);
+				}
+			}
+		}
+
+		public void SetPixel(int x, int y, short color, byte chr)
 		{
 			if (x < 0 || x >= Width || y < 0 || y >= Height)
 			{
 				return;
 			}
 
-			consoleScreenBuffer[x + y * Width].Attributes = (short) color;
-			consoleScreenBuffer[x + y * Width].Char.AsciiChar = (byte) chr;
+			consoleScreenBuffer[x + y * Width].Attributes = color;
+			consoleScreenBuffer[x + y * Width].Char.AsciiChar = chr;
 		}
 
-		public void SetPixel(int x, int y, Colors color)
+		public void SetPixel(int x, int y, short color)
 		{
 			if (x < 0 || x >= Width || y < 0 || y >= Height)
 			{
@@ -103,7 +100,7 @@ namespace GraphicsEngine.Graphics.Console
 
 			if (oldchr == 219 || oldchr == chr)
 			{
-				consoleScreenBuffer[x + y * Width].Attributes = (short) color;
+				consoleScreenBuffer[x + y * Width].Attributes = color;
 				consoleScreenBuffer[x + y * Width].Char.AsciiChar = (byte) oldchr;
 
 				return;
@@ -121,14 +118,14 @@ namespace GraphicsEngine.Graphics.Console
 			consoleScreenBuffer[x + y * Width].Attributes = (short) color;
 		}
 
-		public Colors GetPixelColor(int x, int y)
+		public short GetPixelColor(int x, int y)
 		{
 			if (x < 0 || x >= Width || y < 0 || y >= Height)
 			{
 				throw new IndexOutOfRangeException("X or Y out of range.");
 			}
 
-			return (Colors) consoleScreenBuffer[x + y * Width].Attributes;
+			return consoleScreenBuffer[x + y * Width].Attributes;
 		}
 
 		public char GetPixelChar(int x, int y)
@@ -141,16 +138,16 @@ namespace GraphicsEngine.Graphics.Console
 			return (char) consoleScreenBuffer[x + y * Width].Char.AsciiChar;
 		}
 
-		public void DrawFrame()
+		public void Draw()
 		{
 			Kernel32Console.WriteConsoleOutput(stdOutputHandle, consoleScreenBuffer, consoleScreenBufferSize, consoleScreenBufferCoords, ref consoleScreenCoords);
 		}
 
-		public void ClearFrame(Colors color)
+		public void ClearFrame(short color)
 		{
 			for (int i = 0; i < Width * Height; i++)
 			{
-				consoleScreenBuffer[i].Attributes = (short) color;
+				consoleScreenBuffer[i].Attributes = color;
 				consoleScreenBuffer[i].Char.AsciiChar = (byte) ' ';
 			}
 		}

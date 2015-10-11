@@ -1,6 +1,6 @@
 ﻿namespace GraphicsEngine.Graphics.Console
 {
-	public interface IConsoleGraphicsBuffer
+	public interface IConsoleGraphicsFrame
 	{
 		int Width { get; }
 		int Height { get; }

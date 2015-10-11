@@ -1,9 +1,9 @@
 ﻿namespace GraphicsEngine.Graphics.Console
 {
-	public class ConsoleGraphicsBuffer
-		: IConsoleGraphicsBuffer
+	public class ConsoleGraphicsFrame
+		: IConsoleGraphicsFrame
 	{
-		public ConsoleGraphicsBuffer(int width, int height)
+		public ConsoleGraphicsFrame(int width, int height)
 		{
 			Width = width;
 			Height = height;
@@ -17,12 +17,12 @@
 		public int Width { get; }
 		public int Height { get; }
 
-		IConsoleCharacterBuffer IConsoleGraphicsBuffer.CharacterBuffer
+		IConsoleCharacterBuffer IConsoleGraphicsFrame.CharacterBuffer
 		{
 			get { return CharacterBuffer; }
 		}
 
-		IConsoleColorBuffer IConsoleGraphicsBuffer.ColorBuffer
+		IConsoleColorBuffer IConsoleGraphicsFrame.ColorBuffer
 		{
 			get { return ColorBuffer; }
 		}

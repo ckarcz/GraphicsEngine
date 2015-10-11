@@ -2,10 +2,10 @@
 {
 	public interface IConsoleColorBuffer
 	{
-		byte this[int x, int y] { get; }
+		short this[int x, int y] { get; }
 		int Width { get; }
 		int Height { get; }
 
-		byte[,] GetMultiArrayAsCopy();
+		short[,] GetMultiArrayAsCopy();
 	}
 }
