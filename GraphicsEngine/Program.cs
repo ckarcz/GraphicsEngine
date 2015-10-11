@@ -15,8 +15,8 @@ namespace GraphicsEngine
 	{
 		private static void Main(string[] args)
 		{
-			var consoleScreenWidth = 300;
-			var consoleScreenHeight = 100;
+			var consoleScreenWidth = 200;
+			var consoleScreenHeight = 75;
 
 			var renderer = new SimpleConsoleImageRenderer(consoleScreenWidth, consoleScreenHeight);
 			var rasterizer = new SimpleRasterizer(consoleScreenWidth, consoleScreenHeight);
@@ -32,6 +32,71 @@ namespace GraphicsEngine
 			var rise = linePoint2.Y - linePoint1.Y;
 			var run = linePoint2.X - linePoint1.X;
 			var lineSlope = run == 0 ? 1 : rise / run;
+			rasterizer.DrawStringHorizontal(new Vector2(-50, -10), string.Format("SLOPE: {0}", lineSlope));
+			rasterizer.DrawLine(linePoint1, linePoint2);
+
+			renderer.RenderImage(rasterizer.RasterizeImage());
+
+			Console.ReadLine();
+
+			rasterizer.ClearImage();
+			rasterizer.DrawAxes();
+			renderer.RenderImage(rasterizer.RasterizeImage());
+
+			 linePoint1 = new Vector2(0, 0);
+			 linePoint2 = new Vector2(75, 50);
+			 rise = linePoint2.Y - linePoint1.Y;
+			 run = linePoint2.X - linePoint1.X;
+			 lineSlope = run == 0 ? 1 : rise / run;
+			rasterizer.DrawStringHorizontal(new Vector2(-50, -10), string.Format("SLOPE: {0}", lineSlope));
+			rasterizer.DrawLine(linePoint1, linePoint2);
+
+			renderer.RenderImage(rasterizer.RasterizeImage());
+
+			Console.ReadLine();
+
+			rasterizer.ClearImage();
+			rasterizer.DrawAxes();
+			renderer.RenderImage(rasterizer.RasterizeImage());
+
+			linePoint1 = new Vector2(0, 0);
+			linePoint2 = new Vector2(10, 50);
+			rise = linePoint2.Y - linePoint1.Y;
+			run = linePoint2.X - linePoint1.X;
+			lineSlope = run == 0 ? 1 : rise / run;
+			rasterizer.DrawStringHorizontal(new Vector2(-50, -10), string.Format("SLOPE: {0}", lineSlope));
+			rasterizer.DrawLine(linePoint1, linePoint2);
+
+			renderer.RenderImage(rasterizer.RasterizeImage());
+
+			Console.ReadLine();
+
+			rasterizer.ClearImage();
+			rasterizer.DrawAxes();
+			renderer.RenderImage(rasterizer.RasterizeImage());
+
+			linePoint1 = new Vector2(0, 0);
+			linePoint2 = new Vector2(-10, 50);
+			rise = linePoint2.Y - linePoint1.Y;
+			run = linePoint2.X - linePoint1.X;
+			lineSlope = run == 0 ? 1 : rise / run;
+			rasterizer.DrawStringHorizontal(new Vector2(-50, -10), string.Format("SLOPE: {0}", lineSlope));
+			rasterizer.DrawLine(linePoint1, linePoint2);
+
+			renderer.RenderImage(rasterizer.RasterizeImage());
+
+			Console.ReadLine();
+
+			rasterizer.ClearImage();
+			rasterizer.DrawAxes();
+			renderer.RenderImage(rasterizer.RasterizeImage());
+
+			linePoint1 = new Vector2(0, 0);
+			linePoint2 = new Vector2(10, -50);
+			rise = linePoint2.Y - linePoint1.Y;
+			run = linePoint2.X - linePoint1.X;
+			lineSlope = run == 0 ? 1 : rise / run;
+			rasterizer.DrawStringHorizontal(new Vector2(-50, -10), string.Format("SLOPE: {0}", lineSlope));
 			rasterizer.DrawLine(linePoint1, linePoint2);
 
 			renderer.RenderImage(rasterizer.RasterizeImage());
@@ -44,9 +109,7 @@ namespace GraphicsEngine
 
 			var linePoint3 = new Vector3(0, 0, 1);
 			var linePoint4 = new Vector3(50, 50, 2);
-			rise = linePoint4.Y - linePoint3.Y;
-			run = linePoint4.X - linePoint3.X;
-			lineSlope = run == 0 ? 1 : rise / run;
+			rasterizer.DrawStringHorizontal(new Vector2(-50, -10), "3D->2D PROJECTED LINE");
 			rasterizer.DrawLine(linePoint3, linePoint4);
 
 			renderer.RenderImage(rasterizer.RasterizeImage());
@@ -64,6 +127,7 @@ namespace GraphicsEngine
 
 			rasterizer.ClearImage();
 			rasterizer.DrawAxes();
+			rasterizer.DrawStringHorizontal(new Vector2(-50, -10), "WAVEFRONT OBJ RENDER");
 			rasterizer.DrawWired(wavefrontObj);
 			renderer.RenderImage(rasterizer.RasterizeImage());
 

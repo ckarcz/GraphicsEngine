@@ -95,7 +95,7 @@ namespace GraphicsEngine.Graphics
 				while (currentPoint.Y < endPoint.Y)
 				{
 					var offetX = (width / 2) + currentPoint.X;
-					var offsetY = (height / 2) + currentPoint.Y;
+					var offsetY = (height / 2) - currentPoint.Y;
 
 					var pixelX = (int) offetX;
 					var pixelY = (int) offsetY;
@@ -117,11 +117,11 @@ namespace GraphicsEngine.Graphics
 				{
 					if (slope > 0.5)
 					{
-						pixelChar = 92; // /
+						pixelChar = 47; // /
 					}
 					else if (slope < -0.5)
 					{
-						pixelChar = 47; // \
+						pixelChar = 92; // \
 					}
 					else
 					{
@@ -132,16 +132,18 @@ namespace GraphicsEngine.Graphics
 				var currentPoint = new Vector2(point1.X, point1.Y);
 				var endPoint = new Vector2(point2.X, point2.Y);
 
+				// start with left most point
 				if (point1.X > point2.X)
 				{
 					currentPoint = new Vector2(point2.X, point2.Y);
 					endPoint = new Vector2(point1.X, point1.Y);
 				}
 
+				// draw along x, left to right
 				while (currentPoint.X <= endPoint.X)
 				{
 					var offetX = (width / 2) + currentPoint.X;
-					var offsetY = (height / 2) + currentPoint.Y;
+					var offsetY = (height / 2) - currentPoint.Y;
 
 					var pixelX = (int)offetX;
 					var pixelY = (int)offsetY;
@@ -176,7 +178,7 @@ namespace GraphicsEngine.Graphics
 		public void DrawPoint(Vector2 point)
 		{
 			var offetX = (width / 2) + point.X;
-			var offsetY = (height / 2) + point.Y;
+			var offsetY = (height / 2) - point.Y;
 
 			var pixelX = (int)offetX;
 			var pixelY = (int)offsetY;
@@ -189,7 +191,7 @@ namespace GraphicsEngine.Graphics
 			if (point.Z > 0)
 			{
 				var offetX = (width / 2) + point.X / point.Z;
-				var offsetY = (height / 2) + point.Y / point.Z;
+				var offsetY = (height / 2) - point.Y / point.Z;
 
 				var pixelX = (int)offetX;
 				var pixelY = (int)offsetY;
@@ -201,7 +203,7 @@ namespace GraphicsEngine.Graphics
 		public void DrawStringHorizontal(Vector2 location, string messageString)
 		{
 			var offetX = (width / 2) + location.X;
-			var offsetY = (height / 2) + location.Y;
+			var offsetY = (height / 2) - location.Y;
 
 			var currentPixelX = (int)offetX;
 			var constPixelY = (int)offsetY;
@@ -216,7 +218,7 @@ namespace GraphicsEngine.Graphics
 		public void DrawStringVertical(Vector2 location, string messageString)
 		{
 			var offetX = (width / 2) + location.X;
-			var offsetY = (height / 2) + location.Y;
+			var offsetY = (height / 2) - location.Y;
 
 			var currentPixelY = (int)offsetY;
 			var constPixelX = (int)offetX;
