@@ -13,6 +13,29 @@ namespace GraphicsEngine.Win32
 {
 	internal static class Kernel32Console
 	{
+		public static class DefaultColors
+		{
+			public static short FOREGROUND_BLACK = 0x0000;
+			public static short FOREGROUND_BLUE = 0x0001;
+			public static short FOREGROUND_GREEN = 0x0002;
+			public static short FOREGROUND_CYAN = 0x0003;
+			public static short FOREGROUND_RED = 0x0004;
+			public static short FOREGROUND_MAGENTA = 0x0005;
+			public static short FOREGROUND_YELLOW = 0x0006;
+			public static short FOREGROUND_GREY = 0x0007;
+			public static short FOREGROUND_INTENSITY = 0x0008;
+
+			public static short BACKGROUND_BLACK = 0x0000;
+			public static short BACKGROUND_BLUE = 0x0010;
+			public static short BACKGROUND_GREEN = 0x0020;
+			public static short BACKGROUND_CYAN = 0x0030;
+			public static short BACKGROUND_RED = 0x0040;
+			public static short BACKGROUND_MAGENTA = 0x0050;
+			public static short BACKGROUND_YELLOW = 0x0060;
+			public static short BACKGROUND_GREY = 0x0070;
+			public static short BACKGROUND_INTENSITY = 0x0080;
+		}
+
 		public const int STD_INPUT_HANDLE = unchecked((int) (-10));
 		public const int STD_OUTPUT_HANDLE = unchecked((int) (-11));
 		public const int STD_ERROR_HANDLE = unchecked((int) (-12));
