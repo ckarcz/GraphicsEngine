@@ -2,6 +2,10 @@ namespace GraphicsEngine.Graphics.Console
 {
 	public interface IConsoleImageRenderer
 	{
-		void RenderImage(IConsoleGraphicsBuffer rasterizedImage);
+		int NumberRenderings { get; }
+
+		void Render(IConsoleGraphicsBuffer rasterizedImage);
+
+		void Clear();
 	}
 }

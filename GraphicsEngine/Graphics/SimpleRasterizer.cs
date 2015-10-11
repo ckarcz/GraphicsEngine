@@ -54,7 +54,7 @@ namespace GraphicsEngine.Graphics
 
 		public void DrawWiredMesh(IMesh mesh, float scale = 1, float translateX = 0, float translateY = 0, bool drawWireFrame = false, bool clip = true)
 		{
-			foreach (var face in mesh.Faces)
+			foreach (var face in mesh.Triangles)
 			{
 				var point1 = new Vector2(face.Point1.X * scale + translateX, face.Point1.Y * scale + translateY);
 				var point2 = new Vector2(face.Point2.X * scale + translateX, face.Point2.Y * scale + translateY);

@@ -8,6 +8,7 @@ using System.IO;
 namespace GraphicsEngine.Graphics.Console
 {
 	public class SimpleConsoleImageRenderer
+		: IConsoleImageRenderer
 	{
 		private int lastTime;
 		private int numRenderings;
@@ -22,7 +23,7 @@ namespace GraphicsEngine.Graphics.Console
 
 			System.Console.Title = "Graphics Engine Test";
 			System.Console.CursorVisible = false;
-			System.Console.BackgroundColor = ConsoleColor.Black;
+			System.Console.BackgroundColor = ConsoleColor.DarkBlue;
 			reTry:
 			try
 			{
@@ -40,7 +41,12 @@ namespace GraphicsEngine.Graphics.Console
 			System.Console.ForegroundColor = ConsoleColor.Yellow;
 		}
 
-		public void RenderImage(IConsoleGraphicsBuffer rasterizedImage)
+		public int NumberRenderings
+		{
+			get { return numRenderings;}
+		}
+
+		public void Render(IConsoleGraphicsBuffer rasterizedImage)
 		{
 			var bufImg = new byte[rasterizedImage.Width * rasterizedImage.Height];
 			for (var x = 0; x < rasterizedImage.Width; x++)
@@ -65,6 +71,11 @@ namespace GraphicsEngine.Graphics.Console
 			}
 
 			numRenderings++;
+		}
+
+		public void Clear()
+		{
+			System.Console.Clear();
 		}
 	}
 }

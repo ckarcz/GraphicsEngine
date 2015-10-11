@@ -11,13 +11,13 @@ namespace GraphicsEngine.Graphics
 	{
 		public Mesh()
 		{
-			Triangles = new List<Triangle>();
+			Triangles = new List<ITriangle>();
 		}
 
-		public List<Triangle> Triangles { get; }
+		public List<ITriangle> Triangles { get; }
 		public string Name { get; set; }
 
-		IEnumerable<Triangle> IMesh.Faces
+		IEnumerable<ITriangle> IMesh.Triangles
 		{
 			get { return Triangles; }
 		}
