@@ -19,7 +19,8 @@ namespace GraphicsEngine
 			var consoleScreenWidth = 300;
 			var consoleScreenHeight = 100;
 
-			var screen = new SimpleConsoleScreen(consoleScreenWidth, consoleScreenHeight, "Graphics Engine Test", ConsoleColor.DarkBlue, ConsoleColor.Cyan);
+			//var screen = new SimpleConsoleScreen(consoleScreenWidth, consoleScreenHeight, "Graphics Engine Test", ConsoleColor.DarkBlue, ConsoleColor.Cyan);
+			var screen = new Kernel32ConsoleScreen(consoleScreenWidth, consoleScreenHeight);
 			var renderer = new ConsoleGraphicsRenderer(screen);
 			var rasterizer = new SimpleRasterizer(consoleScreenWidth, consoleScreenHeight);
 

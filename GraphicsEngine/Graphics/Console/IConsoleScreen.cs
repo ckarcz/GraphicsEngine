@@ -17,7 +17,7 @@ namespace GraphicsEngine.Graphics.Console
 
 		short GetPixelColor(int x, int y);
 
-		char GetPixelChar(int x, int y);
+		byte GetPixelChar(int x, int y);
 
 		void Draw();
 

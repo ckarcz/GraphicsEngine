@@ -54,11 +54,11 @@ namespace GraphicsEngine.Graphics.Console
 
 		public void SetFrame(IConsoleGraphicsFrame consoleGraphicsBuffer)
 		{
-			for (var x = 0; x < consoleGraphicsBuffer.Width; x++)
+			for (var x = 0; x < Width; x++)
 			{
-				for (var y = 0; y < consoleGraphicsBuffer.Height; y++)
+				for (var y = 0; y < Height; y++)
 				{
-					characterBuffer[x + y * consoleGraphicsBuffer.Width] = consoleGraphicsBuffer.CharacterBuffer[x, y];
+					characterBuffer[x + y * Width] = consoleGraphicsBuffer.CharacterBuffer[x, y];
 				}
 			}
 		}
@@ -78,9 +78,9 @@ namespace GraphicsEngine.Graphics.Console
 			throw new System.NotImplementedException();
 		}
 
-		public char GetPixelChar(int x, int y)
+		public byte GetPixelChar(int x, int y)
 		{
-			throw new System.NotImplementedException();
+			return characterBuffer[x + y * Width];
 		}
 
 		public void Draw()

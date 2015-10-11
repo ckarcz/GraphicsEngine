@@ -15,14 +15,15 @@ namespace GraphicsEngine.Graphics.Console
 		private readonly Kernel32Console.Coord consoleScreenBufferCoords;
 		private readonly Kernel32Console.CONSOLE_SCREEN_BUFFER_INFO_EX consoleScreenBufferInfoEx;
 		private readonly Kernel32Console.Coord consoleScreenBufferSize;
-		private readonly IntPtr stdOutputHandle;
+		private readonly byte emptyPixelChar = (byte) ' ';
+        private readonly IntPtr stdOutputHandle;
 
-		public Kernel32ConsoleScreen(int width, int height, IntPtr stdOutputHandle)
+		public Kernel32ConsoleScreen(int width, int height)
 		{
 			Width = width;
 			Height = height;
 
-			this.stdOutputHandle = stdOutputHandle;
+			this.stdOutputHandle = Kernel32Console.GetStdHandle(Kernel32Console.STD_OUTPUT_HANDLE);
 
 			consoleScreenBufferSize = new Kernel32Console.Coord(Width, Height);
 			consoleScreenBufferCoords = new Kernel32Console.Coord(0, 0);
@@ -31,10 +32,12 @@ namespace GraphicsEngine.Graphics.Console
 			consoleScreenBufferInfoEx = Kernel32Console.CONSOLE_SCREEN_BUFFER_INFO_EX.Create();
 			Kernel32Console.GetConsoleScreenBufferInfoEx(stdOutputHandle, ref consoleScreenBufferInfoEx);
 
-			consoleScreenBufferInfoEx.dwSize = new Kernel32Console.Coord(Width / 4, Height / 2 / 4);
+			consoleScreenBufferInfoEx.dwSize = new Kernel32Console.Coord(Width, Height);
 			consoleScreenBufferInfoEx.dwCursorPosition = new Kernel32Console.Coord(0, 0);
 
-			consoleScreenBuffer = new Kernel32Console.CharInfo[Width * (Height * 2)];
+			Kernel32Console.SetConsoleScreenBufferInfoEx(stdOutputHandle, ref consoleScreenBufferInfoEx);
+
+			consoleScreenBuffer = new Kernel32Console.CharInfo[Width * Height];
 			var chri = new Kernel32Console.CharInfo(new Kernel32Console.CharUnion(' '), 0);
 
 			for (int i = 0; i < width * height; i++)
@@ -77,7 +80,7 @@ namespace GraphicsEngine.Graphics.Console
 		{
 			if (x < 0 || x >= Width || y < 0 || y >= Height)
 			{
-				return;
+				throw new IndexOutOfRangeException("X or Y out of range.");
 			}
 
 			consoleScreenBuffer[x + y * Width].Attributes = color;
@@ -88,7 +91,7 @@ namespace GraphicsEngine.Graphics.Console
 		{
 			if (x < 0 || x >= Width || y < 0 || y >= Height)
 			{
-				return;
+				throw new IndexOutOfRangeException("X or Y out of range.");
 			}
 
 			char chr = (char) (y % 2 == 0 ? 223 : 220);
@@ -128,14 +131,14 @@ namespace GraphicsEngine.Graphics.Console
 			return consoleScreenBuffer[x + y * Width].Attributes;
 		}
 
-		public char GetPixelChar(int x, int y)
+		public byte GetPixelChar(int x, int y)
 		{
 			if (x < 0 || x >= Width || y < 0 || y >= Height)
 			{
-				return '\0';
+				throw new IndexOutOfRangeException("X or Y out of range.");
 			}
 
-			return (char) consoleScreenBuffer[x + y * Width].Char.AsciiChar;
+			return consoleScreenBuffer[x + y * Width].Char.AsciiChar;
 		}
 
 		public void Draw()
@@ -148,7 +151,7 @@ namespace GraphicsEngine.Graphics.Console
 			for (int i = 0; i < Width * Height; i++)
 			{
 				consoleScreenBuffer[i].Attributes = color;
-				consoleScreenBuffer[i].Char.AsciiChar = (byte) ' ';
+				consoleScreenBuffer[i].Char.AsciiChar = emptyPixelChar;
 			}
 		}
 	}
