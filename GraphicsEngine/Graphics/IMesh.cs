@@ -9,6 +9,6 @@ namespace GraphicsEngine.Graphics
 	public interface IMesh
 	{
 		string Name { get; }
-		IEnumerable<ITriangle> Triangles { get; }
+		IEnumerable<IPolygon> Faces { get; }
 	}
 }

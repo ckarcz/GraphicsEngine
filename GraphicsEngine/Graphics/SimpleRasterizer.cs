@@ -54,13 +54,23 @@ namespace GraphicsEngine.Graphics
 
 		public void DrawWiredMesh(IMesh mesh, float scale = 1, float translateX = 0, float translateY = 0, bool drawWireFrame = false, bool clip = true)
 		{
-			foreach (var face in mesh.Triangles)
+			foreach (var face in mesh.Faces)
 			{
-				var point1 = new Vector2(face.Point1.X * scale + translateX, face.Point1.Y * scale + translateY);
-				var point2 = new Vector2(face.Point2.X * scale + translateX, face.Point2.Y * scale + translateY);
-				var point3 = new Vector2(face.Point3.X * scale + translateX, face.Point3.Y * scale + translateY);
+				//var point1 = new Vector2(face.Point1.X * scale + translateX, face.Point1.Y * scale + translateY);
+				//var point2 = new Vector2(face.Point2.X * scale + translateX, face.Point2.Y * scale + translateY);
+				//var point3 = new Vector2(face.Point3.X * scale + translateX, face.Point3.Y * scale + translateY);
 
-				DrawWiredTriangle(point1, point2, point3, drawWireFrame, clip);
+				//DrawWiredTriangle(point1, point2, point3, drawWireFrame, clip);
+
+				// TODO - CLEAN UP
+				var points = new List<Vector2>();
+				foreach (var vector in face.Points)
+				{
+					var point = new Vector2(vector.X * scale + translateX, vector.Y * scale + translateY);
+					points.Add(point);
+				}
+
+				DrawWiredPolygon(points, drawWireFrame, clip);
 			}
 		}
 

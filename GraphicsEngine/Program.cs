@@ -20,22 +20,22 @@ namespace GraphicsEngine
 			var consoleScreenWidth = 300;
 			var consoleScreenHeight = 100;
 
-			//var screen = new SimpleConsoleScreen(consoleScreenWidth, consoleScreenHeight, "Graphics Engine Test", ConsoleColor.DarkBlue, ConsoleColor.Cyan);
-			var screen = new Kernel32ConsoleScreen(consoleScreenWidth, consoleScreenHeight);
+			var screen = new SimpleConsoleScreen(consoleScreenWidth, consoleScreenHeight, "Graphics Engine Test", ConsoleColor.DarkBlue, ConsoleColor.Cyan);
+			//var screen = new Kernel32ConsoleScreen(consoleScreenWidth, consoleScreenHeight);
 
 			var renderer = new ConsoleGraphicsRenderer(screen);
 			var rasterizer = new SimpleRasterizer(consoleScreenWidth, consoleScreenHeight);
 
 			// color test
-			screen.SetPixel(50, 50, (short)(Kernel32Console.DefaultColors.BACKGROUND_MAGENTA));
-			screen.SetPixel(55, 50, (short)(Kernel32Console.DefaultColors.BACKGROUND_YELLOW));
-			screen.SetPixel(60, 50, (short)(Kernel32Console.DefaultColors.BACKGROUND_CYAN));
-			screen.SetPixel(65, 50, (short)(Kernel32Console.DefaultColors.BACKGROUND_GREY));
-			screen.Draw();
+			//screen.SetPixel(50, 50, (short)(Kernel32Console.DefaultColors.BACKGROUND_MAGENTA));
+			//screen.SetPixel(55, 50, (short)(Kernel32Console.DefaultColors.BACKGROUND_YELLOW));
+			//screen.SetPixel(60, 50, (short)(Kernel32Console.DefaultColors.BACKGROUND_CYAN));
+			//screen.SetPixel(65, 50, (short)(Kernel32Console.DefaultColors.BACKGROUND_GREY));
+			//screen.Draw();
 
 			var wavefrontObjLoaderFactory = new WavefrontObjLoaderFactory();
 			var wavefrontObjLoader = wavefrontObjLoaderFactory.Create(new MaterialNullStreamProvider()); 
-			var wavefrontObjFilePathString = "f1.obj";
+			var wavefrontObjFilePathString = "link.obj";
 			var wavefrontObjFileStream = File.Open(wavefrontObjFilePathString, FileMode.Open, FileAccess.Read);
 			var wavefrontObj = wavefrontObjLoader.LoadWavefrontObj(wavefrontObjFileStream);
 			var wavefrontObjToMeshConverter = new WavefrontObjToMeshConverter();
@@ -224,6 +224,20 @@ namespace GraphicsEngine
 			rasterizer.ClearImage();
 			rasterizer.DrawAxes();
 			rasterizer.DrawWiredMesh(meshes, 100, 0, -150, renderThinWires, true);
+			renderer.Render(rasterizer.RasterizeImage());
+
+			Console.ReadLine();
+
+			rasterizer.ClearImage();
+			rasterizer.DrawAxes();
+			rasterizer.DrawWiredMesh(meshes, 100, 0, -300, renderThinWires, true);
+			renderer.Render(rasterizer.RasterizeImage());
+
+			Console.ReadLine();
+
+			rasterizer.ClearImage();
+			rasterizer.DrawAxes();
+			rasterizer.DrawWiredMesh(meshes, 100, 0, -400, renderThinWires, true);
 			renderer.Render(rasterizer.RasterizeImage());
 
 			Console.ReadLine();

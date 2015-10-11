@@ -11,15 +11,15 @@ namespace GraphicsEngine.Graphics
 	{
 		public Mesh()
 		{
-			Triangles = new List<ITriangle>();
+			Faces = new List<IPolygon>();
 		}
 
-		public List<ITriangle> Triangles { get; }
+		public IList<IPolygon> Faces { get; }
 		public string Name { get; set; }
 
-		IEnumerable<ITriangle> IMesh.Triangles
+		IEnumerable<IPolygon> IMesh.Faces
 		{
-			get { return Triangles; }
+			get { return Faces; }
 		}
 	}
 }

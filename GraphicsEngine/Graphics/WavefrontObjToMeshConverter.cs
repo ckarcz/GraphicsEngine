@@ -53,24 +53,21 @@ namespace GraphicsEngine.Graphics
 				throw new DataException("Only triangles are supported");
 			}
 
-			for (var i = 0; i < face.Count; i++)
-			{
-				var faceVertex1 = face[0];
-				var faceVertex2 = face[1];
-				var faceVertex3 = face[2];
+			var faceVertex1 = face[0];
+			var faceVertex2 = face[1];
+			var faceVertex3 = face[2];
 
-				var geoVertex1 = wavefrontObj.Vertices[faceVertex1.VertexIndex - 1];
-				var geoVertex2 = wavefrontObj.Vertices[faceVertex2.VertexIndex - 1];
-				var geoVertex3 = wavefrontObj.Vertices[faceVertex3.VertexIndex - 1];
+			var geoVertex1 = wavefrontObj.Vertices[faceVertex1.VertexIndex - 1];
+			var geoVertex2 = wavefrontObj.Vertices[faceVertex2.VertexIndex - 1];
+			var geoVertex3 = wavefrontObj.Vertices[faceVertex3.VertexIndex - 1];
 
-				var point1 = new Vector3(geoVertex1.X, geoVertex1.Y, geoVertex1.Z);
-				var point2 = new Vector3(geoVertex2.X, geoVertex2.Y, geoVertex2.Z);
-				var point3 = new Vector3(geoVertex3.X, geoVertex3.Y, geoVertex3.Z);
+			var point1 = new Vector3(geoVertex1.X, geoVertex1.Y, geoVertex1.Z);
+			var point2 = new Vector3(geoVertex2.X, geoVertex2.Y, geoVertex2.Z);
+			var point3 = new Vector3(geoVertex3.X, geoVertex3.Y, geoVertex3.Z);
 
-				var triangle = new Triangle(point1, point2, point3);
+			var triangle = new Polygon(point1, point2, point3);
 
-				mesh.Triangles.Add(triangle);
-			}
+			mesh.Faces.Add(triangle);
 		}
 	}
 }

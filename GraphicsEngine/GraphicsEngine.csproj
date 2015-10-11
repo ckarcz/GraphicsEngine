@@ -51,6 +51,7 @@
     <Compile Include="Graphics\Console\IConsoleGraphicsFrame.cs" />
     <Compile Include="Graphics\Console\IConsoleCharacterBuffer.cs" />
     <Compile Include="Graphics\Console\IConsoleColorBuffer.cs" />
+    <Compile Include="Graphics\IPolygon.cs" />
     <Compile Include="Graphics\ITriangle.cs" />
     <Compile Include="Graphics\IWavefrontObjToMeshConverter.cs" />
     <Compile Include="Graphics\Mesh.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="Graphics\Console\ConsoleGraphicsRenderer.cs" />
     <Compile Include="Graphics\Console\ConsoleCharacterBuffer.cs" />
     <Compile Include="Graphics\Console\ConsoleColorBuffer.cs" />
+    <Compile Include="Graphics\Polygon.cs" />
     <Compile Include="Graphics\SimpleRasterizer.cs" />
     <Compile Include="Graphics\Triangle.cs" />
     <Compile Include="Graphics\WavefrontObjToMeshConverter.cs" />
