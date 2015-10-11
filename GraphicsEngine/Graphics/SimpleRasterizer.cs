@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using GraphicsEngine.Graphics.Console;
 using GraphicsEngine.Math;
+using GraphicsEngine.Wavefront.Loaders;
 
 namespace GraphicsEngine.Graphics
 {
@@ -20,7 +21,61 @@ namespace GraphicsEngine.Graphics
 			rasterizedImage = new ConsoleGraphicsBuffer(width, height);
 		}
 
-		public void DrawLine(Vector2 point1, Vector2 point2, bool drawWireFrame = false)
+		public void DrawWired(IWavefrontObj wavefrontObj, bool drawWireFrame = false)
+		{
+			foreach (var group in wavefrontObj.Groups)
+			{
+				foreach (var face in group.Faces)
+				{
+					var faceVertex1 = face[0];
+					var faceVertex2 = face[1];
+					var faceVertex3 = face[2];
+
+					var geoVertex1 = wavefrontObj.Vertices[faceVertex1.VertexIndex - 1];
+					var geoVertex2 = wavefrontObj.Vertices[faceVertex2.VertexIndex - 1];
+					var geoVertex3 = wavefrontObj.Vertices[faceVertex3.VertexIndex - 1];
+
+					var point1 = new Vector2(geoVertex1.X, geoVertex1.Y);
+					var point2 = new Vector2(geoVertex2.X, geoVertex2.Y);
+					var point3 = new Vector2(geoVertex3.X, geoVertex3.Y);
+
+					DrawWiredTriangle(point1, point2, point3, drawWireFrame);
+				}
+			}
+		}
+
+		public void DrawWiredTriangle(Vector2 point1, Vector2 point2, Vector2 point3, bool drawWireFrame = false, bool clip = true)
+		{
+			DrawLine(point1, point2, drawWireFrame, clip);
+			DrawLine(point2, point3, drawWireFrame, clip);
+			DrawLine(point1, point3, drawWireFrame, clip);
+		}
+
+		public void DrawWiredTriangle(Vector3 point1, Vector3 point2, Vector3 point3, bool drawWireFrame = false, bool clip = true)
+		{
+			DrawLine(point1, point2, drawWireFrame, clip);
+			DrawLine(point2, point3, drawWireFrame, clip);
+			DrawLine(point1, point3, drawWireFrame, clip);
+		}
+
+
+		public void DrawAxes(bool drawWireFrame = true)
+		{
+			DrawLine(new Vector2(0, -height / 2), new Vector2(0, height / 2), drawWireFrame);
+			DrawLine(new Vector2(-width / 2, 0), new Vector2(width / 2, 0), drawWireFrame);
+		}
+
+		public void DrawLine(Vector3 point1, Vector3 point2, bool drawWireFrame = false, bool clip = true)
+		{
+			point1.X /= point1.Z;
+			point1.Y /= point1.Z;
+			point2.X /= point2.Z;
+			point2.Y /= point2.Z;
+
+			DrawLine(new Vector2(point1.X, point1.Y), new Vector2(point2.X, point2.Y), drawWireFrame, clip);
+		}
+
+		public void DrawLine(Vector2 point1, Vector2 point2, bool drawWireFrame = false, bool clip = true)
 		{
 			var rise = point2.Y - point1.Y;
 			var run = point2.X - point1.X;
@@ -39,10 +94,13 @@ namespace GraphicsEngine.Graphics
 
 				while (currentPoint.Y < endPoint.Y)
 				{
-					var pixelX = (int) currentPoint.X;
-					var pixelY = (int) currentPoint.Y;
+					var offetX = (width / 2) + currentPoint.X;
+					var offsetY = (height / 2) + currentPoint.Y;
 
-					if (pixelX >= 0 && pixelX < width && pixelY >= 0 && pixelY < height)
+					var pixelX = (int) offetX;
+					var pixelY = (int) offsetY;
+
+					if (clip && pixelX >= 0 && pixelX < width && pixelY >= 0 && pixelY < height)
 					{
 						rasterizedImage.CharacterBuffer[pixelX, pixelY] = pixelChar;
 					}
@@ -82,10 +140,13 @@ namespace GraphicsEngine.Graphics
 
 				while (currentPoint.X <= endPoint.X)
 				{
-					var pixelX = (int) currentPoint.X;
-					var pixelY = (int) currentPoint.Y;
+					var offetX = (width / 2) + currentPoint.X;
+					var offsetY = (height / 2) + currentPoint.Y;
 
-					if (pixelX >= 0 && pixelX < width && pixelY >= 0 && pixelY < height)
+					var pixelX = (int)offetX;
+					var pixelY = (int)offsetY;
+
+					if (clip && pixelX >= 0 && pixelX < width && pixelY >= 0 && pixelY < height)
 					{
 						rasterizedImage.CharacterBuffer[pixelX, pixelY] = pixelChar;
 					}
@@ -100,10 +161,7 @@ namespace GraphicsEngine.Graphics
 		{
 			foreach (var point in points)
 			{
-				var pixelX = (int) point.X;
-				var pixelY = (int) point.Y;
-
-				rasterizedImage.CharacterBuffer[pixelX, pixelY] = halfPixelChar;
+				DrawPoint(point);
 			}
 		}
 
@@ -111,8 +169,30 @@ namespace GraphicsEngine.Graphics
 		{
 			foreach (var point in points)
 			{
-				var pixelX = (int) (point.X / point.Z);
-				var pixelY = (int) (point.Y / point.Z);
+				DrawPoint(point);
+			}
+		}
+
+		public void DrawPoint(Vector2 point)
+		{
+			var offetX = (width / 2) + point.X;
+			var offsetY = (height / 2) + point.Y;
+
+			var pixelX = (int)offetX;
+			var pixelY = (int)offsetY;
+
+			rasterizedImage.CharacterBuffer[pixelX, pixelY] = halfPixelChar;
+		}
+
+		public void DrawPoint(Vector3 point)
+		{
+			if (point.Z > 0)
+			{
+				var offetX = (width / 2) + point.X / point.Z;
+				var offsetY = (height / 2) + point.Y / point.Z;
+
+				var pixelX = (int)offetX;
+				var pixelY = (int)offsetY;
 
 				rasterizedImage.CharacterBuffer[pixelX, pixelY] = halfPixelChar;
 			}
@@ -120,8 +200,11 @@ namespace GraphicsEngine.Graphics
 
 		public void DrawStringHorizontal(Vector2 location, string messageString)
 		{
-			var currentPixelX = (int) location.X;
-			var constPixelY = (int) location.Y;
+			var offetX = (width / 2) + location.X;
+			var offsetY = (height / 2) + location.Y;
+
+			var currentPixelX = (int)offetX;
+			var constPixelY = (int)offsetY;
 
 			foreach (var messageChar in messageString)
 			{
@@ -132,8 +215,11 @@ namespace GraphicsEngine.Graphics
 
 		public void DrawStringVertical(Vector2 location, string messageString)
 		{
-			var currentPixelY = (int) location.Y;
-			var constPixelX = (int) location.X;
+			var offetX = (width / 2) + location.X;
+			var offsetY = (height / 2) + location.Y;
+
+			var currentPixelY = (int)offsetY;
+			var constPixelX = (int)offetX;
 
 			foreach (var messageChar in messageString)
 			{

@@ -10,7 +10,7 @@ namespace GraphicsEngine.Graphics
 	public interface IMesh
 	{
 		string Name { get; }
-		List<Vector3> Triangles { get; }
+		List<Vector3> Vectors { get; }
 		List<Vector3> Normals { get; }
 	}
 }

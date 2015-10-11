@@ -12,12 +12,12 @@ namespace GraphicsEngine.Graphics
 	{
 		public Mesh()
 		{
-			Triangles = new List<Vector3>();
+			Vectors = new List<Vector3>();
 			Normals = new List<Vector3>();
 		}
 
 		public string Name { get; set; }
-		public List<Vector3> Triangles { get; set; }
+		public List<Vector3> Vectors { get; set; }
 		public List<Vector3> Normals { get; set; }
 	}
 }

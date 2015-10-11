@@ -26,8 +26,8 @@ namespace GraphicsEngine.Graphics.Console
 			reTry:
 			try
 			{
-				System.Console.SetWindowSize(width, height + 15);
-				System.Console.SetBufferSize(width, height + 15);
+				System.Console.SetWindowSize(width, height);
+				System.Console.SetBufferSize(width, height);
 			}
 			catch (ArgumentOutOfRangeException)
 			{
@@ -36,9 +36,7 @@ namespace GraphicsEngine.Graphics.Console
 				goto reTry;
 			}
 			System.Console.Clear();
-			System.Console.SetCursorPosition(0, height);
-			System.Console.ForegroundColor = ConsoleColor.Magenta;
-			System.Console.Write(new String('▄', width));
+			System.Console.SetCursorPosition(0, 0);
 			System.Console.ForegroundColor = ConsoleColor.Cyan;
 		}
 

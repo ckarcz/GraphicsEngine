@@ -60,17 +60,17 @@ namespace GraphicsEngine.Graphics
 				var faceVertex = face[i];
 
 				var vertex = wavefrontObj.Vertices[faceVertex.VertexIndex - 1];
-				mesh.Triangles.Add(new Vector3(vertex.X, vertex.Y, vertex.Z));
+				mesh.Vectors.Add(new Vector3(vertex.X, vertex.Y, vertex.Z));
 			}
 		}
 
 		private void CalculateNormals(Mesh mesh)
 		{
-			for (var i = 0; i < mesh.Triangles.Count; i += 3)
+			for (var i = 0; i < mesh.Vectors.Count; i += 3)
 			{
-				var a = mesh.Triangles[i];
-				var b = mesh.Triangles[i + 1];
-				var c = mesh.Triangles[i + 2];
+				var a = mesh.Vectors[i];
+				var b = mesh.Vectors[i + 1];
+				var c = mesh.Vectors[i + 2];
 
 				var normal = (b - a).Cross(c - a);
 
