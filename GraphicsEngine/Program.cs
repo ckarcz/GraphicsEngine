@@ -2,7 +2,6 @@
 
 using System;
 using System.IO;
-using System.Text;
 using GraphicsEngine.Graphics;
 using GraphicsEngine.Graphics.Console;
 using GraphicsEngine.Math;
@@ -24,7 +23,7 @@ namespace GraphicsEngine
 
 			var wavefrontObjLoaderFactory = new WavefrontObjLoaderFactory();
 			var wavefrontObjLoader = wavefrontObjLoaderFactory.Create();
-			var wavefrontObjFilePathString = "triangle.obj";
+			var wavefrontObjFilePathString = "link.obj";
 			var wavefrontObjFileStream = File.Open(wavefrontObjFilePathString, FileMode.Open, FileAccess.Read);
 			var wavefrontObj = wavefrontObjLoader.LoadWavefrontObj(wavefrontObjFileStream);
 			var wavefrontObjToMeshConverter = new WavefrontObjToMeshConverter();
@@ -128,21 +127,6 @@ namespace GraphicsEngine
 
 			rasterizer.ClearImage();
 			rasterizer.DrawAxes();
-			rasterizer.DrawStringHorizontal(new Vector2(-50, -10), "WAVEFRONT OBJ RENDER");
-			rasterizer.DrawWiredMesh(meshes);
-			renderer.RenderImage(rasterizer.RasterizeImage());
-
-			Console.ReadLine();
-
-			rasterizer.ClearImage();
-			rasterizer.DrawAxes();
-			rasterizer.DrawWiredMesh(meshes, true);
-			renderer.RenderImage(rasterizer.RasterizeImage());
-
-			Console.ReadLine();
-
-			rasterizer.ClearImage();
-			rasterizer.DrawAxes();
 
 			var a = new Vector2(-140, -45);
 			var b = new Vector2(-100, -45);
@@ -150,9 +134,9 @@ namespace GraphicsEngine
 			var d = new Vector2(-125, -25);
 
 			var spacer = 1;
-			for (int i = 0; i < 50; i++)
+			for (var i = 0; i < 50; i++)
 			{
-				rasterizer.DrawWiredPolygon(new [] {a, b, c, d}, true, true);
+				rasterizer.DrawWiredPolygon(new[] {a, b, c, d}, true, true);
 
 				a.X += spacer;
 				a.Y += spacer * 0.25f;
@@ -166,6 +150,56 @@ namespace GraphicsEngine
 				spacer++;
 			}
 
+			renderer.RenderImage(rasterizer.RasterizeImage());
+
+			Console.ReadLine();
+
+			rasterizer.ClearImage();
+			rasterizer.DrawAxes();
+			rasterizer.DrawStringHorizontal(new Vector2(-50, -10), "WAVEFRONT OBJ RENDER");
+			rasterizer.DrawWiredMesh(meshes, 1, 0, 0, true, true);
+			renderer.RenderImage(rasterizer.RasterizeImage());
+
+			Console.ReadLine();
+
+			rasterizer.ClearImage();
+			rasterizer.DrawAxes();
+			rasterizer.DrawWiredMesh(meshes, 5, 0, 0, true, true);
+			renderer.RenderImage(rasterizer.RasterizeImage());
+
+			Console.ReadLine();
+
+			rasterizer.ClearImage();
+			rasterizer.DrawAxes();
+			rasterizer.DrawWiredMesh(meshes, 10, 0, -10, true, true);
+			renderer.RenderImage(rasterizer.RasterizeImage());
+
+			Console.ReadLine();
+
+			rasterizer.ClearImage();
+			rasterizer.DrawAxes();
+			rasterizer.DrawWiredMesh(meshes, 25, 0, -50, true, true);
+			renderer.RenderImage(rasterizer.RasterizeImage());
+
+			Console.ReadLine();
+
+			rasterizer.ClearImage();
+			rasterizer.DrawAxes();
+			rasterizer.DrawWiredMesh(meshes, 50, 0, -50, true, true);
+			renderer.RenderImage(rasterizer.RasterizeImage());
+
+			Console.ReadLine();
+
+			rasterizer.ClearImage();
+			rasterizer.DrawAxes();
+			rasterizer.DrawWiredMesh(meshes, 50, 0, -100, true, true);
+			renderer.RenderImage(rasterizer.RasterizeImage());
+
+			Console.ReadLine();
+
+			rasterizer.ClearImage();
+			rasterizer.DrawAxes();
+			rasterizer.DrawWiredMesh(meshes, 50, 0, -150, true, true);
 			renderer.RenderImage(rasterizer.RasterizeImage());
 
 			Console.ReadLine();

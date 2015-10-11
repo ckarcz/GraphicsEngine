@@ -1,7 +1,6 @@
 ﻿#region Imports
 
 using System.Collections.Generic;
-using System.Linq;
 using GraphicsEngine.Graphics.Console;
 using GraphicsEngine.Math;
 using GraphicsEngine.Wavefront.Loaders;
@@ -30,7 +29,7 @@ namespace GraphicsEngine.Graphics
 		}
 
 		// old
-		public void DrawWiredWavefrontObj(IWavefrontObj wavefrontObj, bool drawWireFrame = false)
+		public void DrawWiredWavefrontObj(IWavefrontObj wavefrontObj, bool drawWireFrame = false, bool clip = true)
 		{
 			foreach (var group in wavefrontObj.Groups)
 			{
@@ -48,28 +47,28 @@ namespace GraphicsEngine.Graphics
 					var point2 = new Vector2(geoVertex2.X, geoVertex2.Y);
 					var point3 = new Vector2(geoVertex3.X, geoVertex3.Y);
 
-					DrawWiredTriangle(point1, point2, point3, drawWireFrame);
+					DrawWiredTriangle(point1, point2, point3, drawWireFrame, clip);
 				}
 			}
 		}
 
-		public void DrawWiredMesh(IMesh mesh, bool drawWireFrame = false)
+		public void DrawWiredMesh(IMesh mesh, float scale = 1, float translateX = 0, float translateY = 0, bool drawWireFrame = false, bool clip = true)
 		{
 			foreach (var face in mesh.Faces)
 			{
-				var point1 = new Vector2(face.Point1.X, face.Point1.Y);
-				var point2 = new Vector2(face.Point2.X, face.Point2.Y);
-				var point3 = new Vector2(face.Point3.X, face.Point3.Y);
+				var point1 = new Vector2(face.Point1.X * scale + translateX, face.Point1.Y * scale + translateY);
+				var point2 = new Vector2(face.Point2.X * scale + translateX, face.Point2.Y * scale + translateY);
+				var point3 = new Vector2(face.Point3.X * scale + translateX, face.Point3.Y * scale + translateY);
 
-				DrawWiredTriangle(point1, point2, point3, drawWireFrame);
+				DrawWiredTriangle(point1, point2, point3, drawWireFrame, clip);
 			}
 		}
 
-		public void DrawWiredMesh(IEnumerable<IMesh> meshes, bool drawWireFrame = false)
+		public void DrawWiredMesh(IEnumerable<IMesh> meshes, int scale = 1, float translateX = 0, float translateY = 0, bool drawWireFrame = false, bool clip = true)
 		{
 			foreach (var mesh in meshes)
 			{
-				DrawWiredMesh(mesh, drawWireFrame);
+				DrawWiredMesh(mesh, scale, translateX, translateY, drawWireFrame, clip);
 			}
 		}
 
@@ -81,7 +80,7 @@ namespace GraphicsEngine.Graphics
 
 			vectorsEnumerator.MoveNext();
 			var firstPoint = vectorsEnumerator.Current;
-            var point1 = firstPoint;
+			var point1 = firstPoint;
 			var point2 = firstPoint;
 
 			while (vectorsEnumerator.MoveNext())
