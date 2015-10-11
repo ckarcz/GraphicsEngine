@@ -21,8 +21,6 @@ namespace GraphicsEngine
 			var renderer = new SimpleConsoleImageRenderer(consoleScreenWidth, consoleScreenHeight);
 			var rasterizer = new SimpleRasterizer(consoleScreenWidth, consoleScreenHeight);
 
-			Console.ReadLine();
-
 			rasterizer.ClearImage();
 			rasterizer.DrawAxes();
 			renderer.RenderImage(rasterizer.RasterizeImage());

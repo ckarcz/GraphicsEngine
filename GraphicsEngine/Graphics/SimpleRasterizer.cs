@@ -1,15 +1,22 @@
-﻿using System.Collections.Generic;
+﻿#region Imports
+
+using System.Collections.Generic;
 using GraphicsEngine.Graphics.Console;
 using GraphicsEngine.Math;
 using GraphicsEngine.Wavefront.Loaders;
+
+#endregion
 
 namespace GraphicsEngine.Graphics
 {
 	public class SimpleRasterizer
 	{
-		private readonly byte halfPixelChar = 219;
+		private readonly byte halfPixelChar = 219; // '▄'
 		private readonly int height;
+		private readonly byte horizontalWireFrameChar = 95; // '-'
 		private readonly ConsoleGraphicsBuffer rasterizedImage;
+		private readonly byte upLeftWireFrameChar = 92; // '|'
+		private readonly byte upRightWireFrameChar = 47; // '|'
 		private readonly byte verticleWireFrameChar = 124; // '|'
 		private readonly int width;
 
@@ -57,7 +64,6 @@ namespace GraphicsEngine.Graphics
 			DrawLine(point2, point3, drawWireFrame, clip);
 			DrawLine(point1, point3, drawWireFrame, clip);
 		}
-
 
 		public void DrawAxes(bool drawWireFrame = true)
 		{
@@ -115,46 +121,94 @@ namespace GraphicsEngine.Graphics
 
 				if (drawWireFrame)
 				{
-					if (slope > 0.5)
+					if (slope > 0)
 					{
-						pixelChar = 47; // /
-					}
-					else if (slope < -0.5)
-					{
-						pixelChar = 92; // \
+						if (slope > 1)
+						{
+							pixelChar = verticleWireFrameChar;
+						}
+						else if (slope > 0.5)
+						{
+							pixelChar = upRightWireFrameChar;
+						}
+						else
+						{
+							pixelChar = horizontalWireFrameChar;
+						}
 					}
 					else
 					{
-						pixelChar = 95; // -
+						if (slope < -1)
+						{
+							pixelChar = verticleWireFrameChar;
+						}
+						else if (slope < -0.5)
+						{
+							pixelChar = upLeftWireFrameChar;
+						}
+						else
+						{
+							pixelChar = horizontalWireFrameChar;
+						}
 					}
 				}
 
 				var currentPoint = new Vector2(point1.X, point1.Y);
 				var endPoint = new Vector2(point2.X, point2.Y);
 
-				// start with left most point
-				if (point1.X > point2.X)
+				if (System.Math.Abs(slope) <= 1) // for more horizontal or 45deg lines, draw horizontally
 				{
-					currentPoint = new Vector2(point2.X, point2.Y);
-					endPoint = new Vector2(point1.X, point1.Y);
-				}
-
-				// draw along x, left to right
-				while (currentPoint.X <= endPoint.X)
-				{
-					var offetX = (width / 2) + currentPoint.X;
-					var offsetY = (height / 2) - currentPoint.Y;
-
-					var pixelX = (int)offetX;
-					var pixelY = (int)offsetY;
-
-					if (clip && pixelX >= 0 && pixelX < width && pixelY >= 0 && pixelY < height)
+					// start with left most point
+					if (point1.X > point2.X)
 					{
-						rasterizedImage.CharacterBuffer[pixelX, pixelY] = pixelChar;
+						currentPoint = new Vector2(point2.X, point2.Y);
+						endPoint = new Vector2(point1.X, point1.Y);
 					}
 
-					currentPoint.X++;
-					currentPoint.Y += slope;
+					// draw along x, left to right
+					while (currentPoint.X <= endPoint.X)
+					{
+						var offetX = (width / 2) + currentPoint.X;
+						var offsetY = (height / 2) - currentPoint.Y;
+
+						var pixelX = (int)offetX;
+						var pixelY = (int)offsetY;
+
+						if (clip && pixelX >= 0 && pixelX < width && pixelY >= 0 && pixelY < height)
+						{
+							rasterizedImage.CharacterBuffer[pixelX, pixelY] = pixelChar;
+						}
+
+						currentPoint.X++;
+						currentPoint.Y += slope;
+					}
+				}
+				else // for more vertical lines, draw vertically
+				{
+					// start with bottom most point
+					if (point1.Y > point2.Y)
+					{
+						currentPoint = new Vector2(point2.X, point2.Y);
+						endPoint = new Vector2(point1.X, point1.Y);
+					}
+
+					// draw along y, bottom to top
+					while (currentPoint.Y <= endPoint.Y)
+					{
+						var offetX = (width / 2) + currentPoint.X;
+						var offsetY = (height / 2) - currentPoint.Y;
+
+						var pixelX = (int)offetX;
+						var pixelY = (int)offsetY;
+
+						if (clip && pixelX >= 0 && pixelX < width && pixelY >= 0 && pixelY < height)
+						{
+							rasterizedImage.CharacterBuffer[pixelX, pixelY] = pixelChar;
+						}
+
+						currentPoint.Y++;
+						currentPoint.X += invSlope;
+					}
 				}
 			}
 		}
@@ -180,8 +234,8 @@ namespace GraphicsEngine.Graphics
 			var offetX = (width / 2) + point.X;
 			var offsetY = (height / 2) - point.Y;
 
-			var pixelX = (int)offetX;
-			var pixelY = (int)offsetY;
+			var pixelX = (int) offetX;
+			var pixelY = (int) offsetY;
 
 			rasterizedImage.CharacterBuffer[pixelX, pixelY] = halfPixelChar;
 		}
@@ -193,8 +247,8 @@ namespace GraphicsEngine.Graphics
 				var offetX = (width / 2) + point.X / point.Z;
 				var offsetY = (height / 2) - point.Y / point.Z;
 
-				var pixelX = (int)offetX;
-				var pixelY = (int)offsetY;
+				var pixelX = (int) offetX;
+				var pixelY = (int) offsetY;
 
 				rasterizedImage.CharacterBuffer[pixelX, pixelY] = halfPixelChar;
 			}
@@ -205,8 +259,8 @@ namespace GraphicsEngine.Graphics
 			var offetX = (width / 2) + location.X;
 			var offsetY = (height / 2) - location.Y;
 
-			var currentPixelX = (int)offetX;
-			var constPixelY = (int)offsetY;
+			var currentPixelX = (int) offetX;
+			var constPixelY = (int) offsetY;
 
 			foreach (var messageChar in messageString)
 			{
@@ -220,8 +274,8 @@ namespace GraphicsEngine.Graphics
 			var offetX = (width / 2) + location.X;
 			var offsetY = (height / 2) - location.Y;
 
-			var currentPixelY = (int)offsetY;
-			var constPixelX = (int)offetX;
+			var currentPixelY = (int) offsetY;
+			var constPixelX = (int) offetX;
 
 			foreach (var messageChar in messageString)
 			{
