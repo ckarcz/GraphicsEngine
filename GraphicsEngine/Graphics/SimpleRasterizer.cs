@@ -1,6 +1,7 @@
 ﻿#region Imports
 
 using System.Collections.Generic;
+using System.Linq;
 using GraphicsEngine.Graphics.Console;
 using GraphicsEngine.Math;
 using GraphicsEngine.Wavefront.Loaders;
@@ -28,7 +29,8 @@ namespace GraphicsEngine.Graphics
 			rasterizedImage = new ConsoleGraphicsBuffer(width, height);
 		}
 
-		public void DrawWired(IWavefrontObj wavefrontObj, bool drawWireFrame = false)
+		// old
+		public void DrawWiredWavefrontObj(IWavefrontObj wavefrontObj, bool drawWireFrame = false)
 		{
 			foreach (var group in wavefrontObj.Groups)
 			{
@@ -49,6 +51,48 @@ namespace GraphicsEngine.Graphics
 					DrawWiredTriangle(point1, point2, point3, drawWireFrame);
 				}
 			}
+		}
+
+		public void DrawWiredMesh(IMesh mesh, bool drawWireFrame = false)
+		{
+			foreach (var face in mesh.Faces)
+			{
+				var point1 = new Vector2(face.Point1.X, face.Point1.Y);
+				var point2 = new Vector2(face.Point2.X, face.Point2.Y);
+				var point3 = new Vector2(face.Point3.X, face.Point3.Y);
+
+				DrawWiredTriangle(point1, point2, point3, drawWireFrame);
+			}
+		}
+
+		public void DrawWiredMesh(IEnumerable<IMesh> meshes, bool drawWireFrame = false)
+		{
+			foreach (var mesh in meshes)
+			{
+				DrawWiredMesh(mesh, drawWireFrame);
+			}
+		}
+
+		public void DrawWiredPolygon(IEnumerable<Vector2> vectors, bool drawWireFrame = false, bool clip = true)
+		{
+			// TODO - check for 3 or more vectors first
+
+			var vectorsEnumerator = vectors.GetEnumerator();
+
+			vectorsEnumerator.MoveNext();
+			var firstPoint = vectorsEnumerator.Current;
+            var point1 = firstPoint;
+			var point2 = firstPoint;
+
+			while (vectorsEnumerator.MoveNext())
+			{
+				point1 = point2;
+				point2 = vectorsEnumerator.Current;
+
+				DrawLine(point1, point2, drawWireFrame, clip);
+			}
+
+			DrawLine(point2, firstPoint, drawWireFrame, clip);
 		}
 
 		public void DrawWiredTriangle(Vector2 point1, Vector2 point2, Vector2 point3, bool drawWireFrame = false, bool clip = true)
@@ -171,8 +215,8 @@ namespace GraphicsEngine.Graphics
 						var offetX = (width / 2) + currentPoint.X;
 						var offsetY = (height / 2) - currentPoint.Y;
 
-						var pixelX = (int)offetX;
-						var pixelY = (int)offsetY;
+						var pixelX = (int) offetX;
+						var pixelY = (int) offsetY;
 
 						if (clip && pixelX >= 0 && pixelX < width && pixelY >= 0 && pixelY < height)
 						{
@@ -198,8 +242,8 @@ namespace GraphicsEngine.Graphics
 						var offetX = (width / 2) + currentPoint.X;
 						var offsetY = (height / 2) - currentPoint.Y;
 
-						var pixelX = (int)offetX;
-						var pixelY = (int)offsetY;
+						var pixelX = (int) offetX;
+						var pixelY = (int) offsetY;
 
 						if (clip && pixelX >= 0 && pixelX < width && pixelY >= 0 && pixelY < height)
 						{

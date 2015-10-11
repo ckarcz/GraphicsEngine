@@ -37,7 +37,7 @@ namespace GraphicsEngine.Graphics.Console
 			}
 			System.Console.Clear();
 			System.Console.SetCursorPosition(0, 0);
-			System.Console.ForegroundColor = ConsoleColor.Cyan;
+			System.Console.ForegroundColor = ConsoleColor.Yellow;
 		}
 
 		public void RenderImage(IConsoleGraphicsBuffer rasterizedImage)
