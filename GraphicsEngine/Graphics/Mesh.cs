@@ -1,7 +1,6 @@
 ﻿#region Imports
 
 using System.Collections.Generic;
-using GraphicsEngine.Math;
 
 #endregion
 
@@ -12,12 +11,15 @@ namespace GraphicsEngine.Graphics
 	{
 		public Mesh()
 		{
-			Vectors = new List<Vector3>();
-			Normals = new List<Vector3>();
+			Triangles = new List<Triangle>();
 		}
 
+		public List<Triangle> Triangles { get; }
 		public string Name { get; set; }
-		public List<Vector3> Vectors { get; set; }
-		public List<Vector3> Normals { get; set; }
+
+		IEnumerable<Triangle> IMesh.Faces
+		{
+			get { return Triangles; }
+		}
 	}
 }

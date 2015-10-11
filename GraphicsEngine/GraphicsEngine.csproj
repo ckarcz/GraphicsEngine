@@ -58,6 +58,7 @@
     <Compile Include="Graphics\Console\ConsoleCharacterBuffer.cs" />
     <Compile Include="Graphics\Console\ConsoleColorBuffer.cs" />
     <Compile Include="Graphics\SimpleRasterizer.cs" />
+    <Compile Include="Graphics\Triangle.cs" />
     <Compile Include="Graphics\WavefrontObjToMeshConverter.cs" />
     <Compile Include="Math\MathUtil.cs" />
     <Compile Include="Math\Matrix.cs" />
