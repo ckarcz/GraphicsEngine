@@ -1,5 +1,6 @@
 #region Imports
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -23,6 +24,8 @@ namespace GraphicsEngine.Engine
 		private readonly Rasterizer rasterizer;
 		private readonly Transformation transformation;
 		private readonly string[] wavefrontObjectFilePaths = new[] {"triangle.obj", "cube.obj", "sphere.obj", "conf.obj", "gourd.obj", "link.obj", "monkey.obj", "bunny.obj", "f1.obj"};
+
+		private float scaleFactor = 0.1f;
 
 		public TestScene(int width, int height)
 		{
@@ -53,7 +56,9 @@ namespace GraphicsEngine.Engine
 		public void Draw()
 		{
 			rasterizer.ClearImage();
+
 			rasterizer.DrawAxes(Transformation.None);
+
 			rasterizer.DrawWiredMesh(transformation, meshes, true);
 
 			rasterizer.DrawStringHorizontal(Transformation.None, new Vector2(-Width / 2 + 1, Height / 2 - 2), string.Format("MODEL: '{0}'", currentWavefrontObjectFilePath));
@@ -162,13 +167,22 @@ namespace GraphicsEngine.Engine
 
 			if (inputStateService.IsKeyDown(Key.PageUp))
 			{
-				scaleX += 0.1f;
-				scaleY += 0.1f;
+				scaleX += scaleFactor;
+				scaleY += scaleFactor;
 			}
 			else if (inputStateService.IsKeyDown(Key.PageDown))
 			{
-				scaleX += -0.1f;
-				scaleY += -0.1f;
+				scaleX += -scaleFactor;
+				scaleY += -scaleFactor;
+			}
+
+			if (inputStateService.IsKeyToggled(Key.CapsLock))
+			{
+				scaleFactor = 0.5f;
+			}
+			else
+			{
+				scaleFactor = 0.1f;
 			}
 
 			transformation.Translation = new Vector3(translateX, translateY, translateZ);

@@ -129,6 +129,8 @@ namespace GraphicsEngine.Graphics
 				rasterizationAction();
 			}
 
+			Reset();
+
 			return frameBuffer;
 		}
 

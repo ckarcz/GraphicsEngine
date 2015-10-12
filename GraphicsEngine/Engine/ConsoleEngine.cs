@@ -15,13 +15,18 @@ namespace GraphicsEngine.Engine
 		private readonly IConsoleGraphicsRenderer renderer;
 		private readonly IScene scene;
 
-		public ConsoleEngine(IConsoleGraphicsRenderer renderer, IScene scene)
+		public ConsoleEngine(IConsoleGraphicsRenderer renderer, IScene scene, bool vsync = true)
 		{
 			this.renderer = renderer;
 			this.scene = scene;
+
+			VSyncEnabled = vsync;
 		}
 
 		public bool IsRunning { get; private set; }
+
+		public bool VSyncEnabled { get; private set; }
+
 		public int FPS { get; private set; }
 		public int Renderings { get; private set; }
 
@@ -52,11 +57,13 @@ namespace GraphicsEngine.Engine
 			var lastRenderTick = currentTick;
 			var deltaRenderTick = currentTick - lastRenderTick;
 
-			var updateRate = 10;
-			var renderRate = 100;
+			var updateRate = 1;
+			var renderRate = 35;
 
 			var shouldUpdate = true;
 			var shouldRender = true;
+
+			var startTime = DateTime.UtcNow;
 
 			while (IsRunning)
 			{
@@ -90,6 +97,8 @@ namespace GraphicsEngine.Engine
 					Render(frame);
 					lastRenderTick = currentTick;
 					shouldRender = false;
+					var secondsElapsed = (DateTime.UtcNow - startTime).Seconds;
+                    FPS = secondsElapsed == 0 ? secondsElapsed : Renderings / secondsElapsed;
 				}
 			}
 		}
@@ -97,8 +106,7 @@ namespace GraphicsEngine.Engine
 		private void Render(ConsoleGraphicsFrame frame)
 		{
 			Renderings++;
-			Rasterizer.DrawStringHorizontal(frame, Transformation.None, new Vector2(-scene.Width / 2, -(scene.Height) / 2) + 1, string.Format("FPS: {0}", FPS));
-			Rasterizer.DrawStringHorizontal(frame, Transformation.None, new Vector2(-scene.Width / 2, -(scene.Height) / 2) + 2, string.Format("FRAMES RENDERED: {0}", Renderings));
+			Rasterizer.DrawStringHorizontal(frame, Transformation.None, new Vector2(-scene.Width / 2, -(scene.Height) / 2) + 1, string.Format("FRAMES RENDERED: {0}\tFPS: {1}", Renderings, FPS));
 			renderer.Render(frame);
 		}
 	}

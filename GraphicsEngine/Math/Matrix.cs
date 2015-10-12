@@ -26,6 +26,54 @@ namespace GraphicsEngine.Math
 			return ((M11 == other.M11) && (M22 == other.M22) && (M33 == other.M33) && (M44 == other.M44) && (M12 == other.M12) && (M13 == other.M13) && (M14 == other.M14) && (M21 == other.M21) && (M23 == other.M23) && (M24 == other.M24) && (M31 == other.M31) && (M32 == other.M32) && (M34 == other.M34) && (M41 == other.M41) && (M42 == other.M42) && (M43 == other.M43));
 		}
 
+		public static Matrix CreateScalingMatrix(Vector3 scalingVector)
+		{
+			var result = new Matrix();
+
+			result.M11 = scalingVector.X;
+			result.M12 = 0;
+			result.M13 = 0;
+			result.M14 = 0;
+			result.M21 = 0;
+			result.M22 = scalingVector.Y;
+			result.M23 = 0;
+			result.M24 = 0;
+			result.M31 = 0;
+			result.M32 = 0;
+			result.M33 = scalingVector.Z;
+			result.M34 = 0;
+			result.M41 = 0;
+			result.M42 = 0;
+			result.M43 = 0;
+			result.M44 = 1;
+
+			return result;
+		}
+
+		public static Matrix CreateTranslatingMatrix(Vector3 moveVector)
+		{
+			var result = new Matrix();
+
+			result.M11 = 1;
+			result.M12 = 0;
+			result.M13 = 0;
+			result.M14 = 0;
+			result.M21 = 0;
+			result.M22 = 1;
+			result.M23 = 0;
+			result.M24 = 0;
+			result.M31 = 0;
+			result.M32 = 0;
+			result.M33 = 1;
+			result.M34 = 0;
+			result.M41 = moveVector.X;
+			result.M42 = moveVector.Y;
+			result.M43 = moveVector.Z;
+			result.M44 = 1;
+
+			return result;
+		}
+
 		#endregion Public Methods
 
 		#region Constructors

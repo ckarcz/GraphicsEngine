@@ -16,5 +16,10 @@ namespace GraphicsEngine.Engine
 		{
 			return Keyboard.IsKeyDown(thisKey);
 		}
+
+		public bool IsKeyToggled(Key thisKey)
+		{
+			return Keyboard.IsKeyToggled(thisKey);
+		}
 	}
 }
