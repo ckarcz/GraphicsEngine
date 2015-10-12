@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.RightsManagement;
 using System.Windows.Input;
 using GraphicsEngine.Graphics;
 using GraphicsEngine.Graphics.Console;
@@ -16,42 +17,53 @@ namespace GraphicsEngine.Engine
 	public class TestScene
 		: IScene
 	{
-		private string currentWavefrontObjectFilePath = "triangle.obj";
+		private string currentWavefrontObjectFilePath;
 		private IEnumerable<IMesh> meshes;
 		private readonly InputStateService inputStateService;
 		private readonly Rasterizer rasterizer;
-		private readonly IConsoleGraphicsRenderer renderer;
 		private readonly Transformation transformation;
 		private readonly string[] wavefrontObjectFilePaths = new[] {"triangle.obj", "cube.obj", "sphere.obj", "conf.obj", "gourd.obj", "link.obj", "monkey.obj", "bunny.obj", "f1.obj"};
 
-		public TestScene(IConsoleGraphicsRenderer renderer)
+		public TestScene(int width, int height)
 		{
-			this.renderer = renderer;
-			rasterizer = new Rasterizer(renderer.Width, renderer.Height);
+			Width = width;
+			Height = height;
+
+			rasterizer = new Rasterizer(Width, Height);
 			inputStateService = new InputStateService();
 			transformation = new Transformation();
 
+			currentWavefrontObjectFilePath = "link.obj";
+
 			InitScene(currentWavefrontObjectFilePath);
+
+			transformation.Scale *= 50;
 		}
+
+		public int Width { get; private set; }
+
+		public int Height { get; private set; }
 
 		public void Update()
 		{
 			UpdateMeshes();
 			UpdateTransformation();
+		}
 
+		public void Draw()
+		{
 			rasterizer.ClearImage();
 			rasterizer.DrawAxes(Transformation.None);
 			rasterizer.DrawWiredMesh(transformation, meshes, true);
 
-			rasterizer.DrawStringHorizontal(Transformation.None, new Vector2(-renderer.Width / 2 + 1, renderer.Height / 2 - 2), string.Format("MODEL: '{0}'", currentWavefrontObjectFilePath));
-			rasterizer.DrawStringHorizontal(Transformation.None, new Vector2(-renderer.Width / 2 + 1, renderer.Height / 2 - 3), string.Format("# POLYGONS: {0}", meshes.Sum(mesh => mesh.Faces.Count())));
+			rasterizer.DrawStringHorizontal(Transformation.None, new Vector2(-Width / 2 + 1, Height / 2 - 2), string.Format("MODEL: '{0}'", currentWavefrontObjectFilePath));
+			rasterizer.DrawStringHorizontal(Transformation.None, new Vector2(-Width / 2 + 1, Height / 2 - 3), string.Format("# POLYGONS: {0}", meshes.Sum(mesh => mesh.Faces.Count())));
 		}
 
-		public void Render()
+		public ConsoleGraphicsFrame Rasterize()
 		{
 			var rasterizedFrame = rasterizer.Rasterize();
-
-			renderer.Render(rasterizedFrame);
+			return rasterizedFrame;
 		}
 
 		private void InitScene(string wavefrontObjFilePath)
@@ -71,39 +83,39 @@ namespace GraphicsEngine.Engine
 		private void UpdateMeshes()
 		{
 			string newModelToLoad = string.Empty;
-			if (inputStateService.IsKeyDown(Key.D0))
+			if (inputStateService.IsKeyDown(Key.D1))
 			{
 				newModelToLoad = wavefrontObjectFilePaths[0];
 			}
-			else if (inputStateService.IsKeyDown(Key.D1))
+			else if (inputStateService.IsKeyDown(Key.D2))
 			{
 				newModelToLoad = wavefrontObjectFilePaths[1];
 			}
-			else if (inputStateService.IsKeyDown(Key.D2))
+			else if (inputStateService.IsKeyDown(Key.D3))
 			{
 				newModelToLoad = wavefrontObjectFilePaths[2];
 			}
-			else if (inputStateService.IsKeyDown(Key.D3))
+			else if (inputStateService.IsKeyDown(Key.D4))
 			{
 				newModelToLoad = wavefrontObjectFilePaths[3];
 			}
-			else if (inputStateService.IsKeyDown(Key.D4))
+			else if (inputStateService.IsKeyDown(Key.D5))
 			{
 				newModelToLoad = wavefrontObjectFilePaths[4];
 			}
-			else if (inputStateService.IsKeyDown(Key.D5))
+			else if (inputStateService.IsKeyDown(Key.D6))
 			{
 				newModelToLoad = wavefrontObjectFilePaths[5];
 			}
-			else if (inputStateService.IsKeyDown(Key.D6))
+			else if (inputStateService.IsKeyDown(Key.D7))
 			{
 				newModelToLoad = wavefrontObjectFilePaths[6];
 			}
-			else if (inputStateService.IsKeyDown(Key.D7))
+			else if (inputStateService.IsKeyDown(Key.D8))
 			{
 				newModelToLoad = wavefrontObjectFilePaths[7];
 			}
-			else if (inputStateService.IsKeyDown(Key.D8))
+			else if (inputStateService.IsKeyDown(Key.D9))
 			{
 				newModelToLoad = wavefrontObjectFilePaths[8];
 			}
@@ -123,22 +135,29 @@ namespace GraphicsEngine.Engine
 			float scaleY = transformation.Scale.Y;
 			float scaleZ = transformation.Scale.Z;
 
-			if (inputStateService.IsKeyDown(Key.Right))
+			if (inputStateService.IsKeyDown(Key.Enter))
 			{
-				translateX += 1;
+				// center scene
 			}
-			else if (inputStateService.IsKeyDown(Key.Left))
+			else
 			{
-				translateX += -1;
-			}
+				if (inputStateService.IsKeyDown(Key.Right))
+				{
+					translateX += 2;
+				}
+				else if (inputStateService.IsKeyDown(Key.Left))
+				{
+					translateX += -2;
+				}
 
-			if (inputStateService.IsKeyDown(Key.Up))
-			{
-				translateY += 1;
-			}
-			else if (inputStateService.IsKeyDown(Key.Down))
-			{
-				translateY += -1;
+				if (inputStateService.IsKeyDown(Key.Up))
+				{
+					translateY += 2;
+				}
+				else if (inputStateService.IsKeyDown(Key.Down))
+				{
+					translateY += -2;
+				}
 			}
 
 			if (inputStateService.IsKeyDown(Key.PageUp))
