@@ -17,6 +17,16 @@ namespace GraphicsEngine.Graphics.Console
 			this.consoleScreen = consoleScreen;
 		}
 
+		public int Width
+		{
+			get { return consoleScreen.Width; }
+		}
+
+		public int Height
+		{
+			get { return consoleScreen.Height; }
+		}
+
 		public int NumberRenderings { get; private set; }
 
 		public void Render(IConsoleGraphicsFrame frame)

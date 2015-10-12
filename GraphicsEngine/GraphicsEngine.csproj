@@ -35,14 +35,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\Extensions\StringExtensions.cs" />
+    <Compile Include="Engine\ConsoleEngine.cs" />
     <Compile Include="Graphics\Console\Kernel32ConsoleScreen.cs" />
     <Compile Include="Graphics\Console\IConsoleGraphicsRenderer.cs" />
     <Compile Include="Graphics\Console\IConsoleScreen.cs" />
@@ -56,20 +59,22 @@
     <Compile Include="Graphics\IWavefrontObjToMeshConverter.cs" />
     <Compile Include="Graphics\Mesh.cs" />
     <Compile Include="Graphics\Console\ConsoleGraphicsFrame.cs" />
-    <Compile Include="Graphics\MeshRasterizer.cs" />
     <Compile Include="Graphics\Console\ConsoleGraphicsRenderer.cs" />
     <Compile Include="Graphics\Console\ConsoleCharacterBuffer.cs" />
     <Compile Include="Graphics\Console\ConsoleColorBuffer.cs" />
     <Compile Include="Graphics\Polygon.cs" />
-    <Compile Include="Graphics\SimpleRasterizer.cs" />
+    <Compile Include="Graphics\Rasterizer.cs" />
     <Compile Include="Graphics\Triangle.cs" />
     <Compile Include="Graphics\WavefrontObjToMeshConverter.cs" />
+    <Compile Include="Engine\IConsoleEngine.cs" />
+    <Compile Include="Engine\IScene.cs" />
     <Compile Include="Math\MathUtil.cs" />
     <Compile Include="Math\Matrix.cs" />
     <Compile Include="Math\Quaternion.cs" />
     <Compile Include="Math\Vector2.cs" />
     <Compile Include="Math\Vector3.cs" />
     <Compile Include="Math\Vector4.cs" />
+    <Compile Include="Engine\LinkTestScene.cs" />
     <Compile Include="Wavefront\Datastore\DataStore.cs" />
     <Compile Include="Wavefront\Datastore\IDataStore.cs" />
     <Compile Include="Wavefront\Datastore\IElementGroup.cs" />

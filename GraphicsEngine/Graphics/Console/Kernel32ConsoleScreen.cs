@@ -34,6 +34,7 @@ namespace GraphicsEngine.Graphics.Console
 
 			consoleScreenBufferInfoEx.dwSize = new Kernel32Console.Coord(Width, Height);
 			consoleScreenBufferInfoEx.dwCursorPosition = new Kernel32Console.Coord(0, 0);
+			consoleScreenBufferInfoEx.wAttributes = Kernel32Console.DefaultColors.BACKGROUND_BLACK;
 
 			Kernel32Console.SetConsoleScreenBufferInfoEx(stdOutputHandle, ref consoleScreenBufferInfoEx);
 
@@ -44,6 +45,10 @@ namespace GraphicsEngine.Graphics.Console
 			{
 				consoleScreenBuffer[i] = chri;
 			}
+
+			// TODO fix above so we don't have to use System.Console here
+			System.Console.SetWindowSize(width, height);
+			System.Console.CursorVisible = false;
 		}
 
 		public int Width { get; }
