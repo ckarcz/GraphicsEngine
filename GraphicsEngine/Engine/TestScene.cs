@@ -1,10 +1,8 @@
 #region Imports
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Windows.Input;
 using GraphicsEngine.Graphics;
 using GraphicsEngine.Graphics.Console;
@@ -15,64 +13,105 @@ using GraphicsEngine.Wavefront.Loaders;
 
 namespace GraphicsEngine.Engine
 {
-	public class InputStateService
-	{
-		public InputStateService()
-		{
-
-		}
-
-		public bool IsKeyDown(Key thisKey)
-		{
-			return Keyboard.IsKeyDown(thisKey);
-		}
-	}
-
-	public class LinkTestScene
+	public class TestScene
 		: IScene
 	{
+		private string currentWavefrontObjectFilePath = "triangle.obj";
 		private IEnumerable<IMesh> meshes;
+		private readonly InputStateService inputStateService;
 		private readonly Rasterizer rasterizer;
 		private readonly IConsoleGraphicsRenderer renderer;
-		private readonly InputStateService inputStateService;
 		private readonly Transformation transformation;
+		private readonly string[] wavefrontObjectFilePaths = new[] {"triangle.obj", "cube.obj", "sphere.obj", "conf.obj", "gourd.obj", "link.obj", "monkey.obj", "bunny.obj", "f1.obj"};
 
-		public LinkTestScene(IConsoleGraphicsRenderer renderer)
+		public TestScene(IConsoleGraphicsRenderer renderer)
 		{
 			this.renderer = renderer;
 			rasterizer = new Rasterizer(renderer.Width, renderer.Height);
 			inputStateService = new InputStateService();
 			transformation = new Transformation();
-			
-			InitScene();
+
+			InitScene(currentWavefrontObjectFilePath);
 		}
 
 		public void Update()
 		{
+			UpdateMeshes();
 			UpdateTransformation();
+
 			rasterizer.ClearImage();
 			rasterizer.DrawAxes(Transformation.None);
 			rasterizer.DrawWiredMesh(transformation, meshes, true);
+
+			rasterizer.DrawStringHorizontal(Transformation.None, new Vector2(-renderer.Width / 2 + 1, renderer.Height / 2 - 2), string.Format("MODEL: '{0}'", currentWavefrontObjectFilePath));
+			rasterizer.DrawStringHorizontal(Transformation.None, new Vector2(-renderer.Width / 2 + 1, renderer.Height / 2 - 3), string.Format("# POLYGONS: {0}", meshes.Sum(mesh => mesh.Faces.Count())));
 		}
 
-		public IConsoleGraphicsFrame Render()
+		public void Render()
 		{
 			var rasterizedFrame = rasterizer.Rasterize();
 
 			renderer.Render(rasterizedFrame);
-
-			return rasterizedFrame;
 		}
 
-		private void InitScene()
+		private void InitScene(string wavefrontObjFilePath)
 		{
 			var wavefrontObjLoaderFactory = new WavefrontObjLoaderFactory();
 			var wavefrontObjLoader = wavefrontObjLoaderFactory.Create(new MaterialNullStreamProvider());
-			var wavefrontObjFilePathString = "link.obj";
+			var wavefrontObjFilePathString = wavefrontObjFilePath;
 			var wavefrontObjFileStream = File.Open(wavefrontObjFilePathString, FileMode.Open, FileAccess.Read);
 			var wavefrontObj = wavefrontObjLoader.LoadWavefrontObj(wavefrontObjFileStream);
+			wavefrontObjFileStream.Close();
 			var wavefrontObjToMeshConverter = new WavefrontObjToMeshConverter();
 			meshes = wavefrontObjToMeshConverter.ConvertToMesh(wavefrontObj);
+			currentWavefrontObjectFilePath = wavefrontObjFilePath;
+			transformation.Reset();
+		}
+
+		private void UpdateMeshes()
+		{
+			string newModelToLoad = string.Empty;
+			if (inputStateService.IsKeyDown(Key.D0))
+			{
+				newModelToLoad = wavefrontObjectFilePaths[0];
+			}
+			else if (inputStateService.IsKeyDown(Key.D1))
+			{
+				newModelToLoad = wavefrontObjectFilePaths[1];
+			}
+			else if (inputStateService.IsKeyDown(Key.D2))
+			{
+				newModelToLoad = wavefrontObjectFilePaths[2];
+			}
+			else if (inputStateService.IsKeyDown(Key.D3))
+			{
+				newModelToLoad = wavefrontObjectFilePaths[3];
+			}
+			else if (inputStateService.IsKeyDown(Key.D4))
+			{
+				newModelToLoad = wavefrontObjectFilePaths[4];
+			}
+			else if (inputStateService.IsKeyDown(Key.D5))
+			{
+				newModelToLoad = wavefrontObjectFilePaths[5];
+			}
+			else if (inputStateService.IsKeyDown(Key.D6))
+			{
+				newModelToLoad = wavefrontObjectFilePaths[6];
+			}
+			else if (inputStateService.IsKeyDown(Key.D7))
+			{
+				newModelToLoad = wavefrontObjectFilePaths[7];
+			}
+			else if (inputStateService.IsKeyDown(Key.D8))
+			{
+				newModelToLoad = wavefrontObjectFilePaths[8];
+			}
+
+			if (newModelToLoad != string.Empty && currentWavefrontObjectFilePath != newModelToLoad)
+			{
+				InitScene(newModelToLoad);
+			}
 		}
 
 		private void UpdateTransformation()
@@ -83,7 +122,7 @@ namespace GraphicsEngine.Engine
 			float scaleX = transformation.Scale.X;
 			float scaleY = transformation.Scale.Y;
 			float scaleZ = transformation.Scale.Z;
-			
+
 			if (inputStateService.IsKeyDown(Key.Right))
 			{
 				translateX += 1;
@@ -112,7 +151,6 @@ namespace GraphicsEngine.Engine
 				scaleX += -0.1f;
 				scaleY += -0.1f;
 			}
-
 
 			transformation.Translation = new Vector3(translateX, translateY, translateZ);
 			transformation.Scale = new Vector3(scaleX, scaleY, scaleZ);
@@ -292,55 +330,6 @@ namespace GraphicsEngine.Engine
 			//renderThinWires = !renderThinWires;
 
 			//goto loop;
-		}
-	}
-
-	public interface ITransformation
-	{
-		Vector3 Scale { get; }
-		Vector3 Translation { get; }
-
-		void Transform(ref Vector2 point);
-
-		void Transform(ref Vector3 point);
-	}
-
-	public class Transformation
-		: ITransformation
-	{
-		public Transformation()
-		{
-			Scale = Vector3.OneVector;
-			Translation = Vector3.ZeroVector;
-		}
-
-		public Vector3 Scale { get; set; }
-
-		public Vector3 Translation { get; set; }
-
-		public static ITransformation None { get; } = new Transformation();
-
-		public void Transform(ref Vector2 point)
-		{
-			Transform(this, ref point);
-		}
-
-		public void Transform(ref Vector3 point)
-		{
-			Transform(this, ref point);
-		}
-
-		public static void Transform(ITransformation transformation, ref Vector2 point)
-		{
-			point.X = point.X * transformation.Scale.X + transformation.Translation.X;
-			point.Y = point.Y * transformation.Scale.Y + transformation.Translation.Y;
-		}
-
-		public static void Transform(ITransformation transformation, ref Vector3 point)
-		{
-			point.X = point.X * transformation.Scale.X + transformation.Translation.X;
-			point.Y = point.Y * transformation.Scale.Y + transformation.Translation.Y;
-			point.Z = point.Z * transformation.Scale.Z + transformation.Translation.Z;
 		}
 	}
 }

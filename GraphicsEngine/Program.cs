@@ -20,7 +20,7 @@ namespace GraphicsEngine
 			//var screen = new Kernel32ConsoleScreen(consoleScreenWidth, consoleScreenHeight);
 
 			var renderer = new ConsoleGraphicsRenderer(screen);
-			var scene = new LinkTestScene(renderer);
+			var scene = new TestScene(renderer);
 			var engine = new ConsoleEngine(renderer, scene);
 
 			engine.Start();

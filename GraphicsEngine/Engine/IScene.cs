@@ -10,6 +10,6 @@ namespace GraphicsEngine.Engine
 	{
 		void Update();
 
-		IConsoleGraphicsFrame Render();
+		void Render();
 	}
 }

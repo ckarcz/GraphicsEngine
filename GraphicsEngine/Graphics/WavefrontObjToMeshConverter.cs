@@ -48,26 +48,18 @@ namespace GraphicsEngine.Graphics
 
 		private void ConvertFace(IWavefrontObj wavefrontObj, Face face, Mesh mesh)
 		{
-			if (face.Count != 3)
+			var points = new List<Vector3>();
+			for (var i = 0; i < face.Count; i++)
 			{
-				throw new DataException("Only triangles are supported");
+				var faceVertex = face[i];
+				var geoVertex = wavefrontObj.Vertices[faceVertex.VertexIndex - 1];
+				var point = new Vector3(geoVertex.X, geoVertex.Y, geoVertex.Z);
+				points.Add(point);
 			}
 
-			var faceVertex1 = face[0];
-			var faceVertex2 = face[1];
-			var faceVertex3 = face[2];
+			var polygon = new Polygon(points);
 
-			var geoVertex1 = wavefrontObj.Vertices[faceVertex1.VertexIndex - 1];
-			var geoVertex2 = wavefrontObj.Vertices[faceVertex2.VertexIndex - 1];
-			var geoVertex3 = wavefrontObj.Vertices[faceVertex3.VertexIndex - 1];
-
-			var point1 = new Vector3(geoVertex1.X, geoVertex1.Y, geoVertex1.Z);
-			var point2 = new Vector3(geoVertex2.X, geoVertex2.Y, geoVertex2.Z);
-			var point3 = new Vector3(geoVertex3.X, geoVertex3.Y, geoVertex3.Z);
-
-			var triangle = new Polygon(point1, point2, point3);
-
-			mesh.Faces.Add(triangle);
+			mesh.Faces.Add(polygon);
 		}
 	}
 }

@@ -44,6 +44,8 @@ namespace GraphicsEngine.Engine
 			{
 				scene.Update();
 				scene.Render();
+
+				Thread.Sleep(22);
 			}
 		}
 	}
