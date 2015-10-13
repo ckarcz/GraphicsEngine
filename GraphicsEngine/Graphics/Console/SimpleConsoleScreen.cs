@@ -21,13 +21,15 @@ namespace GraphicsEngine.Graphics.Console
 			Height = height;
 			characterBuffer = new byte[Width * Height];
 
+			reTry:
 			System.Console.Clear();
 			System.Console.BackgroundColor = backgroundColor;
 			System.Console.ForegroundColor = foregroundColor;
 
-			reTry:
 			try
 			{
+				System.Console.BackgroundColor = ConsoleColor.Black;
+				System.Console.ForegroundColor = ConsoleColor.Magenta;
 				System.Console.SetWindowSize(width, height + 1);
 				System.Console.SetBufferSize(width, height + 1);
 				System.Console.SetCursorPosition(0, height);
@@ -35,7 +37,7 @@ namespace GraphicsEngine.Graphics.Console
 			}
 			catch (ArgumentOutOfRangeException)
 			{
-				System.Console.WriteLine("Decrease your font size and press enter");
+				System.Console.WriteLine("Change console window font to 'Raster Fonts' and font size to '4 x 6' and hit ENTER.");
 				System.Console.ReadLine();
 				goto reTry;
 			}
