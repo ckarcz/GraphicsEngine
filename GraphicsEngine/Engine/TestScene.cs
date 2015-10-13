@@ -22,7 +22,7 @@ namespace GraphicsEngine.Engine
 		private readonly InputStateService inputStateService;
 		private readonly Rasterizer rasterizer;
 		private readonly Transformation transformation;
-		private readonly string[] wavefrontObjectFilePaths = new[] {"triangle.obj", "cube.obj", "sphere.obj", "conf.obj", "gourd.obj", "link.obj", "monkey.obj", "bunny.obj", "f1.obj"};
+		private readonly string[] wavefrontObjectFilePaths = new[] {"Models\\triangle.obj", "Models\\cube.obj", "Models\\sphere.obj", "Models\\conf.obj", "Models\\gourd.obj", "Models\\link.obj", "Models\\monkey.obj", "Models\\bunny.obj", "Models\\f1.obj" };
 
 		public TestScene(int width, int height)
 		{
@@ -33,7 +33,7 @@ namespace GraphicsEngine.Engine
 			inputStateService = new InputStateService();
 			transformation = new Transformation();
 
-			currentWavefrontObjectFilePath = "link.obj";
+			currentWavefrontObjectFilePath = "Models\\link.obj";
 
 			InitScene(currentWavefrontObjectFilePath);
 

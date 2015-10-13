@@ -132,37 +132,34 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <Content Include="triangle.obj">
+    <Content Include="Models\triangle.obj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="link.obj">
+    <Content Include="Models\link.obj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="bunny.obj">
+    <Content Include="Models\bunny.obj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="conf.obj">
+    <Content Include="Models\conf.obj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="cube.obj">
+    <Content Include="Models\cube.obj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="f1.obj">
+    <Content Include="Models\f1.obj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="gourd.obj">
+    <Content Include="Models\gourd.obj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="lucy.obj">
+    <Content Include="Models\monkey.obj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="monkey.obj">
+    <Content Include="Models\sphere.obj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="sphere.obj">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="triangle.mtl">
+    <Content Include="Models\triangle.mtl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
