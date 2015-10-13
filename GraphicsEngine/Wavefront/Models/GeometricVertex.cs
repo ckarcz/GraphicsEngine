@@ -3,6 +3,7 @@
 	public struct GeometricVertex
 	{
 		public GeometricVertex(float x, float y, float z)
+			: this()
 		{
 			X = x;
 			Y = y;

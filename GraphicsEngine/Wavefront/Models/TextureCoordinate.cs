@@ -3,6 +3,7 @@
 	public struct TextureCoordinate
 	{
 		public TextureCoordinate(float x, float y)
+			: this()
 		{
 			X = x;
 			Y = y;

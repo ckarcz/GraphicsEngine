@@ -6,12 +6,13 @@ using System;
 
 namespace GraphicsEngine.Math
 {
-	public class Quaternion
+	public struct Quaternion
 		: IEquatable<Quaternion>
 	{
 		#region Constructors
 
 		public Quaternion(float x, float y, float z, float w)
+			: this()
 		{
 			X = x;
 			Y = y;
@@ -25,11 +26,6 @@ namespace GraphicsEngine.Math
 
 		public bool Equals(Quaternion other)
 		{
-			if (other == null)
-			{
-				return false;
-			}
-
 			return ((X == other.X) && (Y == other.Y) && (Z == other.Z) && (W == other.W));
 		}
 

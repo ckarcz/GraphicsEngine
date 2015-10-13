@@ -3,6 +3,7 @@
 	public struct VertexNormal
 	{
 		public VertexNormal(float x, float y, float z)
+			: this()
 		{
 			X = x;
 			Y = y;

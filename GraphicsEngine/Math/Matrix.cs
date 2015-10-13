@@ -79,6 +79,7 @@ namespace GraphicsEngine.Math
 		#region Constructors
 
 		public Matrix(float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24, float m31, float m32, float m33, float m34, float m41, float m42, float m43, float m44)
+			: this()
 		{
 			M11 = m11;
 			M12 = m12;
@@ -99,6 +100,7 @@ namespace GraphicsEngine.Math
 		}
 
 		public Matrix(Vector4 row1, Vector4 row2, Vector4 row3, Vector4 row4)
+			: this()
 		{
 			M11 = row1.X;
 			M12 = row1.Y;

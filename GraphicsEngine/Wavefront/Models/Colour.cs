@@ -3,6 +3,7 @@
 	public struct Colour
 	{
 		public Colour(float r, float g, float b)
+			: this()
 		{
 			R = r;
 			G = g;

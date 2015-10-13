@@ -12,6 +12,7 @@ namespace GraphicsEngine.Math
 		#region Constructors
 
 		public Vector3(float x, float y, float z)
+			: this()
 		{
 			X = x;
 			Y = y;
