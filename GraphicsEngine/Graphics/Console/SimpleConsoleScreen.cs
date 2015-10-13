@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 
 namespace GraphicsEngine.Graphics.Console
@@ -17,14 +17,17 @@ namespace GraphicsEngine.Graphics.Console
 			Height = height;
 			characterBuffer = new byte[Width * Height];
 
-			System.Console.Title = windowTitle;
-			System.Console.CursorVisible = false;
+			System.Console.Clear();
 			System.Console.BackgroundColor = backgroundColor;
+			System.Console.ForegroundColor = foregroundColor;
+
 			reTry:
 			try
 			{
-				System.Console.SetWindowSize(width, height);
-				System.Console.SetBufferSize(width, height);
+				System.Console.SetWindowSize(width, height + 1);
+				System.Console.SetBufferSize(width, height + 1);
+				System.Console.SetCursorPosition(0, height);
+				System.Console.Write(new String(' ', width));
 			}
 			catch (ArgumentOutOfRangeException)
 			{
@@ -32,9 +35,10 @@ namespace GraphicsEngine.Graphics.Console
 				System.Console.ReadLine();
 				goto reTry;
 			}
-			System.Console.Clear();
+
+			System.Console.Title = windowTitle;
 			System.Console.SetCursorPosition(0, 0);
-			System.Console.ForegroundColor = foregroundColor;
+			System.Console.CursorVisible = false;
 		}
 
 		public int Width { get; private set; }

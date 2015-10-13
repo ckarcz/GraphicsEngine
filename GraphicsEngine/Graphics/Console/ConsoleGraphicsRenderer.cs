@@ -1,11 +1,4 @@
-﻿#region Imports
-
-using System;
-using System.IO;
-
-#endregion
-
-namespace GraphicsEngine.Graphics.Console
+﻿namespace GraphicsEngine.Graphics.Console
 {
 	public class ConsoleGraphicsRenderer
 		: IConsoleGraphicsRenderer
@@ -27,14 +20,14 @@ namespace GraphicsEngine.Graphics.Console
 			get { return consoleScreen.Height; }
 		}
 
-		public int NumberRenderings { get; private set; }
+		public int Renderings { get; private set; }
 
 		public void Render(IConsoleGraphicsFrame frame)
 		{
 			consoleScreen.SetFrame(frame);
 			consoleScreen.Draw();
 
-			NumberRenderings++;
+			Renderings++;
 		}
 
 		public void Clear()

@@ -140,37 +140,39 @@ namespace GraphicsEngine.Engine
 			float scaleY = transformation.Scale.Y;
 			float scaleZ = transformation.Scale.Z;
 
-			if (inputStateService.IsKeyDown(Key.Enter))
+			if (inputStateService.IsKeyDown(Key.Right))
 			{
-				// center scene
+				translateX += 2;
 			}
-			else
+			else if (inputStateService.IsKeyDown(Key.Left))
 			{
-				if (inputStateService.IsKeyDown(Key.Right))
-				{
-					translateX += 2;
-				}
-				else if (inputStateService.IsKeyDown(Key.Left))
-				{
-					translateX += -2;
-				}
-
-				if (inputStateService.IsKeyDown(Key.Up))
-				{
-					translateY += 2;
-				}
-				else if (inputStateService.IsKeyDown(Key.Down))
-				{
-					translateY += -2;
-				}
+				translateX += -2;
 			}
 
-			if (inputStateService.IsKeyDown(Key.PageUp))
+			if (inputStateService.IsKeyDown(Key.Up))
+			{
+				translateY += 2;
+			}
+			else if (inputStateService.IsKeyDown(Key.Down))
+			{
+				translateY += -2;
+			}
+
+			if (inputStateService.IsKeyDown(Key.OemComma))
+			{
+				translateY += 2;
+			}
+			else if (inputStateService.IsKeyDown(Key.OemPeriod))
+			{
+				translateY += -2;
+			}
+
+			if (inputStateService.IsKeyDown(Key.OemCloseBrackets))
 			{
 				scaleX += scaleFactor;
 				scaleY += scaleFactor;
 			}
-			else if (inputStateService.IsKeyDown(Key.PageDown))
+			else if (inputStateService.IsKeyDown(Key.OemOpenBrackets))
 			{
 				scaleX += -scaleFactor;
 				scaleY += -scaleFactor;
@@ -178,11 +180,11 @@ namespace GraphicsEngine.Engine
 
 			if (inputStateService.IsKeyToggled(Key.CapsLock))
 			{
-				scaleFactor = 0.5f;
+				scaleFactor = 1;
 			}
 			else
 			{
-				scaleFactor = 0.1f;
+				scaleFactor = 0.5f;
 			}
 
 			transformation.Translation = new Vector3(translateX, translateY, translateZ);

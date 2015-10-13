@@ -36,15 +36,30 @@ namespace GraphicsEngine.Graphics
 
 		public static void Transform(ITransformation transformation, ref Vector2 point)
 		{
-			point.X = point.X * transformation.Scale.X + transformation.Translation.X;
-			point.Y = point.Y * transformation.Scale.Y + transformation.Translation.Y;
+			var translationMatrix = Matrix.CreateTranslatingMatrix(transformation.Translation);
+			var scalingMatrix = Matrix.CreateScalingMatrix(transformation.Scale);
+			var transformationMatrix = scalingMatrix * translationMatrix;
+
+			var x = (point.X * transformationMatrix.M11) + (point.Y * transformationMatrix.M21) + transformationMatrix.M41;
+			var y = (point.X * transformationMatrix.M12) + (point.Y * transformationMatrix.M22) + transformationMatrix.M42;
+
+			point.X = x;
+			point.Y = y;
 		}
 
 		public static void Transform(ITransformation transformation, ref Vector3 point)
 		{
-			point.X = point.X * transformation.Scale.X + transformation.Translation.X;
-			point.Y = point.Y * transformation.Scale.Y + transformation.Translation.Y;
-			point.Z = point.Z * transformation.Scale.Z + transformation.Translation.Z;
+			var translationMatrix = Matrix.CreateTranslatingMatrix(transformation.Translation);
+			var scalingMatrix = Matrix.CreateScalingMatrix(transformation.Scale);
+			var transformationMatrix = scalingMatrix * translationMatrix;
+
+			var x = (point.X * transformationMatrix.M11) + (point.Y * transformationMatrix.M21) + (point.Z * transformationMatrix.M31);
+			var y = (point.X * transformationMatrix.M12) + (point.Y * transformationMatrix.M22) + (point.Z * transformationMatrix.M32);
+			var z = (point.X * transformationMatrix.M13) + (point.Y * transformationMatrix.M23) + (point.Z * transformationMatrix.M33);
+
+			point.X = x;
+			point.Y = y;
+			point.Z = z;
 		}
 	}
 }

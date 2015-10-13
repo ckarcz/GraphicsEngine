@@ -6,7 +6,7 @@ namespace GraphicsEngine.Graphics.Console
 
 		int Height { get; }
 
-		int NumberRenderings { get; }
+		int Renderings { get; }
 
 		void Render(IConsoleGraphicsFrame frame);
 

@@ -1,6 +1,7 @@
 #region Imports
 
 using System;
+using System.Data.SqlTypes;
 using GraphicsEngine.Graphics;
 using GraphicsEngine.Graphics.Console;
 using GraphicsEngine.Math;
@@ -27,8 +28,14 @@ namespace GraphicsEngine.Engine
 
 		public bool VSyncEnabled { get; private set; }
 
-		public int FPS { get; private set; }
-		public int Renderings { get; private set; }
+		public int CurrentFPS { get; private set; }
+
+		public int AverageFPS { get; private set; }
+
+		public int Renderings
+		{
+			get { return renderer.Renderings; }
+		}
 
 		public void Start()
 		{
@@ -47,7 +54,8 @@ namespace GraphicsEngine.Engine
 		{
 			IsRunning = true;
 
-			var currentTick = Environment.TickCount;
+			var startTick = Environment.TickCount;
+			var currentTick = startTick;
 			var lastTick = currentTick;
 			var deltaTick = currentTick - lastTick;
 
@@ -58,7 +66,7 @@ namespace GraphicsEngine.Engine
 			var deltaRenderTick = currentTick - lastRenderTick;
 
 			var updateRate = 1;
-			var renderRate = 35;
+			var renderRate = 1;
 
 			var shouldUpdate = true;
 			var shouldRender = true;
@@ -98,15 +106,14 @@ namespace GraphicsEngine.Engine
 					lastRenderTick = currentTick;
 					shouldRender = false;
 					var secondsElapsed = (DateTime.UtcNow - startTime).Seconds;
-                    FPS = secondsElapsed == 0 ? secondsElapsed : Renderings / secondsElapsed;
+                    AverageFPS = secondsElapsed == 0 ? secondsElapsed : Renderings / secondsElapsed;
 				}
-			}
+            }
 		}
 
 		private void Render(ConsoleGraphicsFrame frame)
 		{
-			Renderings++;
-			Rasterizer.DrawStringHorizontal(frame, Transformation.None, new Vector2(-scene.Width / 2, -(scene.Height) / 2) + 1, string.Format("FRAMES RENDERED: {0}\tFPS: {1}", Renderings, FPS));
+			Rasterizer.DrawStringHorizontal(frame, Transformation.None, new Vector2(-scene.Width / 2, -(scene.Height) / 2) + 1, string.Format("FRAMES RENDERED: {0}\tAVG FPS: {1}\tCURRENT FPS: {2}", Renderings, AverageFPS, CurrentFPS));
 			renderer.Render(frame);
 		}
 	}
