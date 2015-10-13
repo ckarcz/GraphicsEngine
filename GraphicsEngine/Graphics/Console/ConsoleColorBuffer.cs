@@ -18,8 +18,8 @@
 			set { consoleColorBuffer[x, y] = value; }
 		}
 
-		public int Width { get; }
-		public int Height { get; }
+		public int Width { get; private set; }
+		public int Height { get; private set; }
 
 		public short[,] GetMultiArrayAsCopy()
 		{

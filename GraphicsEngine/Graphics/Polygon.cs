@@ -25,7 +25,7 @@ namespace GraphicsEngine.Graphics
 			Points = points;
 		}
 
-		public IList<Vector3> Points { get; }
+		public IList<Vector3> Points { get; private set; }
 
 		IEnumerable<Vector3> IPolygon.Points
 		{

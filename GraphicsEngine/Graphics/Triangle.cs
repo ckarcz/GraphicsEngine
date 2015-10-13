@@ -16,8 +16,8 @@ namespace GraphicsEngine.Graphics
 			Point3 = point3;
 		}
 
-		public Vector3 Point1 { get; }
-		public Vector3 Point2 { get; }
-		public Vector3 Point3 { get; }
+		public Vector3 Point1 { get; private set; }
+		public Vector3 Point2 { get; private set; }
+		public Vector3 Point3 { get; private set; }
 	}
 }

@@ -29,10 +29,10 @@ namespace GraphicsEngine.Wavefront.Loaders
 			Materials = materials;
 		}
 
-		public ReadOnlyCollection<GeometricVertex> Vertices { get; }
-		public ReadOnlyCollection<TextureCoordinate> Textures { get; }
-		public ReadOnlyCollection<VertexNormal> Normals { get; }
-		public ReadOnlyCollection<Group> Groups { get; }
-		public ReadOnlyCollection<Material> Materials { get; }
+		public ReadOnlyCollection<GeometricVertex> Vertices { get; private set; }
+		public ReadOnlyCollection<TextureCoordinate> Textures { get; private set; }
+		public ReadOnlyCollection<VertexNormal> Normals { get; private set; }
+		public ReadOnlyCollection<Group> Groups { get; private set; }
+		public ReadOnlyCollection<Material> Materials { get; private set; }
 	}
 }

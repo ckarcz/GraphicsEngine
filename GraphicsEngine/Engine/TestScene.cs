@@ -40,8 +40,8 @@ namespace GraphicsEngine.Engine
 			transformation.Scale *= 50;
 		}
 
-		public int Width { get; }
-		public int Height { get; }
+		public int Width { get; private set; }
+		public int Height { get; private set; }
 
 		public void Update()
 		{

@@ -14,7 +14,7 @@ namespace GraphicsEngine.Graphics
 			Faces = new List<IPolygon>();
 		}
 
-		public IList<IPolygon> Faces { get; }
+		public IList<IPolygon> Faces { get; private set; }
 		public string Name { get; set; }
 
 		IEnumerable<IPolygon> IMesh.Faces

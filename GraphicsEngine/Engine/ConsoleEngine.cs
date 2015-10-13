@@ -24,7 +24,7 @@ namespace GraphicsEngine.Engine
 		}
 
 		public bool IsRunning { get; private set; }
-		public bool VSyncEnabled { get; }
+		public bool VSyncEnabled { get; private set; }
 		public int CurrentFPS { get; private set; }
 		public int AverageFPS { get; private set; }
 
