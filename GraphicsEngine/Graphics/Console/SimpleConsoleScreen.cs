@@ -28,8 +28,6 @@ namespace GraphicsEngine.Graphics.Console
 
 			try
 			{
-				System.Console.BackgroundColor = ConsoleColor.Black;
-				System.Console.ForegroundColor = ConsoleColor.Magenta;
 				System.Console.SetWindowSize(width, height + 1);
 				System.Console.SetBufferSize(width, height + 1);
 				System.Console.SetCursorPosition(0, height);
@@ -37,6 +35,8 @@ namespace GraphicsEngine.Graphics.Console
 			}
 			catch (ArgumentOutOfRangeException)
 			{
+				System.Console.BackgroundColor = ConsoleColor.Black;
+				System.Console.ForegroundColor = ConsoleColor.Magenta;
 				System.Console.WriteLine("Change console window font to 'Raster Fonts' and font size to '4 x 6' and hit ENTER.");
 				System.Console.ReadLine();
 				goto reTry;
