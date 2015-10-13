@@ -1,7 +1,6 @@
 #region Imports
 
 using System;
-using System.Data.SqlTypes;
 using GraphicsEngine.Graphics;
 using GraphicsEngine.Graphics.Console;
 using GraphicsEngine.Math;
@@ -25,11 +24,8 @@ namespace GraphicsEngine.Engine
 		}
 
 		public bool IsRunning { get; private set; }
-
-		public bool VSyncEnabled { get; private set; }
-
+		public bool VSyncEnabled { get; }
 		public int CurrentFPS { get; private set; }
-
 		public int AverageFPS { get; private set; }
 
 		public int Renderings
@@ -106,9 +102,9 @@ namespace GraphicsEngine.Engine
 					lastRenderTick = currentTick;
 					shouldRender = false;
 					var secondsElapsed = (DateTime.UtcNow - startTime).Seconds;
-                    AverageFPS = secondsElapsed == 0 ? secondsElapsed : Renderings / secondsElapsed;
+					AverageFPS = secondsElapsed == 0 ? secondsElapsed : Renderings / secondsElapsed;
 				}
-            }
+			}
 		}
 
 		private void Render(ConsoleGraphicsFrame frame)

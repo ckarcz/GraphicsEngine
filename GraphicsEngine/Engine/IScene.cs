@@ -9,7 +9,6 @@ namespace GraphicsEngine.Engine
 	public interface IScene
 	{
 		int Width { get; }
-
 		int Height { get; }
 
 		void Update();

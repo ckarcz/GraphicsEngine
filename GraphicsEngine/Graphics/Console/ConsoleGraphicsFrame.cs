@@ -12,8 +12,8 @@
 			ColorBuffer = new ConsoleColorBuffer(width, height);
 		}
 
-		public ConsoleCharacterBuffer CharacterBuffer { get; private set; }
-		public ConsoleColorBuffer ColorBuffer { get; private set; }
+		public ConsoleCharacterBuffer CharacterBuffer { get; }
+		public ConsoleColorBuffer ColorBuffer { get; }
 		public int Width { get; }
 		public int Height { get; }
 

@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using GraphicsEngine.Engine;
 using GraphicsEngine.Graphics.Console;
 using GraphicsEngine.Math;
 

@@ -1,10 +1,8 @@
 #region Imports
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.RightsManagement;
 using System.Windows.Input;
 using GraphicsEngine.Graphics;
 using GraphicsEngine.Graphics.Console;
@@ -20,12 +18,11 @@ namespace GraphicsEngine.Engine
 	{
 		private string currentWavefrontObjectFilePath;
 		private IEnumerable<IMesh> meshes;
+		private float scaleFactor = 0.5f;
 		private readonly InputStateService inputStateService;
 		private readonly Rasterizer rasterizer;
 		private readonly Transformation transformation;
 		private readonly string[] wavefrontObjectFilePaths = new[] {"triangle.obj", "cube.obj", "sphere.obj", "conf.obj", "gourd.obj", "link.obj", "monkey.obj", "bunny.obj", "f1.obj"};
-
-		private float scaleFactor = 0.1f;
 
 		public TestScene(int width, int height)
 		{
@@ -43,9 +40,8 @@ namespace GraphicsEngine.Engine
 			transformation.Scale *= 50;
 		}
 
-		public int Width { get; private set; }
-
-		public int Height { get; private set; }
+		public int Width { get; }
+		public int Height { get; }
 
 		public void Update()
 		{
@@ -180,7 +176,7 @@ namespace GraphicsEngine.Engine
 
 			if (inputStateService.IsKeyToggled(Key.CapsLock))
 			{
-				scaleFactor = 1;
+				scaleFactor = 2;
 			}
 			else
 			{

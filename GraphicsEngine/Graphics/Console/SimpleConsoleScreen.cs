@@ -1,13 +1,17 @@
-﻿using System;
+﻿#region Imports
+
+using System;
 using System.IO;
+
+#endregion
 
 namespace GraphicsEngine.Graphics.Console
 {
 	public class SimpleConsoleScreen
 		: IConsoleScreen
 	{
-		private readonly Stream stdOutputStream;
 		private readonly byte[] characterBuffer;
+		private readonly Stream stdOutputStream;
 
 		public SimpleConsoleScreen(int width, int height, string windowTitle = null, ConsoleColor backgroundColor = ConsoleColor.Black, ConsoleColor foregroundColor = ConsoleColor.Cyan)
 		{
@@ -41,9 +45,8 @@ namespace GraphicsEngine.Graphics.Console
 			System.Console.CursorVisible = false;
 		}
 
-		public int Width { get; private set; }
-
-		public int Height { get; private set; }
+		public int Width { get; }
+		public int Height { get; }
 
 		public void ShowCursor(bool showCursor)
 		{
@@ -74,12 +77,12 @@ namespace GraphicsEngine.Graphics.Console
 
 		public void SetPixel(int x, int y, short color)
 		{
-			throw new System.NotImplementedException();
+			throw new NotImplementedException();
 		}
 
 		public short GetPixelColor(int x, int y)
 		{
-			throw new System.NotImplementedException();
+			throw new NotImplementedException();
 		}
 
 		public byte GetPixelChar(int x, int y)
@@ -97,7 +100,7 @@ namespace GraphicsEngine.Graphics.Console
 		{
 			for (int i = 0; i < characterBuffer.Length; i++)
 			{
-				characterBuffer[i] = (byte)' ';
+				characterBuffer[i] = (byte) ' ';
 			}
 		}
 	}

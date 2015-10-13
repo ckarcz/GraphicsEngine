@@ -1,7 +1,6 @@
 ﻿#region Imports
 
 using System.Collections.Generic;
-using System.Data;
 using GraphicsEngine.Math;
 using GraphicsEngine.Wavefront.Loaders;
 using GraphicsEngine.Wavefront.Models;

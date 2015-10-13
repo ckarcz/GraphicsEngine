@@ -9,20 +9,15 @@ namespace GraphicsEngine.Graphics
 	public class Transformation
 		: ITransformation
 	{
+		public static ITransformation None = new Transformation();
+
 		public Transformation()
 		{
 			Reset();
 		}
 
-		public static ITransformation None { get; } = new Transformation();
 		public Vector3 Scale { get; set; }
 		public Vector3 Translation { get; set; }
-
-		public void Reset()
-		{
-			Scale = Vector3.OneVector;
-			Translation = Vector3.ZeroVector;
-		}
 
 		public void Transform(ref Vector2 point)
 		{
@@ -32,6 +27,12 @@ namespace GraphicsEngine.Graphics
 		public void Transform(ref Vector3 point)
 		{
 			Transform(this, ref point);
+		}
+
+		public void Reset()
+		{
+			Scale = Vector3.OneVector;
+			Translation = Vector3.ZeroVector;
 		}
 
 		public static void Transform(ITransformation transformation, ref Vector2 point)
