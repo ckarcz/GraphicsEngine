@@ -33,7 +33,7 @@ namespace GraphicsEngine.Engine
 			inputStateService = new InputStateService();
 			transformation = new Transformation();
 
-			currentWavefrontObjectFilePath = "Models\\sphere.obj";
+			currentWavefrontObjectFilePath = "Models\\link.obj";
 
 			InitScene(currentWavefrontObjectFilePath);
 
@@ -197,11 +197,13 @@ namespace GraphicsEngine.Engine
 			{
 				scaleX += 0.2f * scaleFactor;
 				scaleY += 0.2f * scaleFactor;
+				scaleZ += 0.2f * scaleFactor;
 			}
 			else if (inputStateService.IsKeyDown(Key.OemOpenBrackets))
 			{
 				scaleX += -0.2f * scaleFactor;
 				scaleY += -0.2f * scaleFactor;
+				scaleZ += 0.2f * scaleFactor;
 			}
 
 			if (inputStateService.IsKeyToggled(Key.CapsLock))
@@ -218,182 +220,6 @@ namespace GraphicsEngine.Engine
 			transformation.RotationXTheta = rotateX;
 			transformation.RotationYTheta = rotateY;
 			transformation.RotationZTheta = rotateZ;
-		}
-
-		private void OldTests()
-		{
-			//Console.ReadLine();
-
-			//bool renderThinWires = true;
-
-			//loop:
-			//rasterizer.ClearImage();
-			//rasterizer.DrawAxes();
-
-			//var linePoint1 = new Vector2(0, 0);
-			//var linePoint2 = new Vector2(50, 50);
-			//var rise = linePoint2.Y - linePoint1.Y;
-			//var run = linePoint2.X - linePoint1.X;
-			//var lineSlope = run == 0 ? 1 : rise / run;
-			//rasterizer.DrawStringHorizontal(new Vector2(-50, -10), string.Format("SLOPE: {0}", lineSlope));
-			//rasterizer.DrawLine(linePoint1, linePoint2, renderThinWires);
-
-			//Console.ReadLine();
-
-			//rasterizer.ClearImage();
-			//rasterizer.DrawAxes();
-
-			//linePoint1 = new Vector2(0, 0);
-			//linePoint2 = new Vector2(75, 50);
-			//rise = linePoint2.Y - linePoint1.Y;
-			//run = linePoint2.X - linePoint1.X;
-			//lineSlope = run == 0 ? 1 : rise / run;
-			//rasterizer.DrawStringHorizontal(new Vector2(-50, -10), string.Format("SLOPE: {0}", lineSlope));
-			//rasterizer.DrawLine(linePoint1, linePoint2, renderThinWires);
-
-			//Console.ReadLine();
-
-			//rasterizer.ClearImage();
-			//rasterizer.DrawAxes();
-
-			//linePoint1 = new Vector2(0, 0);
-			//linePoint2 = new Vector2(5, 50);
-			//rise = linePoint2.Y - linePoint1.Y;
-			//run = linePoint2.X - linePoint1.X;
-			//lineSlope = run == 0 ? 1 : rise / run;
-			//rasterizer.DrawStringHorizontal(new Vector2(-50, -10), string.Format("SLOPE: {0}", lineSlope));
-			//rasterizer.DrawLine(linePoint1, linePoint2, renderThinWires);
-
-			//Console.ReadLine();
-
-			//rasterizer.ClearImage();
-			//rasterizer.DrawAxes();
-
-			//linePoint1 = new Vector2(0, 0);
-			//linePoint2 = new Vector2(-10, 50);
-			//rise = linePoint2.Y - linePoint1.Y;
-			//run = linePoint2.X - linePoint1.X;
-			//lineSlope = run == 0 ? 1 : rise / run;
-			//rasterizer.DrawStringHorizontal(new Vector2(-50, -10), string.Format("SLOPE: {0}", lineSlope));
-			//rasterizer.DrawLine(linePoint1, linePoint2, renderThinWires);
-
-			//Console.ReadLine();
-
-			//rasterizer.ClearImage();
-			//rasterizer.DrawAxes();
-
-			//linePoint1 = new Vector2(0, 0);
-			//linePoint2 = new Vector2(10, -50);
-			//rise = linePoint2.Y - linePoint1.Y;
-			//run = linePoint2.X - linePoint1.X;
-			//lineSlope = run == 0 ? 1 : rise / run;
-			//rasterizer.DrawStringHorizontal(new Vector2(-50, -10), string.Format("SLOPE: {0}", lineSlope));
-			//rasterizer.DrawLine(linePoint1, linePoint2, renderThinWires);
-
-			//Console.ReadLine();
-
-			//rasterizer.ClearImage();
-			//rasterizer.DrawAxes();
-
-			//var linePoint3 = new Vector3(0, 0, 1);
-			//var linePoint4 = new Vector3(50, 50, 2);
-			//rasterizer.DrawStringHorizontal(new Vector2(-50, -10), "3D->2D PROJECTED LINE");
-			//rasterizer.DrawLine(linePoint3, linePoint4, renderThinWires);
-
-			//Console.ReadLine();
-
-			//rasterizer.ClearImage();
-			//rasterizer.DrawAxes();
-
-			//rasterizer.DrawWiredPolygon(new[] {new Vector2(-100, -45), new Vector2(-45, -45), new Vector2(-20, -5), new Vector2(15, -27), new Vector2(36, -2), new Vector2(45, 15), new Vector2(25, 45), new Vector2(5, 15), new Vector2(-35, 10)}, renderThinWires, true);
-
-			//Console.ReadLine();
-
-			//rasterizer.ClearImage();
-			//rasterizer.DrawAxes();
-
-			//var a = new Vector2(-140, -45);
-			//var b = new Vector2(-100, -45);
-			//var c = new Vector2(-85, -25);
-			//var d = new Vector2(-125, -25);
-
-			//var spacer = 1;
-			//for (var i = 0; i < 50; i++)
-			//{
-			//	rasterizer.DrawWiredPolygon(new[] {a, b, c, d}, renderThinWires, true);
-
-			//	a.X += spacer;
-			//	a.Y += spacer * 0.25f;
-			//	b.X += spacer;
-			//	b.Y += spacer * 0.25f;
-			//	c.X += spacer;
-			//	c.Y += spacer * 0.25f;
-			//	d.X += spacer;
-			//	d.Y += spacer * 0.25f;
-
-			//	spacer++;
-			//}
-
-			//Console.ReadLine();
-
-			//rasterizer.ClearImage();
-			//rasterizer.DrawAxes();
-			//rasterizer.DrawStringHorizontal(new Vector2(-50, -10), "WAVEFRONT OBJ RENDER");
-			//rasterizer.DrawWiredMesh(meshes, 1, 0, 0, renderThinWires, true);
-
-			//Console.ReadLine();
-
-			//rasterizer.ClearImage();
-			//rasterizer.DrawAxes();
-			//rasterizer.DrawWiredMesh(meshes, 5, 0, 0, renderThinWires, true);
-
-			//Console.ReadLine();
-
-			//rasterizer.ClearImage();
-			//rasterizer.DrawAxes();
-			//rasterizer.DrawWiredMesh(meshes, 10, 0, -10, renderThinWires, true);
-
-			//Console.ReadLine();
-
-			//rasterizer.ClearImage();
-			//rasterizer.DrawAxes();
-			//rasterizer.DrawWiredMesh(meshes, 25, 0, -50, renderThinWires, true);
-
-			//Console.ReadLine();
-
-			//rasterizer.ClearImage();
-			//rasterizer.DrawAxes();
-			//rasterizer.DrawWiredMesh(meshes, 100, 0, -50, renderThinWires, true);
-
-			//Console.ReadLine();
-
-			//rasterizer.ClearImage();
-			//rasterizer.DrawAxes();
-			//rasterizer.DrawWiredMesh(meshes, 100, 0, -100, renderThinWires, true);
-
-			//Console.ReadLine();
-
-			//rasterizer.ClearImage();
-			//rasterizer.DrawAxes();
-			//rasterizer.DrawWiredMesh(meshes, 100, 0, -150, renderThinWires, true);
-
-			//Console.ReadLine();
-
-			//rasterizer.ClearImage();
-			//rasterizer.DrawAxes();
-			//rasterizer.DrawWiredMesh(meshes, 100, 0, -300, renderThinWires, true);
-
-			//Console.ReadLine();
-
-			//rasterizer.ClearImage();
-			//rasterizer.DrawAxes();
-			//rasterizer.DrawWiredMesh(meshes, 100, 0, -400, renderThinWires, true);
-
-			//Console.ReadLine();
-
-			//renderThinWires = !renderThinWires;
-
-			//goto loop;
 		}
 	}
 }
