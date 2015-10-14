@@ -15,7 +15,7 @@ namespace GraphicsEngine
 		private static void Main(string[] args)
 		{
 			var consoleScreenWidth = 300;
-			var consoleScreenHeight = 100;
+			var consoleScreenHeight = 120;
 
 			MessageBox.Show("Top row digits 1-8 load models.\n\nUp/Down/Left/Right translation.\n[/] scale.");
 

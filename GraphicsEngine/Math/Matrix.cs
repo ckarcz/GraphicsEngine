@@ -26,7 +26,7 @@ namespace GraphicsEngine.Math
 			return ((M11 == other.M11) && (M22 == other.M22) && (M33 == other.M33) && (M44 == other.M44) && (M12 == other.M12) && (M13 == other.M13) && (M14 == other.M14) && (M21 == other.M21) && (M23 == other.M23) && (M24 == other.M24) && (M31 == other.M31) && (M32 == other.M32) && (M34 == other.M34) && (M41 == other.M41) && (M42 == other.M42) && (M43 == other.M43));
 		}
 
-		public static Matrix CreateScalingMatrix(Vector3 scalingVector)
+		public static Matrix CreateScaleMatrix(Vector3 scalingVector)
 		{
 			var result = new Matrix();
 
@@ -50,7 +50,7 @@ namespace GraphicsEngine.Math
 			return result;
 		}
 
-		public static Matrix CreateTranslatingMatrix(Vector3 moveVector)
+		public static Matrix CreateTranslationMatrix(Vector3 moveVector)
 		{
 			var result = new Matrix();
 
@@ -69,6 +69,78 @@ namespace GraphicsEngine.Math
 			result.M41 = moveVector.X;
 			result.M42 = moveVector.Y;
 			result.M43 = moveVector.Z;
+			result.M44 = 1;
+
+			return result;
+		}
+
+		public static Matrix CreateXRotationMatrix(float theta)
+		{
+			var result = new Matrix();
+
+			result.M11 = 1;
+			result.M12 = 0;
+			result.M13 = 0;
+			result.M14 = 0;
+			result.M21 = 0;
+			result.M22 = (float)System.Math.Cos(theta);
+			result.M23 = (float)System.Math.Sin(theta);
+			result.M24 = 0;
+			result.M31 = 0;
+			result.M32 = (float)-System.Math.Sin(theta);
+			result.M33 = (float)System.Math.Cos(theta);
+			result.M34 = 0;
+			result.M41 = 0;
+			result.M42 = 0;
+			result.M43 = 0;
+			result.M44 = 1;
+
+			return result;
+		}
+
+		public static Matrix CreateYRotationMatrix(float theta)
+		{
+			var result = new Matrix();
+
+			result.M11 = (float)System.Math.Cos(theta);
+			result.M12 = 0;
+			result.M13 = (float)-System.Math.Sin(theta);
+			result.M14 = 0;
+			result.M21 = 0;
+			result.M22 = 1;
+			result.M23 = 0;
+			result.M24 = 0;
+			result.M31 = (float)System.Math.Sin(theta);
+			result.M32 = 0;
+			result.M33 = (float)System.Math.Cos(theta);
+			result.M34 = 0;
+			result.M41 = 0;
+			result.M42 = 0;
+			result.M43 = 0;
+			result.M44 = 1;
+
+			return result;
+		}
+
+		public static Matrix CreateZRotationMatrix(float theta)
+		{
+			var result = new Matrix();
+
+			result.M11 = (float)System.Math.Cos(theta);
+			result.M12 = (float)System.Math.Sin(theta);
+			result.M13 = 0;
+			result.M14 = 0;
+			result.M21 = (float)-System.Math.Sin(theta);
+			result.M22 = (float)System.Math.Cos(theta);
+			result.M23 = 0;
+			result.M24 = 0;
+			result.M31 = 0;
+			result.M32 = 0;
+			result.M33 = 1;
+			result.M34 = 0;
+			result.M41 = 0;
+			result.M42 = 0;
+			result.M43 = 0;
 			result.M44 = 1;
 
 			return result;
@@ -97,6 +169,27 @@ namespace GraphicsEngine.Math
 			M42 = m42;
 			M43 = m43;
 			M44 = m44;
+		}
+
+		public Matrix(float[,] matrix)
+			: this()
+		{
+			M11 = matrix[0, 0];
+			M12 = matrix[0, 1];
+			M13 = matrix[0, 2];
+			M14 = matrix[0, 3];
+			M21 = matrix[1, 0];
+			M22 = matrix[1, 1];
+			M23 = matrix[1, 2];
+			M24 = matrix[1, 3];
+			M31 = matrix[2, 0];
+			M32 = matrix[2, 1];
+			M33 = matrix[2, 2];
+			M34 = matrix[2, 3];
+			M41 = matrix[3, 0];
+			M42 = matrix[3, 1];
+			M43 = matrix[3, 2];
+			M44 = matrix[3, 3];
 		}
 
 		public Matrix(Vector4 row1, Vector4 row2, Vector4 row3, Vector4 row4)

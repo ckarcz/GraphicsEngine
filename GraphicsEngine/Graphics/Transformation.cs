@@ -18,6 +18,9 @@ namespace GraphicsEngine.Graphics
 
 		public Vector3 Scale { get; set; }
 		public Vector3 Translation { get; set; }
+		public float RotationXTheta { get; set; }
+		public float RotationYTheta { get; set; }
+		public float RotationZTheta { get; set; }
 
 		public void Transform(ref Vector2 point)
 		{
@@ -33,13 +36,20 @@ namespace GraphicsEngine.Graphics
 		{
 			Scale = Vector3.OneVector;
 			Translation = Vector3.ZeroVector;
+			RotationXTheta = 0;
+			RotationYTheta = 0;
+			RotationZTheta = 0;
 		}
 
 		public static void Transform(ITransformation transformation, ref Vector2 point)
 		{
-			var translationMatrix = Matrix.CreateTranslatingMatrix(transformation.Translation);
-			var scalingMatrix = Matrix.CreateScalingMatrix(transformation.Scale);
-			var transformationMatrix = scalingMatrix * translationMatrix;
+			var translationMatrix = Matrix.CreateTranslationMatrix(transformation.Translation);
+			var scalingMatrix = Matrix.CreateScaleMatrix(transformation.Scale);
+			var xRotationMatrix = Matrix.CreateXRotationMatrix(transformation.RotationXTheta);
+			var yRotationMatrix = Matrix.CreateYRotationMatrix(transformation.RotationYTheta);
+			var zRotationMatrix = Matrix.CreateZRotationMatrix(transformation.RotationZTheta);
+
+			var transformationMatrix = scalingMatrix * translationMatrix * xRotationMatrix * yRotationMatrix * zRotationMatrix;
 
 			var x = (point.X * transformationMatrix.M11) + (point.Y * transformationMatrix.M21) + transformationMatrix.M41;
 			var y = (point.X * transformationMatrix.M12) + (point.Y * transformationMatrix.M22) + transformationMatrix.M42;
@@ -50,9 +60,13 @@ namespace GraphicsEngine.Graphics
 
 		public static void Transform(ITransformation transformation, ref Vector3 point)
 		{
-			var translationMatrix = Matrix.CreateTranslatingMatrix(transformation.Translation);
-			var scalingMatrix = Matrix.CreateScalingMatrix(transformation.Scale);
-			var transformationMatrix = scalingMatrix * translationMatrix;
+			var translationMatrix = Matrix.CreateTranslationMatrix(transformation.Translation);
+			var scalingMatrix = Matrix.CreateScaleMatrix(transformation.Scale);
+			var xRotationMatrix = Matrix.CreateXRotationMatrix(transformation.RotationXTheta);
+			var yRotationMatrix = Matrix.CreateYRotationMatrix(transformation.RotationYTheta);
+			var zRotationMatrix = Matrix.CreateZRotationMatrix(transformation.RotationZTheta);
+
+			var transformationMatrix = scalingMatrix * translationMatrix * xRotationMatrix * yRotationMatrix * zRotationMatrix;
 
 			var x = (point.X * transformationMatrix.M11) + (point.Y * transformationMatrix.M21) + (point.Z * transformationMatrix.M31);
 			var y = (point.X * transformationMatrix.M12) + (point.Y * transformationMatrix.M22) + (point.Z * transformationMatrix.M32);

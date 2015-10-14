@@ -129,62 +129,86 @@ namespace GraphicsEngine.Engine
 
 		private void UpdateTransformation()
 		{
-			float translateX = transformation.Translation.X;
-			float translateY = transformation.Translation.Y;
-			float translateZ = transformation.Translation.Z;
-			float scaleX = transformation.Scale.X;
-			float scaleY = transformation.Scale.Y;
-			float scaleZ = transformation.Scale.Z;
+			var translateX = transformation.Translation.X;
+			var translateY = transformation.Translation.Y;
+			var translateZ = transformation.Translation.Z;
+			var scaleX = transformation.Scale.X;
+			var scaleY = transformation.Scale.Y;
+			var scaleZ = transformation.Scale.Z;
+			var rotateX = transformation.RotationXTheta;
+			var rotateY = transformation.RotationYTheta;
+			var rotateZ = transformation.RotationZTheta;
 
 			if (inputStateService.IsKeyDown(Key.Right))
 			{
-				translateX += 2;
+				translateX += 1f * scaleFactor;
 			}
 			else if (inputStateService.IsKeyDown(Key.Left))
 			{
-				translateX += -2;
+				translateX += -1f * scaleFactor;
 			}
 
 			if (inputStateService.IsKeyDown(Key.Up))
 			{
-				translateY += 2;
+				translateY += 1f * scaleFactor;
 			}
 			else if (inputStateService.IsKeyDown(Key.Down))
 			{
-				translateY += -2;
+				translateY += -1f * scaleFactor;
 			}
 
 			if (inputStateService.IsKeyDown(Key.OemComma))
 			{
-				translateY += 2;
+				rotateX -= 0.01f * scaleFactor;
 			}
 			else if (inputStateService.IsKeyDown(Key.OemPeriod))
 			{
-				translateY += -2;
+				rotateX += 0.01f * scaleFactor;
+			}
+
+			if (inputStateService.IsKeyDown(Key.K))
+			{
+				rotateY -= 0.01f * scaleFactor;
+			}
+			else if (inputStateService.IsKeyDown(Key.L))
+			{
+				rotateY += 0.01f * scaleFactor;
+			}
+
+			if (inputStateService.IsKeyDown(Key.I))
+			{
+				rotateZ -= 0.01f * scaleFactor;
+			}
+			else if (inputStateService.IsKeyDown(Key.O))
+			{
+				rotateZ += 0.01f * scaleFactor;
 			}
 
 			if (inputStateService.IsKeyDown(Key.OemCloseBrackets))
 			{
-				scaleX += scaleFactor;
-				scaleY += scaleFactor;
+				scaleX += 0.2f * scaleFactor;
+				scaleY += 0.2f * scaleFactor;
 			}
 			else if (inputStateService.IsKeyDown(Key.OemOpenBrackets))
 			{
-				scaleX += -scaleFactor;
-				scaleY += -scaleFactor;
+				scaleX += -0.2f * scaleFactor;
+				scaleY += -0.2f * scaleFactor;
 			}
 
 			if (inputStateService.IsKeyToggled(Key.CapsLock))
 			{
-				scaleFactor = 2;
+				scaleFactor = 3;
 			}
 			else
 			{
-				scaleFactor = 0.5f;
+				scaleFactor = 1;
 			}
 
 			transformation.Translation = new Vector3(translateX, translateY, translateZ);
 			transformation.Scale = new Vector3(scaleX, scaleY, scaleZ);
+			transformation.RotationXTheta = rotateX;
+			transformation.RotationYTheta = rotateY;
+			transformation.RotationZTheta = rotateZ;
 		}
 
 		private void OldTests()

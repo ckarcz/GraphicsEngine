@@ -234,6 +234,11 @@ namespace GraphicsEngine.Math
 			return middleVector;
 		}
 
+		public Vector3 GetAsVector3()
+		{
+			return new Vector3(X, Y, Z);
+		}
+
 		public bool Equals(Vector4 other)
 		{
 			return this == other;
