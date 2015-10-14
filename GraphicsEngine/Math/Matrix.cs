@@ -74,6 +74,21 @@ namespace GraphicsEngine.Math
 			return result;
 		}
 
+		public static Matrix CreateXRotationMatrix(Vector3 rotationVector)
+		{
+			return CreateXRotationMatrix(rotationVector.X);
+		}
+
+		public static Matrix CreateYRotationMatrix(Vector3 rotationVector)
+		{
+			return CreateYRotationMatrix(rotationVector.Y);
+		}
+
+		public static Matrix CreateZRotationMatrix(Vector3 rotationVector)
+		{
+			return CreateZRotationMatrix(rotationVector.Z);
+		}
+
 		public static Matrix CreateXRotationMatrix(float theta)
 		{
 			var result = new Matrix();
@@ -83,12 +98,12 @@ namespace GraphicsEngine.Math
 			result.M13 = 0;
 			result.M14 = 0;
 			result.M21 = 0;
-			result.M22 = (float)System.Math.Cos(theta);
-			result.M23 = (float)System.Math.Sin(theta);
+			result.M22 = (float) System.Math.Cos(theta);
+			result.M23 = (float) System.Math.Sin(theta);
 			result.M24 = 0;
 			result.M31 = 0;
-			result.M32 = (float)-System.Math.Sin(theta);
-			result.M33 = (float)System.Math.Cos(theta);
+			result.M32 = (float) -System.Math.Sin(theta);
+			result.M33 = (float) System.Math.Cos(theta);
 			result.M34 = 0;
 			result.M41 = 0;
 			result.M42 = 0;
@@ -102,17 +117,17 @@ namespace GraphicsEngine.Math
 		{
 			var result = new Matrix();
 
-			result.M11 = (float)System.Math.Cos(theta);
+			result.M11 = (float) System.Math.Cos(theta);
 			result.M12 = 0;
-			result.M13 = (float)-System.Math.Sin(theta);
+			result.M13 = (float) -System.Math.Sin(theta);
 			result.M14 = 0;
 			result.M21 = 0;
 			result.M22 = 1;
 			result.M23 = 0;
 			result.M24 = 0;
-			result.M31 = (float)System.Math.Sin(theta);
+			result.M31 = (float) System.Math.Sin(theta);
 			result.M32 = 0;
-			result.M33 = (float)System.Math.Cos(theta);
+			result.M33 = (float) System.Math.Cos(theta);
 			result.M34 = 0;
 			result.M41 = 0;
 			result.M42 = 0;
@@ -126,12 +141,12 @@ namespace GraphicsEngine.Math
 		{
 			var result = new Matrix();
 
-			result.M11 = (float)System.Math.Cos(theta);
-			result.M12 = (float)System.Math.Sin(theta);
+			result.M11 = (float) System.Math.Cos(theta);
+			result.M12 = (float) System.Math.Sin(theta);
 			result.M13 = 0;
 			result.M14 = 0;
-			result.M21 = (float)-System.Math.Sin(theta);
-			result.M22 = (float)System.Math.Cos(theta);
+			result.M21 = (float) -System.Math.Sin(theta);
+			result.M22 = (float) System.Math.Cos(theta);
 			result.M23 = 0;
 			result.M24 = 0;
 			result.M31 = 0;

@@ -18,9 +18,21 @@ namespace GraphicsEngine.Graphics
 
 		public Vector3 Scale { get; set; }
 		public Vector3 Translation { get; set; }
-		public float RotationXTheta { get; set; }
-		public float RotationYTheta { get; set; }
-		public float RotationZTheta { get; set; }
+		public Vector3 Rotation { get; set; }
+
+		public Vector2 Transform(Vector2 point)
+		{
+			Transform(this, ref point);
+
+			return point;
+		}
+
+		public Vector3 Transform(Vector3 point)
+		{
+			Transform(this, ref point);
+
+			return point;
+		}
 
 		public void Transform(ref Vector2 point)
 		{
@@ -36,18 +48,30 @@ namespace GraphicsEngine.Graphics
 		{
 			Scale = Vector3.OneVector;
 			Translation = Vector3.ZeroVector;
-			RotationXTheta = 0;
-			RotationYTheta = 0;
-			RotationZTheta = 0;
+			Rotation = Vector3.ZeroVector;
+		}
+
+		public static Vector2 Transform(ITransformation transformation, Vector2 point)
+		{
+			Transform(transformation, ref point);
+
+			return point;
+		}
+
+		public static Vector3 Transform(ITransformation transformation, Vector3 point)
+		{
+			Transform(transformation, ref point);
+
+			return point;
 		}
 
 		public static void Transform(ITransformation transformation, ref Vector2 point)
 		{
 			var translationMatrix = Matrix.CreateTranslationMatrix(transformation.Translation);
 			var scalingMatrix = Matrix.CreateScaleMatrix(transformation.Scale);
-			var xRotationMatrix = Matrix.CreateXRotationMatrix(transformation.RotationXTheta);
-			var yRotationMatrix = Matrix.CreateYRotationMatrix(transformation.RotationYTheta);
-			var zRotationMatrix = Matrix.CreateZRotationMatrix(transformation.RotationZTheta);
+			var xRotationMatrix = Matrix.CreateXRotationMatrix(transformation.Rotation);
+			var yRotationMatrix = Matrix.CreateYRotationMatrix(transformation.Rotation);
+			var zRotationMatrix = Matrix.CreateZRotationMatrix(transformation.Rotation);
 
 			var transformationMatrix = scalingMatrix * translationMatrix * xRotationMatrix * yRotationMatrix * zRotationMatrix;
 
@@ -62,9 +86,9 @@ namespace GraphicsEngine.Graphics
 		{
 			var translationMatrix = Matrix.CreateTranslationMatrix(transformation.Translation);
 			var scalingMatrix = Matrix.CreateScaleMatrix(transformation.Scale);
-			var xRotationMatrix = Matrix.CreateXRotationMatrix(transformation.RotationXTheta);
-			var yRotationMatrix = Matrix.CreateYRotationMatrix(transformation.RotationYTheta);
-			var zRotationMatrix = Matrix.CreateZRotationMatrix(transformation.RotationZTheta);
+			var xRotationMatrix = Matrix.CreateXRotationMatrix(transformation.Rotation);
+			var yRotationMatrix = Matrix.CreateYRotationMatrix(transformation.Rotation);
+			var zRotationMatrix = Matrix.CreateZRotationMatrix(transformation.Rotation);
 
 			var transformationMatrix = scalingMatrix * translationMatrix * xRotationMatrix * yRotationMatrix * zRotationMatrix;
 

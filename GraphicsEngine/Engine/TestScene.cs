@@ -33,11 +33,11 @@ namespace GraphicsEngine.Engine
 			inputStateService = new InputStateService();
 			transformation = new Transformation();
 
-			currentWavefrontObjectFilePath = "Models\\link.obj";
+			currentWavefrontObjectFilePath = "Models\\woman_model1938.obj";
 
 			InitScene(currentWavefrontObjectFilePath);
 
-			transformation.Scale *= 50;
+			//transformation.Scale *= 50;
 		}
 
 		public int Width { get; private set; }
@@ -135,9 +135,9 @@ namespace GraphicsEngine.Engine
 			var scaleX = transformation.Scale.X;
 			var scaleY = transformation.Scale.Y;
 			var scaleZ = transformation.Scale.Z;
-			var rotateX = transformation.RotationXTheta;
-			var rotateY = transformation.RotationYTheta;
-			var rotateZ = transformation.RotationZTheta;
+			var rotateX = transformation.Rotation.X;
+			var rotateY = transformation.Rotation.Y;
+			var rotateZ = transformation.Rotation.Z;
 
 			if (inputStateService.IsKeyDown(Key.Right))
 			{
@@ -195,15 +195,15 @@ namespace GraphicsEngine.Engine
 
 			if (inputStateService.IsKeyDown(Key.OemCloseBrackets))
 			{
-				scaleX += 0.2f * scaleFactor;
-				scaleY += 0.2f * scaleFactor;
-				scaleZ += 0.2f * scaleFactor;
+				scaleX += 0.1f * scaleFactor;
+				scaleY += 0.1f * scaleFactor;
+				scaleZ += 0.1f * scaleFactor;
 			}
 			else if (inputStateService.IsKeyDown(Key.OemOpenBrackets))
 			{
-				scaleX += -0.2f * scaleFactor;
-				scaleY += -0.2f * scaleFactor;
-				scaleZ += 0.2f * scaleFactor;
+				scaleX += -0.1f * scaleFactor;
+				scaleY += -0.1f * scaleFactor;
+				scaleZ += -0.1f * scaleFactor;
 			}
 
 			if (inputStateService.IsKeyToggled(Key.CapsLock))
@@ -217,9 +217,7 @@ namespace GraphicsEngine.Engine
 
 			transformation.Translation = new Vector3(translateX, translateY, translateZ);
 			transformation.Scale = new Vector3(scaleX, scaleY, scaleZ);
-			transformation.RotationXTheta = rotateX;
-			transformation.RotationYTheta = rotateY;
-			transformation.RotationZTheta = rotateZ;
+			transformation.Rotation = new Vector3(rotateX, rotateY, rotateZ);
 		}
 	}
 }

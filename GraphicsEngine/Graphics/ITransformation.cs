@@ -10,9 +10,11 @@ namespace GraphicsEngine.Graphics
 	{
 		Vector3 Scale { get; }
 		Vector3 Translation { get; }
-		float RotationXTheta { get; }
-		float RotationYTheta { get; }
-		float RotationZTheta { get; }
+		Vector3 Rotation { get; }
+
+		Vector2 Transform(Vector2 point);
+
+		Vector3 Transform(Vector3 point);
 
 		void Transform(ref Vector2 point);
 
