@@ -68,9 +68,9 @@ namespace GraphicsEngine.Graphics
 
 			var transformationMatrix = scalingMatrix * translationMatrix * xRotationMatrix * yRotationMatrix * zRotationMatrix;
 
-			var x = (point.X * transformationMatrix.M11) + (point.Y * transformationMatrix.M21) + (point.Z * transformationMatrix.M31);
-			var y = (point.X * transformationMatrix.M12) + (point.Y * transformationMatrix.M22) + (point.Z * transformationMatrix.M32);
-			var z = (point.X * transformationMatrix.M13) + (point.Y * transformationMatrix.M23) + (point.Z * transformationMatrix.M33);
+			var x = (point.X * transformationMatrix.M11) + (point.Y * transformationMatrix.M21) + (point.Z * transformationMatrix.M31) + transformationMatrix.M41;
+			var y = (point.X * transformationMatrix.M12) + (point.Y * transformationMatrix.M22) + (point.Z * transformationMatrix.M32) + transformationMatrix.M42;
+			var z = (point.X * transformationMatrix.M13) + (point.Y * transformationMatrix.M23) + (point.Z * transformationMatrix.M33) + transformationMatrix.M43;
 
 			point.X = x;
 			point.Y = y;

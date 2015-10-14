@@ -33,7 +33,7 @@ namespace GraphicsEngine.Graphics.Console
 				System.Console.SetCursorPosition(0, height);
 				System.Console.Write(new String(' ', width));
 			}
-			catch (ArgumentOutOfRangeException)
+			catch (ArgumentOutOfRangeException ex)
 			{
 				System.Console.BackgroundColor = ConsoleColor.Black;
 				System.Console.ForegroundColor = ConsoleColor.Magenta;

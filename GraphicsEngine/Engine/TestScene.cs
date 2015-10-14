@@ -33,7 +33,7 @@ namespace GraphicsEngine.Engine
 			inputStateService = new InputStateService();
 			transformation = new Transformation();
 
-			currentWavefrontObjectFilePath = "Models\\link.obj";
+			currentWavefrontObjectFilePath = "Models\\sphere.obj";
 
 			InitScene(currentWavefrontObjectFilePath);
 
@@ -155,6 +155,15 @@ namespace GraphicsEngine.Engine
 			else if (inputStateService.IsKeyDown(Key.Down))
 			{
 				translateY += -1f * scaleFactor;
+			}
+
+			if (inputStateService.IsKeyDown(Key.PageUp))
+			{
+				translateZ += 1f * scaleFactor;
+			}
+			else if (inputStateService.IsKeyDown(Key.PageDown))
+			{
+				translateZ += -1f * scaleFactor;
 			}
 
 			if (inputStateService.IsKeyDown(Key.OemComma))
