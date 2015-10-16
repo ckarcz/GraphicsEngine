@@ -22,7 +22,7 @@ namespace GraphicsEngine.Engine
 		private readonly InputStateService inputStateService;
 		private readonly Rasterizer rasterizer;
 		private readonly Transformation transformation;
-		private readonly string[] wavefrontObjectFilePaths = new[] {"Models\\triangle.obj", "Models\\cube.obj", "Models\\sphere.obj", "Models\\conf.obj", "Models\\gourd.obj", "Models\\link.obj", "Models\\monkey.obj", "Models\\bunny.obj", "Models\\f1.obj" };
+		private readonly string[] wavefrontObjectFilePaths = new[] {"Models\\triangle.obj", "Models\\cube.obj", "Models\\sphere.obj", "Models\\conf.obj", "Models\\gourd.obj", "Models\\link.obj", "Models\\monkey.obj", "Models\\bunny.obj", "Models\\f1.obj", "Models\\woman1.obj" };
 
 		public TestScene(int width, int height)
 		{
@@ -33,11 +33,12 @@ namespace GraphicsEngine.Engine
 			inputStateService = new InputStateService();
 			transformation = new Transformation();
 
-			currentWavefrontObjectFilePath = "Models\\woman_model1938.obj";
+			currentWavefrontObjectFilePath = "Models\\woman1.obj";
 
 			InitScene(currentWavefrontObjectFilePath);
 
 			//transformation.Scale *= 50;
+			transformation.Translation = new Vector3(0, -50, 0);
 		}
 
 		public int Width { get; private set; }
@@ -53,9 +54,10 @@ namespace GraphicsEngine.Engine
 		{
 			rasterizer.ClearImage();
 
-			rasterizer.DrawAxes(Transformation.None);
+			//rasterizer.DrawAxes(Transformation.None);
 
-			rasterizer.DrawWiredMesh(transformation, meshes, true);
+			rasterizer.DrawMeshWired(transformation, meshes);
+			rasterizer.DrawMeshCenters(transformation, meshes);
 
 			rasterizer.DrawStringHorizontal(Transformation.None, new Vector2(-Width / 2 + 1, Height / 2 - 2), string.Format("MODEL: '{0}'", currentWavefrontObjectFilePath));
 			rasterizer.DrawStringHorizontal(Transformation.None, new Vector2(-Width / 2 + 1, Height / 2 - 3), string.Format("# POLYGONS: {0}", meshes.Sum(mesh => mesh.Faces.Count())));
@@ -119,6 +121,10 @@ namespace GraphicsEngine.Engine
 			else if (inputStateService.IsKeyDown(Key.D9))
 			{
 				newModelToLoad = wavefrontObjectFilePaths[8];
+			}
+			else if (inputStateService.IsKeyDown(Key.D0))
+			{
+				newModelToLoad = wavefrontObjectFilePaths[9];
 			}
 
 			if (newModelToLoad != string.Empty && currentWavefrontObjectFilePath != newModelToLoad)

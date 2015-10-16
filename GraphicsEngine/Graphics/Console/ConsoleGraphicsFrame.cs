@@ -3,6 +3,8 @@
 	public class ConsoleGraphicsFrame
 		: IConsoleGraphicsFrame
 	{
+		public const byte DefaultClearValue = 32;
+
 		public ConsoleGraphicsFrame(int width, int height)
 		{
 			Width = width;
@@ -27,14 +29,14 @@
 			get { return ColorBuffer; }
 		}
 
-		public void ClearBuffers()
+		public void ClearBuffers(byte? clearValue = null)
 		{
 			for (var x = 0; x < Width; x++)
 			{
 				for (var y = 0; y < Height; y++)
 				{
-					CharacterBuffer[x, y] = 32;
-					ColorBuffer[x, y] = 32;
+					CharacterBuffer[x, y] = clearValue.HasValue ? clearValue.Value : DefaultClearValue;
+					ColorBuffer[x, y] = clearValue.HasValue ? clearValue.Value : DefaultClearValue;
 				}
 			}
 		}

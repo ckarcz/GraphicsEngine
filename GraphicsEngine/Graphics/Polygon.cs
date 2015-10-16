@@ -27,6 +27,11 @@ namespace GraphicsEngine.Graphics
 
 		public IList<Vector3> Points { get; private set; }
 
+		public Vector3 this[int index]
+		{
+			get { return Points[index]; }
+		}
+
 		IEnumerable<Vector3> IPolygon.Points
 		{
 			get { return Points; }

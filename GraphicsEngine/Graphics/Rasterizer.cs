@@ -11,7 +11,7 @@ namespace GraphicsEngine.Graphics
 {
 	public class Rasterizer
 	{
-		private static readonly byte halfPixelChar = 219; // '▄'
+		public const byte HalfPixelChar = 219; // '▄'
 		private static readonly byte horizontalWireFrameChar = 95; // '-'
 		private static readonly byte upLeftWireFrameChar = 92; // '/'
 		private static readonly byte upRightWireFrameChar = 47; // '\'
@@ -26,81 +26,105 @@ namespace GraphicsEngine.Graphics
 			rasterizingActions = new List<Action>();
 		}
 
-		public void DrawWiredMesh(ITransformation transformation, IMesh mesh, bool drawWireFrame = false)
+		public void DrawMeshWired(ITransformation transformation, IMesh mesh, byte? pixelOverride = null)
 		{
-			var action = new Action(() => DrawWiredMesh(frameBuffer, transformation, mesh, drawWireFrame));
+			var action = new Action(() => DrawMeshWired(frameBuffer, transformation, mesh, pixelOverride));
 			rasterizingActions.Add(action);
 		}
 
-		public void DrawWiredMesh(ITransformation transformation, IEnumerable<IMesh> meshes, bool drawWireFrame = false)
+		public void DrawMeshWired(ITransformation transformation, IEnumerable<IMesh> meshes, byte? pixelOverride = null)
 		{
-			var action = new Action(() => DrawWiredMesh(frameBuffer, transformation, meshes, drawWireFrame));
+			var action = new Action(() => DrawMeshWired(frameBuffer, transformation, meshes, pixelOverride));
 			rasterizingActions.Add(action);
 		}
 
-		public void DrawWiredPolygon(ITransformation transformation, IEnumerable<Vector2> vectors, bool drawWireFrame = false)
+		public void DrawMeshVertices(ITransformation transformation, IMesh mesh, byte? pixelOverride = null)
 		{
-			var action = new Action(() => DrawWiredPolygon(frameBuffer, transformation, vectors, drawWireFrame));
+			var action = new Action(() => DrawMeshVertices(frameBuffer, transformation, mesh, pixelOverride));
 			rasterizingActions.Add(action);
 		}
 
-		public void DrawWiredPolygon(ITransformation transformation, IEnumerable<Vector3> vectors, bool drawWireFrame = false)
+		public void DrawMeshVertices(ITransformation transformation, IEnumerable<IMesh> meshes, byte? pixelOverride = null)
 		{
-			var action = new Action(() => DrawWiredPolygon(frameBuffer, transformation, vectors, drawWireFrame));
+			var action = new Action(() => DrawMeshVertices(frameBuffer, transformation, meshes, pixelOverride));
 			rasterizingActions.Add(action);
 		}
 
-		public void DrawWiredTriangle(ITransformation transformation, Vector2 point1, Vector2 point2, Vector2 point3, bool drawWireFrame = false)
+		public void DrawMeshCenters(ITransformation transformation, IMesh mesh, byte? pixelOverride = null)
 		{
-			var action = new Action(() => DrawWiredTriangle(frameBuffer, transformation, point1, point2, point3, drawWireFrame));
+			var action = new Action(() => DrawMeshCenters(frameBuffer, transformation, mesh, pixelOverride));
 			rasterizingActions.Add(action);
 		}
 
-		public void DrawWiredTriangle(ITransformation transformation, Vector3 point1, Vector3 point2, Vector3 point3, bool drawWireFrame = false)
+		public void DrawMeshCenters(ITransformation transformation, IEnumerable<IMesh> meshes, byte? pixelOverride = null)
 		{
-			var action = new Action(() => DrawWiredTriangle(frameBuffer, transformation, point1, point2, point3, drawWireFrame));
+			var action = new Action(() => DrawMeshCenters(frameBuffer, transformation, meshes, pixelOverride));
 			rasterizingActions.Add(action);
 		}
 
-		public void DrawAxes(ITransformation transformation, bool drawWireFrame = true)
+		public void DrawPolygonWired(ITransformation transformation, IEnumerable<Vector2> vectors, byte? pixelOverride = null)
 		{
-			var action = new Action(() => DrawAxes(frameBuffer, transformation, drawWireFrame));
+			var action = new Action(() => DrawPolygonWired(frameBuffer, transformation, vectors, pixelOverride));
 			rasterizingActions.Add(action);
 		}
 
-		public void DrawLine(ITransformation transformation, Vector3 point1, Vector3 point2, bool drawWireFrame = false)
+		public void DrawPolygonWired(ITransformation transformation, IEnumerable<Vector3> vectors, byte? pixelOverride = null)
 		{
-			var action = new Action(() => DrawLine(frameBuffer, transformation, point1, point2, drawWireFrame));
+			var action = new Action(() => DrawPolygonWired(frameBuffer, transformation, vectors, pixelOverride));
 			rasterizingActions.Add(action);
 		}
 
-		public void DrawLine(ITransformation transformation, Vector2 point1, Vector2 point2, bool drawWireFrame = false)
+		public void DrawTriangleWired(ITransformation transformation, Vector2 point1, Vector2 point2, Vector2 point3, byte? pixelOverride = null)
 		{
-			var action = new Action(() => DrawLine(frameBuffer, transformation, point1, point2, drawWireFrame));
+			var action = new Action(() => DrawTriangleWired(frameBuffer, transformation, point1, point2, point3, pixelOverride));
 			rasterizingActions.Add(action);
 		}
 
-		public void DrawPoints(ITransformation transformation, IEnumerable<Vector2> points)
+		public void DrawTriangleWired(ITransformation transformation, Vector3 point1, Vector3 point2, Vector3 point3, byte? pixelOverride = null)
 		{
-			var action = new Action(() => DrawPoints(frameBuffer, transformation, points));
+			var action = new Action(() => DrawTriangleWired(frameBuffer, transformation, point1, point2, point3, pixelOverride));
 			rasterizingActions.Add(action);
 		}
 
-		public void DrawPoints(ITransformation transformation, IEnumerable<Vector3> points)
+		public void DrawAxes(ITransformation transformation, byte? pixelOverride = null)
 		{
-			var action = new Action(() => DrawPoints(frameBuffer, transformation, points));
+			var action = new Action(() => DrawAxes(frameBuffer, transformation, pixelOverride));
 			rasterizingActions.Add(action);
 		}
 
-		public void DrawPoint(ITransformation transformation, Vector2 point)
+		public void DrawLine(ITransformation transformation, Vector3 point1, Vector3 point2, byte? pixelOverride = null)
 		{
-			var action = new Action(() => DrawPoint(frameBuffer, transformation, point));
+			var action = new Action(() => DrawLine(frameBuffer, transformation, point1, point2, pixelOverride));
 			rasterizingActions.Add(action);
 		}
 
-		public void DrawPoint(ITransformation transformation, Vector3 point)
+		public void DrawLine(ITransformation transformation, Vector2 point1, Vector2 point2, byte? pixelOverride = null)
 		{
-			var action = new Action(() => DrawPoint(frameBuffer, transformation, point));
+			var action = new Action(() => DrawLine(frameBuffer, transformation, point1, point2, pixelOverride));
+			rasterizingActions.Add(action);
+		}
+
+		public void DrawPoints(ITransformation transformation, IEnumerable<Vector2> points, byte? pixelOverride = null)
+		{
+			var action = new Action(() => DrawPoints(frameBuffer, transformation, points, pixelOverride));
+			rasterizingActions.Add(action);
+		}
+
+		public void DrawPoints(ITransformation transformation, IEnumerable<Vector3> points, byte? pixelOverride = null)
+		{
+			var action = new Action(() => DrawPoints(frameBuffer, transformation, points, pixelOverride));
+			rasterizingActions.Add(action);
+		}
+
+		public void DrawPoint(ITransformation transformation, Vector2 point, byte? pixelOverride = null)
+		{
+			var action = new Action(() => DrawPoint(frameBuffer, transformation, point, pixelOverride));
+			rasterizingActions.Add(action);
+		}
+
+		public void DrawPoint(ITransformation transformation, Vector3 point, byte? pixelOverride = null)
+		{
+			var action = new Action(() => DrawPoint(frameBuffer, transformation, point, pixelOverride));
 			rasterizingActions.Add(action);
 		}
 
@@ -116,10 +140,10 @@ namespace GraphicsEngine.Graphics
 			rasterizingActions.Add(action);
 		}
 
-		public void ClearImage()
+		public void ClearImage(byte? pixelOverride = null)
 		{
 			Reset();
-			ClearImage(frameBuffer);
+			ClearImage(frameBuffer, pixelOverride);
 		}
 
 		public void Reset()
@@ -139,7 +163,7 @@ namespace GraphicsEngine.Graphics
 			return frameBuffer;
 		}
 
-		public static void DrawWiredMesh(ConsoleGraphicsFrame frame, ITransformation transformation, IMesh mesh, bool drawWireFrame = false)
+		public static void DrawMeshWired(ConsoleGraphicsFrame frame, ITransformation transformation, IMesh mesh, byte? pixelOverride = null)
 		{
 			foreach (var face in mesh.Faces)
 			{
@@ -150,19 +174,71 @@ namespace GraphicsEngine.Graphics
 					points.Add(point);
 				}
 
-				DrawWiredPolygon(frame, transformation, points, drawWireFrame);
+				DrawPolygonWired(frame, transformation, points, pixelOverride);
 			}
 		}
 
-		public static void DrawWiredMesh(ConsoleGraphicsFrame frame, ITransformation transformation, IEnumerable<IMesh> meshes, bool drawWireFrame = false)
+		public static void DrawMeshWired(ConsoleGraphicsFrame frame, ITransformation transformation, IEnumerable<IMesh> meshes, byte? pixelOverride = null)
 		{
 			foreach (var mesh in meshes)
 			{
-				DrawWiredMesh(frame, transformation, mesh, drawWireFrame);
+				DrawMeshWired(frame, transformation, mesh, pixelOverride);
 			}
 		}
 
-		public static void DrawWiredPolygon(ConsoleGraphicsFrame frame, ITransformation transformation, IEnumerable<Vector2> vectors, bool drawWireFrame = false)
+		public static void DrawMeshVertices(ConsoleGraphicsFrame frame, ITransformation transformation, IMesh mesh, byte? pixelOverride = null)
+		{
+			foreach (var face in mesh.Faces)
+			{
+				DrawPoints(frame, transformation, face.Points, pixelOverride);
+			}
+		}
+
+		public static void DrawMeshVertices(ConsoleGraphicsFrame frame, ITransformation transformation, IEnumerable<IMesh> meshes, byte? pixelOverride = null)
+		{
+			foreach (var mesh in meshes)
+			{
+				DrawMeshVertices(frame, transformation, mesh, pixelOverride);
+			}
+		}
+
+		public static void DrawMeshCenters(ConsoleGraphicsFrame frame, ITransformation transformation, IMesh mesh, byte? pixelOverride = null)
+		{
+			if (mesh.Centers.HasValue && mesh.Minimums.HasValue && mesh.Maximums.HasValue)
+			{
+				var meshMinimums = mesh.Minimums.Value;
+				var meshMaximums = mesh.Maximums.Value;
+				var meshCenters = mesh.Centers.Value;
+
+				var distanceX = meshMaximums.X - meshMinimums.X;
+				var distanceY = meshMaximums.Y - meshMinimums.Y;
+				var distanceZ = meshMaximums.Z - meshMinimums.Z;
+
+				var maxDistance = System.Math.Max(distanceX, System.Math.Max(distanceY, distanceZ));
+
+				var meshCenterLineXStart = new Vector3(meshMinimums.X - maxDistance / 4, meshCenters.Y, meshCenters.Z);
+				var meshCenterLineXEnd = new Vector3(meshMaximums.X + maxDistance / 4, meshCenters.Y, meshCenters.Z);
+				DrawLine(frame, transformation, meshCenterLineXStart, meshCenterLineXEnd, pixelOverride);
+
+				var meshCenterLineYStart = new Vector3(meshCenters.X, meshMinimums.Y - maxDistance / 4, meshCenters.Z);
+				var meshCenterLineYEnd = new Vector3(meshCenters.X, meshMaximums.Y + maxDistance / 4, meshCenters.Z);
+				DrawLine(frame, transformation, meshCenterLineYStart, meshCenterLineYEnd, pixelOverride);
+
+				var meshCenterLineZStart = new Vector3(meshCenters.X, meshCenters.Y, meshMinimums.Z - maxDistance / 4);
+				var meshCenterLineZEnd = new Vector3(meshCenters.X, meshCenters.Y, meshMaximums.Z + maxDistance / 4);
+				DrawLine(frame, transformation, meshCenterLineZStart, meshCenterLineZEnd, pixelOverride);
+			}
+		}
+
+		public static void DrawMeshCenters(ConsoleGraphicsFrame frame, ITransformation transformation, IEnumerable<IMesh> meshes, byte? pixelOverride = null)
+		{
+			foreach (var mesh in meshes)
+			{
+				DrawMeshCenters(frame, transformation, mesh, pixelOverride);
+			}
+		}
+
+		public static void DrawPolygonWired(ConsoleGraphicsFrame frame, ITransformation transformation, IEnumerable<Vector2> vectors, byte? pixelOverride = null)
 		{
 			var vectorsEnumerator = vectors.GetEnumerator();
 
@@ -176,13 +252,13 @@ namespace GraphicsEngine.Graphics
 				point1 = point2;
 				point2 = vectorsEnumerator.Current;
 
-				DrawLine(frame, transformation, point1, point2, drawWireFrame);
+				DrawLine(frame, transformation, point1, point2, pixelOverride);
 			}
 
-			DrawLine(frame, transformation, point2, firstPoint, drawWireFrame);
+			DrawLine(frame, transformation, point2, firstPoint, pixelOverride);
 		}
 
-		public static void DrawWiredPolygon(ConsoleGraphicsFrame frame, ITransformation transformation, IEnumerable<Vector3> vectors, bool drawWireFrame = false)
+		public static void DrawPolygonWired(ConsoleGraphicsFrame frame, ITransformation transformation, IEnumerable<Vector3> vectors, byte? pixelOverride = null)
 		{
 			var vectorsEnumerator = vectors.GetEnumerator();
 
@@ -196,33 +272,33 @@ namespace GraphicsEngine.Graphics
 				point1 = point2;
 				point2 = vectorsEnumerator.Current;
 
-				DrawLine(frame, transformation, point1, point2, drawWireFrame);
+				DrawLine(frame, transformation, point1, point2, pixelOverride);
 			}
 
-			DrawLine(frame, transformation, point2, firstPoint, drawWireFrame);
+			DrawLine(frame, transformation, point2, firstPoint, pixelOverride);
 		}
 
-		public static void DrawWiredTriangle(ConsoleGraphicsFrame frame, ITransformation transformation, Vector2 point1, Vector2 point2, Vector2 point3, bool drawWireFrame = false)
+		public static void DrawTriangleWired(ConsoleGraphicsFrame frame, ITransformation transformation, Vector2 point1, Vector2 point2, Vector2 point3, byte? pixelOverride = null)
 		{
-			DrawLine(frame, transformation, point1, point2, drawWireFrame);
-			DrawLine(frame, transformation, point2, point3, drawWireFrame);
-			DrawLine(frame, transformation, point1, point3, drawWireFrame);
+			DrawLine(frame, transformation, point1, point2, pixelOverride);
+			DrawLine(frame, transformation, point2, point3, pixelOverride);
+			DrawLine(frame, transformation, point1, point3, pixelOverride);
 		}
 
-		public static void DrawWiredTriangle(ConsoleGraphicsFrame frame, ITransformation transformation, Vector3 point1, Vector3 point2, Vector3 point3, bool drawWireFrame = false)
+		public static void DrawTriangleWired(ConsoleGraphicsFrame frame, ITransformation transformation, Vector3 point1, Vector3 point2, Vector3 point3, byte? pixelOverride = null)
 		{
-			DrawLine(frame, transformation, point1, point2, drawWireFrame);
-			DrawLine(frame, transformation, point2, point3, drawWireFrame);
-			DrawLine(frame, transformation, point1, point3, drawWireFrame);
+			DrawLine(frame, transformation, point1, point2, pixelOverride);
+			DrawLine(frame, transformation, point2, point3, pixelOverride);
+			DrawLine(frame, transformation, point1, point3, pixelOverride);
 		}
 
-		public static void DrawAxes(ConsoleGraphicsFrame frame, ITransformation transformation, bool drawWireFrame = true)
+		public static void DrawAxes(ConsoleGraphicsFrame frame, ITransformation transformation, byte? pixelOverride = null)
 		{
-			DrawLine(frame, transformation, new Vector2(0, -frame.Height / 2), new Vector2(0, frame.Height / 2), drawWireFrame);
-			DrawLine(frame, transformation, new Vector2(-frame.Width / 2, 0), new Vector2(frame.Width / 2, 0), drawWireFrame);
+			DrawLine(frame, transformation, new Vector2(0, -frame.Height / 2), new Vector2(0, frame.Height / 2), pixelOverride);
+			DrawLine(frame, transformation, new Vector2(-frame.Width / 2, 0), new Vector2(frame.Width / 2, 0), pixelOverride);
 		}
 
-		public static void DrawLine(ConsoleGraphicsFrame frame, ITransformation transformation, Vector3 point1, Vector3 point2, bool drawWireFrame = false)
+		public static void DrawLine(ConsoleGraphicsFrame frame, ITransformation transformation, Vector3 point1, Vector3 point2, byte? pixelOverride = null)
 		{
 			transformation.Transform(ref point1);
 			transformation.Transform(ref point2);
@@ -230,150 +306,14 @@ namespace GraphicsEngine.Graphics
 			var rise = point2.Y - point1.Y;
 			var run = point2.X - point1.X;
 
-			var pixelChar = halfPixelChar;
+			var pixelChar = verticleWireFrameChar;
+			if (pixelOverride.HasValue)
+			{
+				pixelChar = pixelOverride.Value;
+			}
 
 			if (run == 0) // so we don't divide by zero when calculating slope
 			{
-				if (drawWireFrame)
-				{
-					pixelChar = verticleWireFrameChar;
-				}
-
-				var currentPoint = new Vector2(point1.X, System.Math.Min(point1.Y, point2.Y));
-				var endPoint = new Vector2(point2.X, System.Math.Max(point1.Y, point2.Y));
-
-				while (currentPoint.Y < endPoint.Y)
-				{
-					var offetX = (frame.Width / 2) + currentPoint.X;
-					var offsetY = (frame.Height / 2) - currentPoint.Y;
-
-					var pixelX = (int)offetX;
-					var pixelY = (int)offsetY;
-
-					if (pixelX >= 0 && pixelX < frame.Width && pixelY >= 0 && pixelY < frame.Height)
-					{
-						frame.CharacterBuffer[pixelX, pixelY] = pixelChar;
-					}
-
-					currentPoint.Y++;
-				}
-			}
-			else
-			{
-				var slope = rise / run;
-				var invSlope = run / rise;
-
-				if (drawWireFrame)
-				{
-					if (slope > 0)
-					{
-						if (slope > 1)
-						{
-							pixelChar = verticleWireFrameChar;
-						}
-						else if (slope > 0.5)
-						{
-							pixelChar = upRightWireFrameChar;
-						}
-						else
-						{
-							pixelChar = horizontalWireFrameChar;
-						}
-					}
-					else
-					{
-						if (slope < -1)
-						{
-							pixelChar = verticleWireFrameChar;
-						}
-						else if (slope < -0.5)
-						{
-							pixelChar = upLeftWireFrameChar;
-						}
-						else
-						{
-							pixelChar = horizontalWireFrameChar;
-						}
-					}
-				}
-
-				var currentPoint = new Vector2(point1.X, point1.Y);
-				var endPoint = new Vector2(point2.X, point2.Y);
-
-				if (System.Math.Abs(slope) <= 1) // for more horizontal or 45deg lines, draw horizontally
-				{
-					// start with left most point
-					if (point1.X > point2.X)
-					{
-						currentPoint = new Vector2(point2.X, point2.Y);
-						endPoint = new Vector2(point1.X, point1.Y);
-					}
-
-					// draw along x, left to right
-					while (currentPoint.X <= endPoint.X)
-					{
-						var offetX = (frame.Width / 2) + currentPoint.X;
-						var offsetY = (frame.Height / 2) - currentPoint.Y;
-
-						var pixelX = (int)offetX;
-						var pixelY = (int)offsetY;
-
-						if (pixelX >= 0 && pixelX < frame.Width && pixelY >= 0 && pixelY < frame.Height)
-						{
-							frame.CharacterBuffer[pixelX, pixelY] = pixelChar;
-						}
-
-						currentPoint.X++;
-						currentPoint.Y += slope;
-					}
-				}
-				else // for more vertical lines, draw vertically
-				{
-					// start with bottom most point
-					if (point1.Y > point2.Y)
-					{
-						currentPoint = new Vector2(point2.X, point2.Y);
-						endPoint = new Vector2(point1.X, point1.Y);
-					}
-
-					// draw along y, bottom to top
-					while (currentPoint.Y <= endPoint.Y)
-					{
-						var offetX = (frame.Width / 2) + currentPoint.X;
-						var offsetY = (frame.Height / 2) - currentPoint.Y;
-
-						var pixelX = (int)offetX;
-						var pixelY = (int)offsetY;
-
-						if (pixelX >= 0 && pixelX < frame.Width && pixelY >= 0 && pixelY < frame.Height)
-						{
-							frame.CharacterBuffer[pixelX, pixelY] = pixelChar;
-						}
-
-						currentPoint.Y++;
-						currentPoint.X += invSlope;
-					}
-				}
-			}
-		}
-
-		public static void DrawLine(ConsoleGraphicsFrame frame, ITransformation transformation, Vector2 point1, Vector2 point2, bool drawWireFrame = false)
-		{
-			transformation.Transform(ref point1);
-			transformation.Transform(ref point2);
-
-			var rise = point2.Y - point1.Y;
-			var run = point2.X - point1.X;
-
-			var pixelChar = halfPixelChar;
-
-			if (run == 0) // so we don't divide by zero when calculating slope
-			{
-				if (drawWireFrame)
-				{
-					pixelChar = verticleWireFrameChar;
-				}
-
 				var currentPoint = new Vector2(point1.X, System.Math.Min(point1.Y, point2.Y));
 				var endPoint = new Vector2(point2.X, System.Math.Max(point1.Y, point2.Y));
 
@@ -398,7 +338,7 @@ namespace GraphicsEngine.Graphics
 				var slope = rise / run;
 				var invSlope = run / rise;
 
-				if (drawWireFrame)
+				if (!pixelOverride.HasValue)
 				{
 					if (slope > 0)
 					{
@@ -492,23 +432,157 @@ namespace GraphicsEngine.Graphics
 			}
 		}
 
-		public static void DrawPoints(ConsoleGraphicsFrame frame, ITransformation transformation, IEnumerable<Vector2> points)
+		public static void DrawLine(ConsoleGraphicsFrame frame, ITransformation transformation, Vector2 point1, Vector2 point2, byte? pixelOverride = null)
 		{
-			foreach (var point in points)
+			transformation.Transform(ref point1);
+			transformation.Transform(ref point2);
+
+			var rise = point2.Y - point1.Y;
+			var run = point2.X - point1.X;
+
+			var pixelChar = verticleWireFrameChar;
+			if (pixelOverride.HasValue)
 			{
-				DrawPoint(frame, transformation, point);
+				pixelChar = pixelOverride.Value;
+			}
+
+			if (run == 0) // so we don't divide by zero when calculating slope
+			{
+				var currentPoint = new Vector2(point1.X, System.Math.Min(point1.Y, point2.Y));
+				var endPoint = new Vector2(point2.X, System.Math.Max(point1.Y, point2.Y));
+
+				while (currentPoint.Y < endPoint.Y)
+				{
+					var offetX = (frame.Width / 2) + currentPoint.X;
+					var offsetY = (frame.Height / 2) - currentPoint.Y;
+
+					var pixelX = (int)offetX;
+					var pixelY = (int)offsetY;
+
+					if (pixelX >= 0 && pixelX < frame.Width && pixelY >= 0 && pixelY < frame.Height)
+					{
+						frame.CharacterBuffer[pixelX, pixelY] = pixelChar;
+					}
+
+					currentPoint.Y++;
+				}
+			}
+			else
+			{
+				var slope = rise / run;
+				var invSlope = run / rise;
+
+				if (!pixelOverride.HasValue)
+				{
+					if (slope > 0)
+					{
+						if (slope > 1)
+						{
+							pixelChar = verticleWireFrameChar;
+						}
+						else if (slope > 0.5)
+						{
+							pixelChar = upRightWireFrameChar;
+						}
+						else
+						{
+							pixelChar = horizontalWireFrameChar;
+						}
+					}
+					else
+					{
+						if (slope < -1)
+						{
+							pixelChar = verticleWireFrameChar;
+						}
+						else if (slope < -0.5)
+						{
+							pixelChar = upLeftWireFrameChar;
+						}
+						else
+						{
+							pixelChar = horizontalWireFrameChar;
+						}
+					}
+				}
+
+				var currentPoint = new Vector2(point1.X, point1.Y);
+				var endPoint = new Vector2(point2.X, point2.Y);
+
+				if (System.Math.Abs(slope) <= 1) // for more horizontal or 45deg lines, draw horizontally
+				{
+					// start with left most point
+					if (point1.X > point2.X)
+					{
+						currentPoint = new Vector2(point2.X, point2.Y);
+						endPoint = new Vector2(point1.X, point1.Y);
+					}
+
+					// draw along x, left to right
+					while (currentPoint.X <= endPoint.X)
+					{
+						var offetX = (frame.Width / 2) + currentPoint.X;
+						var offsetY = (frame.Height / 2) - currentPoint.Y;
+
+						var pixelX = (int)offetX;
+						var pixelY = (int)offsetY;
+
+						if (pixelX >= 0 && pixelX < frame.Width && pixelY >= 0 && pixelY < frame.Height)
+						{
+							frame.CharacterBuffer[pixelX, pixelY] = pixelChar;
+						}
+
+						currentPoint.X++;
+						currentPoint.Y += slope;
+					}
+				}
+				else // for more vertical lines, draw vertically
+				{
+					// start with bottom most point
+					if (point1.Y > point2.Y)
+					{
+						currentPoint = new Vector2(point2.X, point2.Y);
+						endPoint = new Vector2(point1.X, point1.Y);
+					}
+
+					// draw along y, bottom to top
+					while (currentPoint.Y <= endPoint.Y)
+					{
+						var offetX = (frame.Width / 2) + currentPoint.X;
+						var offsetY = (frame.Height / 2) - currentPoint.Y;
+
+						var pixelX = (int)offetX;
+						var pixelY = (int)offsetY;
+
+						if (pixelX >= 0 && pixelX < frame.Width && pixelY >= 0 && pixelY < frame.Height)
+						{
+							frame.CharacterBuffer[pixelX, pixelY] = pixelChar;
+						}
+
+						currentPoint.Y++;
+						currentPoint.X += invSlope;
+					}
+				}
 			}
 		}
 
-		public static void DrawPoints(ConsoleGraphicsFrame frame, ITransformation transformation, IEnumerable<Vector3> points)
+		public static void DrawPoints(ConsoleGraphicsFrame frame, ITransformation transformation, IEnumerable<Vector2> points, byte? pixelOverride = null)
 		{
 			foreach (var point in points)
 			{
-				DrawPoint(frame, transformation, point);
+				DrawPoint(frame, transformation, point, pixelOverride);
 			}
 		}
 
-		public static void DrawPoint(ConsoleGraphicsFrame frame, ITransformation transformation, Vector2 point)
+		public static void DrawPoints(ConsoleGraphicsFrame frame, ITransformation transformation, IEnumerable<Vector3> points, byte? pixelOverride = null)
+		{
+			foreach (var point in points)
+			{
+				DrawPoint(frame, transformation, point, pixelOverride);
+			}
+		}
+
+		public static void DrawPoint(ConsoleGraphicsFrame frame, ITransformation transformation, Vector2 point, byte? pixelOverride = null)
 		{
 			transformation.Transform(ref point);
 
@@ -518,22 +592,25 @@ namespace GraphicsEngine.Graphics
 			var pixelX = (int) offetX;
 			var pixelY = (int) offsetY;
 
-			frame.CharacterBuffer[pixelX, pixelY] = halfPixelChar;
+			if (pixelX >= 0 && pixelX < frame.Width && pixelY >= 0 && pixelY < frame.Height)
+			{
+				frame.CharacterBuffer[pixelX, pixelY] = pixelOverride.HasValue ? pixelOverride.Value : HalfPixelChar;
+			}
 		}
 
-		public static void DrawPoint(ConsoleGraphicsFrame frame, ITransformation transformation, Vector3 point)
+		public static void DrawPoint(ConsoleGraphicsFrame frame, ITransformation transformation, Vector3 point, byte? pixelOverride = null)
 		{
 			transformation.Transform(ref point);
 
-			if (point.Z > 0)
+			var offetX = (frame.Width / 2) + point.X;
+			var offsetY = (frame.Height / 2) - point.Y;
+
+			var pixelX = (int)offetX;
+			var pixelY = (int)offsetY;
+
+			if (pixelX >= 0 && pixelX < frame.Width && pixelY >= 0 && pixelY < frame.Height)
 			{
-				var offetX = (frame.Width / 2) + point.X / point.Z;
-				var offsetY = (frame.Height / 2) - point.Y / point.Z;
-
-				var pixelX = (int) offetX;
-				var pixelY = (int) offsetY;
-
-				frame.CharacterBuffer[pixelX, pixelY] = halfPixelChar;
+				frame.CharacterBuffer[pixelX, pixelY] = pixelOverride.HasValue ? pixelOverride.Value : HalfPixelChar;
 			}
 		}
 
@@ -571,9 +648,9 @@ namespace GraphicsEngine.Graphics
 			}
 		}
 
-		public static void ClearImage(ConsoleGraphicsFrame frame)
+		public static void ClearImage(ConsoleGraphicsFrame frame, byte? pixelOverride = null)
 		{
-			frame.ClearBuffers();
+			frame.ClearBuffers(pixelOverride);
 		}
 	}
 }
