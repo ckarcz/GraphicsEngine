@@ -14,8 +14,8 @@ namespace GraphicsEngine
 		[STAThread]
 		private static void Main(string[] args)
 		{
-			var consoleScreenWidth = Console.LargestWindowWidth - 10;
-			var consoleScreenHeight = Console.LargestWindowHeight - 10;
+			var consoleScreenWidth = 300;
+			var consoleScreenHeight = 100;
 
 			MessageBox.Show("Top row digits 1-8 switches models.\n\nUp & Down & Left & Right translation.\n[ & ] scale.\n\n, & . & K & L & O & P rotate.");
 
