@@ -4,8 +4,10 @@ A 16 bit windows console 3D graphics engine and framework written in C#.
 This is a learning project regarding creating the foundations of a 3D graphics engine.
 
 *Much inspiration was taken from these guys:*
+
 https://github.com/interl0per/Console-Graphics
 https://github.com/Victormeriqui/Console3D
+
 **Though I am writing entirely from scratch.**
 
 Customized wavefront obj loading code I am currently using:
