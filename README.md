@@ -26,7 +26,7 @@ https://github.com/ChrisJansson/ObjLoader
 * Implement a camera (perspective projection).
 * Implement a hiding algorithm so that when multiple objects are rasterized, proper hiding of objects occurs from the camera's perspective. (ZBuffer algo, etc)
 
-Screenshots:
+# Screenshots:
 ![alt tag](http://giant.gfycat.com/WeepyGloriousAnaconda.gif)
 
 ![alt tag](http://i.imgur.com/ScSQBY8.png)
