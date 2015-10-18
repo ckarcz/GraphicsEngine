@@ -209,6 +209,11 @@ namespace GraphicsEngine.Math
 			return this == other;
 		}
 
+		public override string ToString()
+		{
+			return string.Format("({0}, {1})", X, Y);
+		}
+
 		#endregion Public Methods
 	}
 }

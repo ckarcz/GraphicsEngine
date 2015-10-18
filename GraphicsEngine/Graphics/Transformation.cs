@@ -73,7 +73,10 @@ namespace GraphicsEngine.Graphics
 			var yRotationMatrix = Matrix.CreateYRotationMatrix(transformation.Rotation);
 			var zRotationMatrix = Matrix.CreateZRotationMatrix(transformation.Rotation);
 
-			var transformationMatrix = scalingMatrix * translationMatrix * xRotationMatrix * yRotationMatrix * zRotationMatrix;
+			// translate along static axes
+			var transformationMatrix =  scalingMatrix * xRotationMatrix * yRotationMatrix * zRotationMatrix * translationMatrix;
+			// translate along model axes
+			//var transformationMatrix = scalingMatrix * translationMatrix * xRotationMatrix * yRotationMatrix * zRotationMatrix;
 
 			var x = (point.X * transformationMatrix.M11) + (point.Y * transformationMatrix.M21) + transformationMatrix.M41;
 			var y = (point.X * transformationMatrix.M12) + (point.Y * transformationMatrix.M22) + transformationMatrix.M42;
@@ -90,7 +93,10 @@ namespace GraphicsEngine.Graphics
 			var yRotationMatrix = Matrix.CreateYRotationMatrix(transformation.Rotation);
 			var zRotationMatrix = Matrix.CreateZRotationMatrix(transformation.Rotation);
 
-			var transformationMatrix = scalingMatrix * translationMatrix * xRotationMatrix * yRotationMatrix * zRotationMatrix;
+			// translate along static axes
+			var transformationMatrix = scalingMatrix * xRotationMatrix * yRotationMatrix * zRotationMatrix * translationMatrix;
+			// translate along model axes
+			//var transformationMatrix = scalingMatrix * translationMatrix * xRotationMatrix * yRotationMatrix * zRotationMatrix;
 
 			var x = (point.X * transformationMatrix.M11) + (point.Y * transformationMatrix.M21) + (point.Z * transformationMatrix.M31) + transformationMatrix.M41;
 			var y = (point.X * transformationMatrix.M12) + (point.Y * transformationMatrix.M22) + (point.Z * transformationMatrix.M32) + transformationMatrix.M42;

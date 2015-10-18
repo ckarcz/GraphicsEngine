@@ -62,6 +62,18 @@ namespace GraphicsEngine.Graphics
 			rasterizingActions.Add(action);
 		}
 
+		public void DrawMeshBoundingBox(ITransformation transformation, IMesh mesh, byte? pixelOverride = null)
+		{
+			var action = new Action(() => DrawMeshBoundingBox(frameBuffer, transformation, mesh, pixelOverride));
+			rasterizingActions.Add(action);
+		}
+
+		public void DrawMeshBoundingBox(ITransformation transformation, IEnumerable<IMesh> meshes, byte? pixelOverride = null)
+		{
+			var action = new Action(() => DrawMeshBoundingBox(frameBuffer, transformation, meshes, pixelOverride));
+			rasterizingActions.Add(action);
+		}
+
 		public void DrawPolygonWired(ITransformation transformation, IEnumerable<Vector2> vectors, byte? pixelOverride = null)
 		{
 			var action = new Action(() => DrawPolygonWired(frameBuffer, transformation, vectors, pixelOverride));
@@ -235,6 +247,47 @@ namespace GraphicsEngine.Graphics
 			foreach (var mesh in meshes)
 			{
 				DrawMeshCenters(frame, transformation, mesh, pixelOverride);
+			}
+		}
+
+		public static void DrawMeshBoundingBox(ConsoleGraphicsFrame frame, ITransformation transformation, IMesh mesh, byte? pixelOverride = null)
+		{
+			if (mesh.Minimums.HasValue && mesh.Maximums.HasValue)
+			{
+				var meshMinimums = mesh.Minimums.Value;
+				var meshMaximums = mesh.Maximums.Value;
+
+				var nearBottomLeftPoint = new Vector3(meshMinimums.X, meshMinimums.Y, meshMaximums.Z);
+				var farBottomLeftPoint = new Vector3(meshMinimums.X, meshMinimums.Y, meshMinimums.Z);
+				var nearBottomRightPoint = new Vector3(meshMaximums.X, meshMinimums.Y, meshMaximums.Z);
+				var farBottomRightPoint = new Vector3(meshMaximums.X, meshMinimums.Y, meshMinimums.Z);
+				var nearTopRightPoint = new Vector3(meshMaximums.X, meshMaximums.Y, meshMaximums.Z);
+				var farTopRightPoint = new Vector3(meshMaximums.X, meshMaximums.Y, meshMinimums.Z);
+				var nearTopLeftPoint = new Vector3(meshMinimums.X, meshMaximums.Y, meshMaximums.Z);
+				var farTopLeftPoint = new Vector3(meshMinimums.X, meshMaximums.Y, meshMinimums.Z);
+
+				DrawLine(frame, transformation, nearBottomLeftPoint, farBottomLeftPoint, pixelOverride);
+				DrawLine(frame, transformation, nearBottomRightPoint, farBottomRightPoint, pixelOverride);
+				DrawLine(frame, transformation, nearTopRightPoint, farTopRightPoint, pixelOverride);
+				DrawLine(frame, transformation, nearTopLeftPoint, farTopLeftPoint, pixelOverride);
+
+				DrawLine(frame, transformation, nearBottomLeftPoint, nearBottomRightPoint, pixelOverride);
+				DrawLine(frame, transformation, nearBottomRightPoint, nearTopRightPoint, pixelOverride);
+				DrawLine(frame, transformation, nearTopRightPoint, nearTopLeftPoint, pixelOverride);
+				DrawLine(frame, transformation, nearTopLeftPoint, nearBottomLeftPoint, pixelOverride);
+
+				DrawLine(frame, transformation, farBottomLeftPoint, farBottomRightPoint, pixelOverride);
+				DrawLine(frame, transformation, farBottomRightPoint, farTopRightPoint, pixelOverride);
+				DrawLine(frame, transformation, farTopRightPoint, farTopLeftPoint, pixelOverride);
+				DrawLine(frame, transformation, farTopLeftPoint, farBottomLeftPoint, pixelOverride);
+			}
+		}
+
+		public static void DrawMeshBoundingBox(ConsoleGraphicsFrame frame, ITransformation transformation, IEnumerable<IMesh> meshes, byte? pixelOverride = null)
+		{
+			foreach (var mesh in meshes)
+			{
+				DrawMeshBoundingBox(frame, transformation, mesh, pixelOverride);
 			}
 		}
 

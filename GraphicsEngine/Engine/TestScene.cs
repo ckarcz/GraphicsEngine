@@ -58,9 +58,16 @@ namespace GraphicsEngine.Engine
 
 			rasterizer.DrawMeshWired(transformation, meshes);
 			rasterizer.DrawMeshCenters(transformation, meshes);
+			rasterizer.DrawMeshBoundingBox(transformation, meshes);
 
 			rasterizer.DrawStringHorizontal(Transformation.None, new Vector2(-Width / 2 + 1, Height / 2 - 2), string.Format("MODEL: '{0}'", currentWavefrontObjectFilePath));
 			rasterizer.DrawStringHorizontal(Transformation.None, new Vector2(-Width / 2 + 1, Height / 2 - 3), string.Format("# POLYGONS: {0}", meshes.Sum(mesh => mesh.Faces.Count())));
+
+			rasterizer.DrawStringHorizontal(Transformation.None, new Vector2(-Width / 2 + 1, 10), string.Format("TRANSLATION: {0}", transformation.Translation));
+			rasterizer.DrawStringHorizontal(Transformation.None, new Vector2(-Width / 2 + 1, 9), string.Format("SCALE: {0}", transformation.Scale));
+			rasterizer.DrawStringHorizontal(Transformation.None, new Vector2(-Width / 2 + 1, 8), string.Format("ROTATION: {0}", transformation.Rotation));
+
+			rasterizer.DrawStringHorizontal(Transformation.None, new Vector2(-Width / 2 + 1, 6), string.Format("MODEL CENTER: {0}", transformation.Transform(meshes.First().Centers.Value)));
 		}
 
 		public ConsoleGraphicsFrame Rasterize()
@@ -219,6 +226,31 @@ namespace GraphicsEngine.Engine
 			else
 			{
 				scaleFactor = 1;
+			}
+
+			if (rotateX > MathUtil.TwoPi)
+			{
+				rotateX = 0;
+			}
+			else if (rotateX < 0)
+			{
+				rotateX = MathUtil.TwoPi;
+			}
+			if (rotateY > MathUtil.TwoPi)
+			{
+				rotateY = 0;
+			}
+			else if (rotateY < 0)
+			{
+				rotateY = MathUtil.TwoPi;
+			}
+			if (rotateZ > MathUtil.TwoPi)
+			{
+				rotateZ = 0;
+			}
+			else if (rotateZ < 0)
+			{
+				rotateZ = MathUtil.TwoPi;
 			}
 
 			transformation.Translation = new Vector3(translateX, translateY, translateZ);
