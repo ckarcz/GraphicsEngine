@@ -4,7 +4,7 @@ A 16 bit windows console 3D graphics engine and framework written in C#.
 This is a learning project regarding creating the foundations of a 3D graphics engine.
 
 Screenshots:
-![alt tag](http://gfycat.com/WeepyGloriousAnaconda)
+![alt tag](http://giant.gfycat.com/WeepyGloriousAnaconda.gif)
 
 ![alt tag](http://i.imgur.com/ScSQBY8.png)
 
