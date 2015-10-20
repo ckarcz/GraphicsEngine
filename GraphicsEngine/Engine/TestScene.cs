@@ -8,6 +8,7 @@ using GraphicsEngine.Graphics;
 using GraphicsEngine.Graphics.Console;
 using GraphicsEngine.Math;
 using GraphicsEngine.Wavefront.Loaders;
+using GraphicsEngine.Win32;
 
 #endregion
 
@@ -33,12 +34,12 @@ namespace GraphicsEngine.Engine
 			inputStateService = new InputStateService();
 			transformation = new Transformation();
 
-			currentWavefrontObjectFilePath = "Models\\woman1.obj";
+			currentWavefrontObjectFilePath = "Models\\triangle.obj";
 
 			InitScene(currentWavefrontObjectFilePath);
 
 			//transformation.Scale *= 50;
-			transformation.Translation = new Vector3(0, -50, 0);
+			//transformation.Translation = new Vector3(0, -50, 0);
 		}
 
 		public int Width { get; private set; }
@@ -52,11 +53,10 @@ namespace GraphicsEngine.Engine
 
 		public void Draw()
 		{
-			rasterizer.ClearImage();
-
+			rasterizer.ClearImage((byte) ' ', (byte) Kernel32Console.Colors.BACKGROUND_BLACK | Kernel32Console.Colors.FOREGROUND_GREY | Kernel32Console.Colors.FOREGROUND_INTENSITY);
 			//rasterizer.DrawAxes(Transformation.None);
 
-			rasterizer.DrawMeshWired(transformation, meshes);
+			rasterizer.DrawMeshWired(transformation, meshes, Rasterizer.HalfPixelChar);
 			rasterizer.DrawMeshCenters(transformation, meshes);
 			rasterizer.DrawMeshBoundingBox(transformation, meshes);
 

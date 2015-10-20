@@ -47,6 +47,12 @@ namespace GraphicsEngine.Graphics.Console
 			System.Console.CursorVisible = false;
 		}
 
+		public string WindowTitle
+		{
+			get { return System.Console.Title; }
+			set { System.Console.Title = value; }
+		}
+
 		public int Width { get; private set; }
 		public int Height { get; private set; }
 

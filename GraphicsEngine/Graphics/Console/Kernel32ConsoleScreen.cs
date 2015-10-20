@@ -1,6 +1,8 @@
 #region Imports
 
 using System;
+using System.Diagnostics;
+using System.Text;
 using GraphicsEngine.Win32;
 
 #endregion
@@ -10,45 +12,53 @@ namespace GraphicsEngine.Graphics.Console
 	public class Kernel32ConsoleScreen
 		: IConsoleScreen
 	{
-		private Kernel32Console.SmallRect consoleScreenCoords;
-		private readonly Kernel32Console.CharInfo[] consoleScreenBuffer;
-		private readonly Kernel32Console.Coord consoleScreenBufferCoords;
+		private Kernel32Console.SMALL_RECT consoleScreenSizeRect;
+		private readonly Kernel32Console.CHAR_INFO[] consoleScreenBuffer;
+		private readonly Kernel32Console.COORD consoleScreenBufferStartCoords;
 		private readonly Kernel32Console.CONSOLE_SCREEN_BUFFER_INFO_EX consoleScreenBufferInfoEx;
-		private readonly Kernel32Console.Coord consoleScreenBufferSize;
-		private readonly byte emptyPixelChar = (byte) ' ';
-        private readonly IntPtr stdOutputHandle;
+		private readonly Kernel32Console.COORD consoleScreenBufferSizeCoords;
+		private readonly IntPtr stdOutputHandle;
 
-		public Kernel32ConsoleScreen(int width, int height)
+		public Kernel32ConsoleScreen(int width, int height, string windowTitle, short colors = Kernel32Console.Colors.BACKGROUND_BLACK | Kernel32Console.Colors.FOREGROUND_GREY | Kernel32Console.Colors.FOREGROUND_INTENSITY)
 		{
 			Width = width;
 			Height = height;
+			WindowTitle = windowTitle;
+			stdOutputHandle = Kernel32Console.GetStdHandle(Kernel32Console.STD_OUTPUT_HANDLE);
 
-			this.stdOutputHandle = Kernel32Console.GetStdHandle(Kernel32Console.STD_OUTPUT_HANDLE);
-
-			consoleScreenBufferSize = new Kernel32Console.Coord(Width, Height);
-			consoleScreenBufferCoords = new Kernel32Console.Coord(0, 0);
-			consoleScreenCoords = new Kernel32Console.SmallRect(0, 0, Width, Height);
-
+			consoleScreenBufferSizeCoords = new Kernel32Console.COORD(Width, Height);
+			consoleScreenBufferStartCoords = new Kernel32Console.COORD(0, 0);
+			consoleScreenSizeRect = new Kernel32Console.SMALL_RECT(0, 0, Width, Height);
+			
 			consoleScreenBufferInfoEx = Kernel32Console.CONSOLE_SCREEN_BUFFER_INFO_EX.Create();
 			Kernel32Console.GetConsoleScreenBufferInfoEx(stdOutputHandle, ref consoleScreenBufferInfoEx);
 
-			consoleScreenBufferInfoEx.dwSize = new Kernel32Console.Coord(Width, Height);
-			consoleScreenBufferInfoEx.dwCursorPosition = new Kernel32Console.Coord(0, 0);
-			consoleScreenBufferInfoEx.wAttributes = Kernel32Console.DefaultColors.BACKGROUND_BLACK;
+			consoleScreenBufferInfoEx.dwSize = consoleScreenBufferSizeCoords;
+            consoleScreenBufferInfoEx.dwCursorPosition = new Kernel32Console.COORD(0, 0);
+			consoleScreenBufferInfoEx.srWindow = consoleScreenSizeRect;
+			consoleScreenBufferInfoEx.bFullscreenSupported = false;
 
 			Kernel32Console.SetConsoleScreenBufferInfoEx(stdOutputHandle, ref consoleScreenBufferInfoEx);
 
-			consoleScreenBuffer = new Kernel32Console.CharInfo[Width * Height];
-			var chri = new Kernel32Console.CharInfo(new Kernel32Console.CharUnion(' '), 0);
-
+			consoleScreenBuffer = new Kernel32Console.CHAR_INFO[Width * Height];
+			var emptyChar = new Kernel32Console.CHAR_INFO(new Kernel32Console.CHAR_UNION(' '), colors);
 			for (int i = 0; i < width * height; i++)
 			{
-				consoleScreenBuffer[i] = chri;
+				consoleScreenBuffer[i] = emptyChar;
 			}
 
-			// TODO fix above so we don't have to use System.Console here
-			System.Console.SetWindowSize(width, height);
-			System.Console.CursorVisible = false;
+			Draw();
+		}
+
+		public string WindowTitle
+		{
+			get
+			{
+				var stringBuilder = new StringBuilder();
+				Kernel32Console.GetConsoleTitle(stringBuilder, 256);
+				return stringBuilder.ToString();
+			}
+			set { Kernel32Console.SetConsoleTitle(value); }
 		}
 
 		public int Width { get; private set; }
@@ -61,94 +71,45 @@ namespace GraphicsEngine.Graphics.Console
 
 		public void SetCursor(int x, int y)
 		{
-			Kernel32Console.SetConsoleCursorPosition(stdOutputHandle, new Kernel32Console.Coord(x, y));
+			Kernel32Console.SetConsoleCursorPosition(stdOutputHandle, new Kernel32Console.COORD(x, y));
 		}
 
 		public void SetFrame(IConsoleGraphicsFrame consoleGraphicsBuffer)
 		{
-			var characterBuffer = consoleGraphicsBuffer.CharacterBuffer;
-			var colorBuffer = consoleGraphicsBuffer.ColorBuffer;
-
-			for (var x = 0; x < consoleGraphicsBuffer.Width; x++)
+			for (int x = 0; x < consoleGraphicsBuffer.Width; x++)
 			{
-				for (var y = 0; y < consoleGraphicsBuffer.Height; y++)
+				for (int y = 0; y < consoleGraphicsBuffer.Height; y++)
 				{
-					var character = characterBuffer[x, y];
-					var color = colorBuffer[x, y];
-
-					SetPixel(x, y, color, character);
+					SetPixel(x, y, consoleGraphicsBuffer.ColorBuffer[x, y], consoleGraphicsBuffer.CharacterBuffer[x, y]);
 				}
 			}
 		}
 
 		public void SetPixel(int x, int y, short color, byte chr)
 		{
-			if (x < 0 || x >= Width || y < 0 || y >= Height)
-			{
-				throw new IndexOutOfRangeException("X or Y out of range.");
-			}
-
 			consoleScreenBuffer[x + y * Width].Attributes = color;
 			consoleScreenBuffer[x + y * Width].Char.AsciiChar = chr;
 		}
 
 		public void SetPixel(int x, int y, short color)
 		{
-			if (x < 0 || x >= Width || y < 0 || y >= Height)
-			{
-				throw new IndexOutOfRangeException("X or Y out of range.");
-			}
-
-			char chr = (char) (y % 2 == 0 ? 223 : 220);
-
-			short mody = (short) System.Math.Round((y / 2.0));
-			y -= mody;
-
-			char oldchr = (char) consoleScreenBuffer[x + y * Width].Char.AsciiChar;
-
-			if (oldchr == 219 || oldchr == chr)
-			{
-				consoleScreenBuffer[x + y * Width].Attributes = color;
-				consoleScreenBuffer[x + y * Width].Char.AsciiChar = (byte) oldchr;
-
-				return;
-			}
-
-			if (oldchr != ' ')
-			{
-				consoleScreenBuffer[x + y * Width].Char.AsciiChar = 219;
-			}
-			else
-			{
-				consoleScreenBuffer[x + y * Width].Char.AsciiChar = (byte) chr;
-			}
-
-			consoleScreenBuffer[x + y * Width].Attributes = (short) color;
+			consoleScreenBuffer[x + y * Width].Attributes = color;
+			//consoleScreenBuffer[x + y * Width].Char.AsciiChar = chr;
 		}
 
 		public short GetPixelColor(int x, int y)
 		{
-			if (x < 0 || x >= Width || y < 0 || y >= Height)
-			{
-				throw new IndexOutOfRangeException("X or Y out of range.");
-			}
-
 			return consoleScreenBuffer[x + y * Width].Attributes;
 		}
 
 		public byte GetPixelChar(int x, int y)
 		{
-			if (x < 0 || x >= Width || y < 0 || y >= Height)
-			{
-				throw new IndexOutOfRangeException("X or Y out of range.");
-			}
-
 			return consoleScreenBuffer[x + y * Width].Char.AsciiChar;
 		}
 
 		public void Draw()
 		{
-			Kernel32Console.WriteConsoleOutput(stdOutputHandle, consoleScreenBuffer, consoleScreenBufferSize, consoleScreenBufferCoords, ref consoleScreenCoords);
+			Kernel32Console.WriteConsoleOutput(stdOutputHandle, consoleScreenBuffer, consoleScreenBufferSizeCoords, consoleScreenBufferStartCoords, ref consoleScreenSizeRect);
 		}
 
 		public void ClearFrame(short color)
@@ -156,7 +117,7 @@ namespace GraphicsEngine.Graphics.Console
 			for (int i = 0; i < Width * Height; i++)
 			{
 				consoleScreenBuffer[i].Attributes = color;
-				consoleScreenBuffer[i].Char.AsciiChar = emptyPixelChar;
+				consoleScreenBuffer[i].Char.AsciiChar = (byte)' '; // save as const
 			}
 		}
 	}

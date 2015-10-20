@@ -2,6 +2,8 @@ namespace GraphicsEngine.Graphics.Console
 {
 	public interface IConsoleScreen
 	{
+		string WindowTitle { get; }
+
 		int Width { get; }
 		int Height { get; }
 

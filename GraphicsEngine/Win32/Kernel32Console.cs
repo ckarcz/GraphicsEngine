@@ -3,6 +3,7 @@
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Text;
 
 #endregion
 
@@ -13,33 +14,33 @@ namespace GraphicsEngine.Win32
 {
 	internal static class Kernel32Console
 	{
-		public static class DefaultColors
-		{
-			public static short FOREGROUND_BLACK = 0x0000;
-			public static short FOREGROUND_BLUE = 0x0001;
-			public static short FOREGROUND_GREEN = 0x0002;
-			public static short FOREGROUND_CYAN = 0x0003;
-			public static short FOREGROUND_RED = 0x0004;
-			public static short FOREGROUND_MAGENTA = 0x0005;
-			public static short FOREGROUND_YELLOW = 0x0006;
-			public static short FOREGROUND_GREY = 0x0007;
-			public static short FOREGROUND_INTENSITY = 0x0008;
+		public const int STD_INPUT_HANDLE = unchecked((int)(-10));
+		public const int STD_OUTPUT_HANDLE = unchecked((int)(-11));
+		public const int STD_ERROR_HANDLE = unchecked((int)(-12));
 
-			public static short BACKGROUND_BLACK = 0x0000;
-			public static short BACKGROUND_BLUE = 0x0010;
-			public static short BACKGROUND_GREEN = 0x0020;
-			public static short BACKGROUND_CYAN = 0x0030;
-			public static short BACKGROUND_RED = 0x0040;
-			public static short BACKGROUND_MAGENTA = 0x0050;
-			public static short BACKGROUND_YELLOW = 0x0060;
-			public static short BACKGROUND_GREY = 0x0070;
-			public static short BACKGROUND_INTENSITY = 0x0080;
+		public static class Colors
+		{
+			public const short FOREGROUND_BLACK = 0x0000;
+			public const short FOREGROUND_BLUE = 0x0001;
+			public const short FOREGROUND_GREEN = 0x0002;
+			public const short FOREGROUND_CYAN = 0x0003;
+			public const short FOREGROUND_RED = 0x0004;
+			public const short FOREGROUND_MAGENTA = 0x0005;
+			public const short FOREGROUND_YELLOW = 0x0006;
+			public const short FOREGROUND_GREY = 0x0007;
+			public const short FOREGROUND_INTENSITY = 0x0008;
+
+			public const short BACKGROUND_BLACK = 0x0000;
+			public const short BACKGROUND_BLUE = 0x0010;
+			public const short BACKGROUND_GREEN = 0x0020;
+			public const short BACKGROUND_CYAN = 0x0030;
+			public const short BACKGROUND_RED = 0x0040;
+			public const short BACKGROUND_MAGENTA = 0x0050;
+			public const short BACKGROUND_YELLOW = 0x0060;
+			public const short BACKGROUND_GREY = 0x0070;
+			public const short BACKGROUND_INTENSITY = 0x0080;
 		}
 
-		public const int STD_INPUT_HANDLE = unchecked((int) (-10));
-		public const int STD_OUTPUT_HANDLE = unchecked((int) (-11));
-		public const int STD_ERROR_HANDLE = unchecked((int) (-12));
-		public const int HIGH_INTENSITY = 0x0008;
 		public const ushort COMMON_LVB_LEADING_BYTE = 0x0100;
 		public const ushort COMMON_LVB_TRAILING_BYTE = 0x0200;
 		public const ushort COMMON_LVB_GRID_HORIZONTAL = 0x0400;
@@ -73,7 +74,7 @@ namespace GraphicsEngine.Win32
 
 		[DllImport("user32.dll")]
 		[return: MarshalAs(UnmanagedType.Bool)]
-		public static extern bool GetCursorPos(out Coord lpPoint);
+		public static extern bool GetCursorPos(out COORD lpPoint);
 
 		[DllImport("kernel32.dll", SetLastError = true)]
 		public static extern IntPtr GetStdHandle(
@@ -86,11 +87,11 @@ namespace GraphicsEngine.Win32
 		[DllImport("kernel32.dll", SetLastError = true)]
 		public static extern bool SetConsoleCursorPosition(
 			IntPtr hConsoleOutput,
-			Coord dwCursorPosition
+			COORD dwCursorPosition
 			);
 
 		[DllImport("user32.dll", SetLastError = true)]
-		public static extern bool GetWindowRect(IntPtr hwnd, out SmallRect lpRect);
+		public static extern bool GetWindowRect(IntPtr hwnd, out SMALL_RECT lpRect);
 
 		[DllImport("kernel32.dll", SetLastError = true)]
 		public static extern bool GetConsoleScreenBufferInfoEx(
@@ -101,10 +102,10 @@ namespace GraphicsEngine.Win32
 		[DllImport("kernel32.dll", SetLastError = true)]
 		public static extern bool WriteConsoleOutput(
 			IntPtr hConsoleOutput,
-			CharInfo[] lpBuffer,
-			Coord dwBufferSize,
-			Coord dwBufferCoord,
-			ref SmallRect lpWriteRegion
+			CHAR_INFO[] lpBuffer,
+			COORD dwBufferSize,
+			COORD dwBufferCoord,
+			ref SMALL_RECT lpWriteRegion
 			);
 
 		[DllImport("kernel32.dll", SetLastError = true)]
@@ -120,17 +121,28 @@ namespace GraphicsEngine.Win32
 			ref CONSOLE_SCREEN_BUFFER_INFO_EX ConsoleScreenBufferInfoEx
 			);
 
+		[DllImport("kernel32.dll", SetLastError = true)]
+		public static extern uint GetConsoleTitle(
+			[Out] StringBuilder lpConsoleTitle,
+			uint nSize
+			);	
+
+		[DllImport("kernel32.dll", SetLastError = true)]
+		public static extern bool SetConsoleTitle(
+			string lpConsoleTitle
+			);
+
 		[StructLayout(LayoutKind.Sequential)]
 		public unsafe struct CONSOLE_FONT_INFO_EX
 		{
 			public uint cbSize;
 			public uint nFont;
-			public Coord dwFontSize;
+			public Kernel32Console.COORD dwFontSize;
 			public ushort FontFamily;
 			public ushort FontWeight;
 
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
-			public fixed char FaceName [LF_FACESIZE];
+			public fixed char FaceName[LF_FACESIZE];
 
 			public const int LF_FACESIZE = 32;
 		}
@@ -189,7 +201,7 @@ namespace GraphicsEngine.Win32
 		[StructLayout(LayoutKind.Sequential)]
 		public struct MOUSE_EVENT_RECORD
 		{
-			public Coord dwMousePosition;
+			public COORD dwMousePosition;
 			public uint dwButtonState;
 			public uint dwControlKeyState;
 			public uint dwEventFlags;
@@ -198,11 +210,11 @@ namespace GraphicsEngine.Win32
 		[StructLayout(LayoutKind.Sequential)]
 		public struct WINDOW_BUFFER_SIZE_RECORD
 		{
-			public Coord dwSize;
+			public COORD dwSize;
 
 			public WINDOW_BUFFER_SIZE_RECORD(short x, short y)
 			{
-				dwSize = new Coord(x, y);
+				dwSize = new COORD(x, y);
 			}
 		}
 
@@ -222,73 +234,93 @@ namespace GraphicsEngine.Win32
 		public struct CONSOLE_SCREEN_BUFFER_INFO_EX
 		{
 			public uint cbSize;
-			public Coord dwSize;
-			public Coord dwCursorPosition;
+			public COORD dwSize;
+			public COORD dwCursorPosition;
 			public short wAttributes;
-			public SmallRect srWindow;
-			public Coord dwMaximumWindowSize;
+			public SMALL_RECT srWindow;
+			public COORD dwMaximumWindowSize;
 			public ushort wPopupAttributes;
 			public bool bFullscreenSupported;
 
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
-			public ColorRef[] ColorTable;
+			public COLORREF[] ColorTable;
 
 			public static CONSOLE_SCREEN_BUFFER_INFO_EX Create()
 			{
-				return new CONSOLE_SCREEN_BUFFER_INFO_EX {cbSize = 96};
+				return new CONSOLE_SCREEN_BUFFER_INFO_EX { cbSize = 96 };
 			}
 		}
 
 		[StructLayout(LayoutKind.Sequential)]
-		public struct ColorRef
+		public struct COLORREF
 		{
 			public uint ColorDWORD;
 
-			public ColorRef(Color color)
+			public COLORREF(Color color)
 			{
-				ColorDWORD = (uint) color.R + (((uint) color.G) << 8) + (((uint) color.B) << 16);
+				ColorDWORD = (uint)color.R + (((uint)color.G) << 8) + (((uint)color.B) << 16);
+			}
+
+			public COLORREF(uint dword)
+			{
+				ColorDWORD = dword;
 			}
 
 			public Color GetColor()
 			{
-				return Color.FromArgb((int) (0x000000FFU & ColorDWORD), (int) (0x0000FF00U & ColorDWORD) >> 8, (int) (0x00FF0000U & ColorDWORD) >> 16);
+				return Color.FromArgb(R, G, B);
+			}
+
+			public int R
+			{
+				get { return (int) (0x000000FFU & ColorDWORD); }
+			}
+
+			public int G
+			{
+				get { return (int)(0x0000FF00U & ColorDWORD) >> 8; }
+			}
+
+			public int B
+			{
+				get { return (int)(0x00FF0000U & ColorDWORD) >> 16; }
 			}
 
 			public void SetColor(Color color)
 			{
-				ColorDWORD = (uint) color.R + (((uint) color.G) << 8) + (((uint) color.B) << 16);
+				ColorDWORD = (uint)color.R + (((uint)color.G) << 8) + (((uint)color.B) << 16);
 			}
 		}
 
 		[StructLayout(LayoutKind.Sequential)]
-		public struct Coord
+		public struct COORD
 		{
 			public readonly short X;
 			public readonly short Y;
 
-			public Coord(short X, short Y)
+			public COORD(short X, short Y)
 			{
 				this.X = X;
 				this.Y = Y;
 			}
 
-			public Coord(int X, int Y)
+			public COORD(int X, int Y)
 			{
-				this.X = (short) X;
-				this.Y = (short) Y;
+				this.X = (short)X;
+				this.Y = (short)Y;
 			}
 		};
 
 		[StructLayout(LayoutKind.Explicit)]
-		public struct CharUnion
+		public struct CHAR_UNION
 		{
-			public CharUnion(char unicodeChar)
+			public CHAR_UNION(char unicodeChar)
 			{
 				UnicodeChar = unicodeChar;
-				AsciiChar = (byte) UnicodeChar;
+				AsciiChar = (byte)UnicodeChar;
 			}
 
-			public CharUnion(char unicodeChar, byte asciiChar)
+			public CHAR_UNION(char unicodeChar, byte asciiChar)
 			{
 				UnicodeChar = unicodeChar;
 				AsciiChar = asciiChar;
@@ -302,30 +334,30 @@ namespace GraphicsEngine.Win32
 		}
 
 		[StructLayout(LayoutKind.Explicit)]
-		public struct CharInfo
+		public struct CHAR_INFO
 		{
-			public CharInfo(CharUnion character, short attributes)
+			public CHAR_INFO(CHAR_UNION character, short attributes)
 			{
 				Char = character;
 				Attributes = attributes;
 			}
 
 			[FieldOffset(0)]
-			public CharUnion Char;
+			public CHAR_UNION Char;
 
 			[FieldOffset(2)]
 			public short Attributes;
 		}
 
 		[StructLayout(LayoutKind.Sequential)]
-		public struct SmallRect
+		public struct SMALL_RECT
 		{
 			public short Left;
 			public short Top;
 			public short Right;
 			public short Bottom;
 
-			public SmallRect(short left, short top, short right, short bottom)
+			public SMALL_RECT(short left, short top, short right, short bottom)
 			{
 				Left = left;
 				Top = top;
@@ -333,12 +365,12 @@ namespace GraphicsEngine.Win32
 				Bottom = bottom;
 			}
 
-			public SmallRect(int left, int top, int right, int bottom)
+			public SMALL_RECT(int left, int top, int right, int bottom)
 			{
-				Left = (short) left;
-				Top = (short) top;
-				Right = (short) right;
-				Bottom = (short) bottom;
+				Left = (short)left;
+				Top = (short)top;
+				Right = (short)right;
+				Bottom = (short)bottom;
 			}
 		}
 	}
