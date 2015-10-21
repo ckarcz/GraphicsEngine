@@ -34,7 +34,7 @@ namespace GraphicsEngine.Engine
 			inputStateService = new InputStateService();
 			transformation = new Transformation();
 
-			currentWavefrontObjectFilePath = "Models\\triangle.obj";
+			currentWavefrontObjectFilePath = "Models\\woman1.obj";
 
 			InitScene(currentWavefrontObjectFilePath);
 
@@ -57,8 +57,8 @@ namespace GraphicsEngine.Engine
 			//rasterizer.DrawAxes(Transformation.None);
 
 			rasterizer.DrawMeshWired(transformation, meshes, Rasterizer.HalfPixelChar);
-			rasterizer.DrawMeshCenters(transformation, meshes);
-			rasterizer.DrawMeshBoundingBox(transformation, meshes);
+			//rasterizer.DrawMeshCenters(transformation, meshes);
+			//rasterizer.DrawMeshBoundingBox(transformation, meshes);
 
 			rasterizer.DrawStringHorizontal(Transformation.None, new Vector2(-Width / 2 + 1, Height / 2 - 2), string.Format("MODEL: '{0}'", currentWavefrontObjectFilePath));
 			rasterizer.DrawStringHorizontal(Transformation.None, new Vector2(-Width / 2 + 1, Height / 2 - 3), string.Format("# POLYGONS: {0}", meshes.Sum(mesh => mesh.Faces.Count())));
