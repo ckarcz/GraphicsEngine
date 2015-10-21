@@ -7,7 +7,7 @@ This is a learning project regarding creating the foundations of a 3D graphics e
 * https://github.com/interl0per/Console-Graphics
 * https://github.com/Victormeriqui/Console3D
 
-(*Though I am writing entirely from scratch.*)
+(*Though for the vast majority of things, I am writing entirely from scratch for complete learning.*)
 
 Customized wavefront obj loading code I am currently using:
 https://github.com/ChrisJansson/ObjLoader
