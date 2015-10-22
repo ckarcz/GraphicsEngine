@@ -27,6 +27,5 @@ https://github.com/ChrisJansson/ObjLoader
 * Implement a hiding algorithm so that when multiple objects are rasterized, proper hiding of objects occurs from the camera's perspective. (ZBuffer algo, etc)
 
 # Screenshots:
-http://gfycat.com/DigitalWhichGar
 
 ![asdfasf](https://github.com/ckarcz/GraphicsEngine/blob/master/colored_wired_woman_demo.gif)
