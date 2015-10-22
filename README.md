@@ -29,4 +29,4 @@ https://github.com/ChrisJansson/ObjLoader
 # Screenshots:
 http://gfycat.com/DigitalWhichGar
 
-![alt tag](http://giant.gfycat.com/DigitalWhichGar.gif)
+![asdfasf](http://giant.gfycat.com/DigitalWhichGar.gif)
