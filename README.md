@@ -29,4 +29,4 @@ https://github.com/ChrisJansson/ObjLoader
 # Screenshots:
 http://gfycat.com/DigitalWhichGar
 
-![asdfasf](http://giant.gfycat.com/DigitalWhichGar.gif)
+![asdfasf](https://github.com/ckarcz/GraphicsEngine/blob/master/colored_wired_woman_demo.gif)
