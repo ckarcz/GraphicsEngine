@@ -1,5 +1,6 @@
 #region Imports
 
+using System;
 using GraphicsEngine.Math;
 
 #endregion
@@ -7,7 +8,7 @@ using GraphicsEngine.Math;
 namespace GraphicsEngine.Graphics
 {
 	public class Transformation
-		: ITransformation
+		: ITransformation, IEquatable<ITransformation>
 	{
 		public static ITransformation None = new Transformation();
 
@@ -67,6 +68,11 @@ namespace GraphicsEngine.Graphics
 
 		public static void Transform(ITransformation transformation, ref Vector2 point)
 		{
+			if (transformation.Equals(Transformation.None))
+			{
+				return;
+			}
+
 			var translationMatrix = Matrix.CreateTranslationMatrix(transformation.Translation);
 			var scalingMatrix = Matrix.CreateScaleMatrix(transformation.Scale);
 			var xRotationMatrix = Matrix.CreateXRotationMatrix(transformation.Rotation);
@@ -87,6 +93,11 @@ namespace GraphicsEngine.Graphics
 
 		public static void Transform(ITransformation transformation, ref Vector3 point)
 		{
+			if (transformation.Equals(Transformation.None))
+			{
+				return;
+			}
+
 			var translationMatrix = Matrix.CreateTranslationMatrix(transformation.Translation);
 			var scalingMatrix = Matrix.CreateScaleMatrix(transformation.Scale);
 			var xRotationMatrix = Matrix.CreateXRotationMatrix(transformation.Rotation);
@@ -105,6 +116,39 @@ namespace GraphicsEngine.Graphics
 			point.X = x;
 			point.Y = y;
 			point.Z = z;
+		}
+
+		public bool Equals(ITransformation other)
+		{
+			if (other == null)
+			{
+				return false;
+			}
+
+			return this.Translation.Equals(other.Translation) &&
+				   this.Scale.Equals(other.Scale) &&
+				   this.Rotation.Equals(other.Rotation);
+		}
+
+		public override bool Equals(object other)
+		{
+			if (other == null)
+			{
+				return false;
+			}
+
+			if (ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			var otherTransformation = other as ITransformation;
+			if (otherTransformation != null)
+			{
+				return Equals(otherTransformation);
+			}
+
+			return false;
 		}
 	}
 }

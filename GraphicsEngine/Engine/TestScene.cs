@@ -34,7 +34,7 @@ namespace GraphicsEngine.Engine
 			inputStateService = new InputStateService();
 			transformation = new Transformation();
 
-			currentWavefrontObjectFilePath = "Models\\woman1.obj";
+			currentWavefrontObjectFilePath = "Models\\triangle.obj";
 
 			InitScene(currentWavefrontObjectFilePath);
 
@@ -54,11 +54,13 @@ namespace GraphicsEngine.Engine
 		public void Draw()
 		{
 			rasterizer.ClearImage((byte) ' ', (byte) Kernel32Console.Colors.BACKGROUND_BLACK | Kernel32Console.Colors.FOREGROUND_GREY | Kernel32Console.Colors.FOREGROUND_INTENSITY);
-			//rasterizer.DrawAxes(Transformation.None);
 
-			rasterizer.DrawMeshWired(transformation, meshes, Rasterizer.HalfPixelChar);
-			//rasterizer.DrawMeshCenters(transformation, meshes);
-			//rasterizer.DrawMeshBoundingBox(transformation, meshes);
+			rasterizer.DrawMeshFilled(transformation, meshes, null, Rasterizer.HalfPixelChar);
+
+			//rasterizer.DrawMeshCenters(transformation, meshes, Kernel32Console.Colors.FOREGROUND_GREEN);
+			//rasterizer.DrawMeshBoundingBox(transformation, meshes, Kernel32Console.Colors.FOREGROUND_MAGENTA);
+
+			//rasterizer.DrawAxes(Transformation.None, Kernel32Console.Colors.FOREGROUND_YELLOW);
 
 			rasterizer.DrawStringHorizontal(Transformation.None, new Vector2(-Width / 2 + 1, Height / 2 - 2), string.Format("MODEL: '{0}'", currentWavefrontObjectFilePath));
 			rasterizer.DrawStringHorizontal(Transformation.None, new Vector2(-Width / 2 + 1, Height / 2 - 3), string.Format("# POLYGONS: {0}", meshes.Sum(mesh => mesh.Faces.Count())));
@@ -226,31 +228,6 @@ namespace GraphicsEngine.Engine
 			else
 			{
 				scaleFactor = 1;
-			}
-
-			if (rotateX > MathUtil.TwoPi)
-			{
-				rotateX = 0;
-			}
-			else if (rotateX < 0)
-			{
-				rotateX = MathUtil.TwoPi;
-			}
-			if (rotateY > MathUtil.TwoPi)
-			{
-				rotateY = 0;
-			}
-			else if (rotateY < 0)
-			{
-				rotateY = MathUtil.TwoPi;
-			}
-			if (rotateZ > MathUtil.TwoPi)
-			{
-				rotateZ = 0;
-			}
-			else if (rotateZ < 0)
-			{
-				rotateZ = MathUtil.TwoPi;
 			}
 
 			transformation.Translation = new Vector3(translateX, translateY, translateZ);
