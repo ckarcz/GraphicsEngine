@@ -14,17 +14,15 @@ namespace GraphicsEngine.Graphics
 {
 	public class Rasterizer
 	{
-		public const byte HalfPixelChar = 219; // '▄'
-		private static readonly byte horizontalWireFrameChar = 95; // '-'
-		private static readonly byte upLeftWireFrameChar = 92; // '/'
-		private static readonly byte upRightWireFrameChar = 47; // '\'
-		private static readonly byte verticleWireFrameChar = 124; // '|'
+		public const byte HalfPixelChar = 219; //						'▄'
+		private static readonly byte horizontalWireFrameChar = 95; //	'-'
+		private static readonly byte upLeftWireFrameChar = 92; //		'/'
+		private static readonly byte upRightWireFrameChar = 47; //		'\'
+		private static readonly byte verticleWireFrameChar = 124; //	'|'
 		private readonly ConsoleGraphicsFrame frameBuffer;
 		private readonly List<Action> rasterizingActions;
 
-		// TEST
 		private static short[] colors = new short[] { Kernel32Console.Colors.FOREGROUND_BLUE, Kernel32Console.Colors.FOREGROUND_CYAN, Kernel32Console.Colors.FOREGROUND_GREEN, Kernel32Console.Colors.FOREGROUND_MAGENTA, Kernel32Console.Colors.FOREGROUND_RED, Kernel32Console.Colors.FOREGROUND_YELLOW, Kernel32Console.Colors.FOREGROUND_GREY };
-
 
 		public Rasterizer(int width, int height)
 		{
@@ -207,7 +205,7 @@ namespace GraphicsEngine.Graphics
 					points.Add(point);
 				}
 
-				var color = colorOverride ?? (short)(colors[i % colors.Length] | Kernel32Console.Colors.FOREGROUND_INTENSITY);
+				var color = colorOverride ?? (short)(colors[i % colors.Length]);
 				DrawPolygonWired(frame, transformation, points, color, pixelOverride);
 				i++;
 			}
@@ -234,7 +232,7 @@ namespace GraphicsEngine.Graphics
 					points.Add(point);
 				}
 
-				var color = colorOverride ?? (short)(colors[i % colors.Length] | Kernel32Console.Colors.FOREGROUND_INTENSITY);
+				var color = colorOverride ?? (short)(colors[i % colors.Length]);
 				DrawPolygonFilled(frame, transformation, points, color, pixelOverride);
 				i++;
 			}
@@ -388,12 +386,12 @@ namespace GraphicsEngine.Graphics
 
 		public static void DrawPolygonFilled(ConsoleGraphicsFrame frame, ITransformation transformation, IEnumerable<Vector3> vectors, short? colorOverride = null, byte? pixelOverride = null)
 		{
-			var transformtedVectors = vectors
-				.Select(vector => transformation.Transform(vector))
+			var transformedVectors = vectors
+				.Select(transformation.Transform)
 				.ToList();
-			var yMax = transformtedVectors.Max(vector => vector.Y);
-			var yMin = transformtedVectors.Min(vector => vector.Y);
-			var edges = GetPolygonEdges(transformtedVectors);
+			var yMax = transformedVectors.Max(vector => vector.Y);
+			var yMin = transformedVectors.Min(vector => vector.Y);
+			var edges = GetPolygonEdges(transformedVectors);
 			for (var scanlineY = yMin; scanlineY <= yMax; scanlineY++)
 			{
 				var yEdgeIntersections = edges
@@ -407,11 +405,14 @@ namespace GraphicsEngine.Graphics
 				{
 					var point1 = xSortedIntersections[index1];
 					var point2 = xSortedIntersections[index2];
-					var startX = point1.X;
+					var line = new Edge3(point1, point2);
+                    var startX = point1.X;
 					var endX = point2.X;
 					for (var x = startX; x <= endX; x++)
 					{
-						var point = new Vector2(x, scanlineY);
+						// Z ALGO IS BUGGY
+						var point = new Vector3(x, scanlineY, line.GetPointFromX(x).Z);
+						//var point = new Vector2(x, scanlineY);
 						DrawPoint(frame, Transformation.None, point, colorOverride, pixelOverride);
 					}
 					
@@ -462,7 +463,7 @@ namespace GraphicsEngine.Graphics
 						frame.CharacterBuffer[pixelX, pixelY] = pixelChar;
 						if (colorOverride != null)
 						{
-							frame.ColorBuffer[pixelX, pixelY] = colorOverride.Value;
+							frame.ColorBuffer[pixelX, pixelY] = (short) (colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
 						}
 					}
 
@@ -535,7 +536,7 @@ namespace GraphicsEngine.Graphics
 							frame.CharacterBuffer[pixelX, pixelY] = pixelChar;
 							if (colorOverride != null)
 							{
-								frame.ColorBuffer[pixelX, pixelY] = colorOverride.Value;
+								frame.ColorBuffer[pixelX, pixelY] = (short) (colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
 							}
 						}
 
@@ -567,7 +568,7 @@ namespace GraphicsEngine.Graphics
 							frame.CharacterBuffer[pixelX, pixelY] = pixelChar;
 							if (colorOverride != null)
 							{
-								frame.ColorBuffer[pixelX, pixelY] = colorOverride.Value;
+								frame.ColorBuffer[pixelX, pixelY] = (short) (colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
 							}
 						}
 
@@ -610,7 +611,7 @@ namespace GraphicsEngine.Graphics
 						frame.CharacterBuffer[pixelX, pixelY] = pixelChar;
 						if (colorOverride != null)
 						{
-							frame.ColorBuffer[pixelX, pixelY] = colorOverride.Value;
+							frame.ColorBuffer[pixelX, pixelY] = (short) (colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
 						}
 					}
 
@@ -682,7 +683,7 @@ namespace GraphicsEngine.Graphics
 							frame.CharacterBuffer[pixelX, pixelY] = pixelChar;
 							if (colorOverride != null)
 							{
-								frame.ColorBuffer[pixelX, pixelY] = colorOverride.Value;
+								frame.ColorBuffer[pixelX, pixelY] = (short) (colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
 							}
 						}
 
@@ -713,7 +714,7 @@ namespace GraphicsEngine.Graphics
 							frame.CharacterBuffer[pixelX, pixelY] = pixelChar;
 							if (colorOverride != null)
 							{
-								frame.ColorBuffer[pixelX, pixelY] = colorOverride.Value;
+								frame.ColorBuffer[pixelX, pixelY] = (short) (colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
 							}
 						}
 
@@ -755,7 +756,7 @@ namespace GraphicsEngine.Graphics
 				frame.CharacterBuffer[pixelX, pixelY] = pixelOverride.HasValue ? pixelOverride.Value : HalfPixelChar;
 				if (colorOverride != null)
 				{
-					frame.ColorBuffer[pixelX, pixelY] = colorOverride.Value;
+					frame.ColorBuffer[pixelX, pixelY] = (short) (colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
 				}
 			}
 		}
@@ -776,7 +777,7 @@ namespace GraphicsEngine.Graphics
 				frame.CharacterBuffer[pixelX, pixelY] = pixelOverride.HasValue ? pixelOverride.Value : HalfPixelChar;
 				if (colorOverride != null)
 				{
-					frame.ColorBuffer[pixelX, pixelY] = colorOverride.Value;
+					frame.ColorBuffer[pixelX, pixelY] = (short) (colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
 				}
 			}
 		}
@@ -796,7 +797,7 @@ namespace GraphicsEngine.Graphics
 				frame.CharacterBuffer[currentPixelX, constPixelY] = (byte) messageChar;
 				if (colorOverride != null)
 				{
-					frame.ColorBuffer[currentPixelX, constPixelY] = colorOverride.Value;
+					frame.ColorBuffer[currentPixelX, constPixelY] = (short) (colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
 				}
 				currentPixelX++;
 			}
@@ -817,7 +818,7 @@ namespace GraphicsEngine.Graphics
 				frame.CharacterBuffer[constPixelX, currentPixelY] = (byte) messageChar;
 				if (colorOverride != null)
 				{
-					frame.ColorBuffer[constPixelX, currentPixelY] = colorOverride.Value;
+					frame.ColorBuffer[constPixelX, currentPixelY] = (short) (colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
 				}
 				currentPixelY++;
 			}

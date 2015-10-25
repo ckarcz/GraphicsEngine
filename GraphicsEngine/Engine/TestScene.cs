@@ -55,10 +55,10 @@ namespace GraphicsEngine.Engine
 		{
 			rasterizer.ClearImage((byte) ' ', (byte) Kernel32Console.Colors.BACKGROUND_BLACK | Kernel32Console.Colors.FOREGROUND_GREY | Kernel32Console.Colors.FOREGROUND_INTENSITY);
 
-			rasterizer.DrawMeshWired(transformation, meshes, null, Rasterizer.HalfPixelChar);
+			rasterizer.DrawMeshFilled(transformation, meshes, null, (byte)'A');//, Rasterizer.HalfPixelChar);
 
-			//rasterizer.DrawMeshCenters(transformation, meshes, Kernel32Console.Colors.FOREGROUND_GREEN);
-			//rasterizer.DrawMeshBoundingBox(transformation, meshes, Kernel32Console.Colors.FOREGROUND_MAGENTA);
+			rasterizer.DrawMeshCenters(transformation, meshes, Kernel32Console.Colors.FOREGROUND_GREEN);
+			rasterizer.DrawMeshBoundingBox(transformation, meshes, Kernel32Console.Colors.FOREGROUND_MAGENTA);
 
 			//rasterizer.DrawAxes(Transformation.None, Kernel32Console.Colors.FOREGROUND_YELLOW);
 
