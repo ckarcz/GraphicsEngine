@@ -445,8 +445,8 @@ namespace GraphicsEngine.Graphics
 
 			if (run == 0) // so we don't divide by zero when calculating slope
 			{
-				var currentPoint = new Vector2(point1.X, System.Math.Min(point1.Y, point2.Y));
-				var endPoint = new Vector2(point2.X, System.Math.Max(point1.Y, point2.Y));
+				var currentPoint = new Vector3(point1.X, System.Math.Min(point1.Y, point2.Y), point1.Z);
+				var endPoint = new Vector3(point2.X, System.Math.Max(point1.Y, point2.Y), point2.Z);
 
 				while (currentPoint.Y < endPoint.Y)
 				{
@@ -456,8 +456,9 @@ namespace GraphicsEngine.Graphics
 					var pixelX = (int) offetX;
 					var pixelY = (int) offsetY;
 
-					if (pixelX >= 0 && pixelX < frame.Width && pixelY >= 0 && pixelY < frame.Height)
+					if (pixelX >= 0 && pixelX < frame.Width && pixelY >= 0 && pixelY < frame.Height && (frame.ZBuffer[pixelX, pixelY] == null || frame.ZBuffer[pixelX, pixelY].Value < currentPoint.Z))
 					{
+						frame.ZBuffer[pixelX, pixelY] = currentPoint.Z;
 						frame.CharacterBuffer[pixelX, pixelY] = pixelChar;
 						if (colorOverride != null)
 						{
@@ -507,16 +508,16 @@ namespace GraphicsEngine.Graphics
 					}
 				}
 
-				var currentPoint = new Vector2(point1.X, point1.Y);
-				var endPoint = new Vector2(point2.X, point2.Y);
+				var currentPoint = new Vector3(point1.X, point1.Y, point1.Z);
+				var endPoint = new Vector3(point2.X, point2.Y, point2.Z);
 
 				if (System.Math.Abs(slope) <= 1) // for more horizontal or 45deg lines, draw horizontally
 				{
 					// start with left most point
 					if (point1.X > point2.X)
 					{
-						currentPoint = new Vector2(point2.X, point2.Y);
-						endPoint = new Vector2(point1.X, point1.Y);
+						currentPoint = new Vector3(point2.X, point2.Y, point2.Z);
+						endPoint = new Vector3(point1.X, point1.Y, point1.Z);
 					}
 
 					// draw along x, left to right
@@ -528,8 +529,9 @@ namespace GraphicsEngine.Graphics
 						var pixelX = (int) offetX;
 						var pixelY = (int) offsetY;
 
-						if (pixelX >= 0 && pixelX < frame.Width && pixelY >= 0 && pixelY < frame.Height)
+						if (pixelX >= 0 && pixelX < frame.Width && pixelY >= 0 && pixelY < frame.Height && (frame.ZBuffer[pixelX, pixelY] == null || frame.ZBuffer[pixelX, pixelY].Value < currentPoint.Z))
 						{
+							frame.ZBuffer[pixelX, pixelY] = currentPoint.Z;
 							frame.CharacterBuffer[pixelX, pixelY] = pixelChar;
 							if (colorOverride != null)
 							{
@@ -546,8 +548,8 @@ namespace GraphicsEngine.Graphics
 					// start with bottom most point
 					if (point1.Y > point2.Y)
 					{
-						currentPoint = new Vector2(point2.X, point2.Y);
-						endPoint = new Vector2(point1.X, point1.Y);
+						currentPoint = new Vector3(point2.X, point2.Y, point2.Z);
+						endPoint = new Vector3(point1.X, point1.Y, point1.Z);
 					}
 
 					// draw along y, bottom to top
@@ -559,8 +561,9 @@ namespace GraphicsEngine.Graphics
 						var pixelX = (int) offetX;
 						var pixelY = (int) offsetY;
 
-						if (pixelX >= 0 && pixelX < frame.Width && pixelY >= 0 && pixelY < frame.Height)
+						if (pixelX >= 0 && pixelX < frame.Width && pixelY >= 0 && pixelY < frame.Height && (frame.ZBuffer[pixelX, pixelY] == null || frame.ZBuffer[pixelX, pixelY].Value < currentPoint.Z))
 						{
+							frame.ZBuffer[pixelX, pixelY] = currentPoint.Z;
 							frame.CharacterBuffer[pixelX, pixelY] = pixelChar;
 							if (colorOverride != null)
 							{
@@ -767,8 +770,9 @@ namespace GraphicsEngine.Graphics
 			var pixelX = (int) offetX;
 			var pixelY = (int) offsetY;
 
-			if (pixelX >= 0 && pixelX < frame.Width && pixelY >= 0 && pixelY < frame.Height)
+			if (pixelX >= 0 && pixelX < frame.Width && pixelY >= 0 && pixelY < frame.Height && (frame.ZBuffer[pixelX, pixelY] == null || frame.ZBuffer[pixelX, pixelY].Value < point.Z))
 			{
+				frame.ZBuffer[pixelX, pixelY] = point.Z;
 				frame.CharacterBuffer[pixelX, pixelY] = pixelOverride.HasValue ? pixelOverride.Value : HalfPixelChar;
 				if (colorOverride != null)
 				{

@@ -55,7 +55,7 @@ namespace GraphicsEngine.Engine
 		{
 			rasterizer.ClearImage((byte) ' ', (byte) Kernel32Console.Colors.BACKGROUND_BLACK | Kernel32Console.Colors.FOREGROUND_GREY | Kernel32Console.Colors.FOREGROUND_INTENSITY);
 
-			rasterizer.DrawMeshFilled(transformation, meshes, null, Rasterizer.HalfPixelChar);
+			rasterizer.DrawMeshWired(transformation, meshes, null, Rasterizer.HalfPixelChar);
 
 			//rasterizer.DrawMeshCenters(transformation, meshes, Kernel32Console.Colors.FOREGROUND_GREEN);
 			//rasterizer.DrawMeshBoundingBox(transformation, meshes, Kernel32Console.Colors.FOREGROUND_MAGENTA);

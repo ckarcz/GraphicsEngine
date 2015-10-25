@@ -11,14 +11,16 @@
 			Width = width;
 			Height = height;
 
+			ZBuffer = new float?[width, height];
 			CharacterBuffer = new ConsoleCharacterBuffer(width, height);
 			ColorBuffer = new ConsoleColorBuffer(width, height);
 		}
 
-		public ConsoleCharacterBuffer CharacterBuffer { get; private set; }
-		public ConsoleColorBuffer ColorBuffer { get; private set; }
-		public int Width { get; private set; }
-		public int Height { get; private set; }
+		public float?[,] ZBuffer { get; private set; }
+		public ConsoleCharacterBuffer CharacterBuffer { get; }
+		public ConsoleColorBuffer ColorBuffer { get; }
+		public int Width { get; }
+		public int Height { get; }
 
 		IConsoleCharacterBuffer IConsoleGraphicsFrame.CharacterBuffer
 		{
@@ -36,6 +38,7 @@
 			{
 				for (var y = 0; y < Height; y++)
 				{
+					ZBuffer[x, y] = null;
 					CharacterBuffer[x, y] = clearCharacter.HasValue ? clearCharacter.Value : DefaultClearCharacter;
 					ColorBuffer[x, y] = clearColor.HasValue ? clearColor.Value : DefaultClearColor;
 				}
