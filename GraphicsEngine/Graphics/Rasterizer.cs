@@ -389,8 +389,8 @@ namespace GraphicsEngine.Graphics
 			var transformedVectors = vectors
 				.Select(transformation.Transform)
 				.ToList();
-			var yMax = transformedVectors.Max(vector => vector.Y);
-			var yMin = transformedVectors.Min(vector => vector.Y);
+			var yMax = (int)System.Math.Ceiling(transformedVectors.Max(vector => vector.Y));
+			var yMin = (int)System.Math.Floor(transformedVectors.Min(vector => vector.Y));
 			var edges = GetPolygonEdges(transformedVectors);
 			for (var scanlineY = yMin; scanlineY <= yMax; scanlineY++)
 			{

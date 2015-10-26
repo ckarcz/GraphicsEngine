@@ -49,6 +49,9 @@
     <Compile Include="Common\Extensions\StringExtensions.cs" />
     <Compile Include="Engine\ConsoleEngine.cs" />
     <Compile Include="Engine\InputStateService.cs" />
+    <Compile Include="Scenes\RandomCharactersScene2.cs" />
+    <Compile Include="Scenes\RandomCharactersScene.cs" />
+    <Compile Include="Scenes\RandomLinesScene.cs" />
     <Compile Include="Graphics\ITransformation.cs" />
     <Compile Include="Graphics\Transformation.cs" />
     <Compile Include="Graphics\Console\Kernel32ConsoleScreen.cs" />
@@ -80,7 +83,7 @@
     <Compile Include="Math\Vector2.cs" />
     <Compile Include="Math\Vector3.cs" />
     <Compile Include="Math\Vector4.cs" />
-    <Compile Include="Engine\TestScene.cs" />
+    <Compile Include="Scenes\MeshTestScene.cs" />
     <Compile Include="Wavefront\Datastore\DataStore.cs" />
     <Compile Include="Wavefront\Datastore\IDataStore.cs" />
     <Compile Include="Wavefront\Datastore\IElementGroup.cs" />

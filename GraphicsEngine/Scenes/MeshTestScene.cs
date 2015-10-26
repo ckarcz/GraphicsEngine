@@ -14,7 +14,7 @@ using GraphicsEngine.Win32;
 
 namespace GraphicsEngine.Engine
 {
-	public class TestScene
+	public class MeshTestScene
 		: IScene
 	{
 		private string currentWavefrontObjectFilePath;
@@ -25,7 +25,7 @@ namespace GraphicsEngine.Engine
 		private readonly Transformation transformation;
 		private readonly string[] wavefrontObjectFilePaths = new[] {"Models\\triangle.obj", "Models\\cube.obj", "Models\\sphere.obj", "Models\\conf.obj", "Models\\gourd.obj", "Models\\link.obj", "Models\\monkey.obj", "Models\\bunny.obj", "Models\\f1.obj", "Models\\woman1.obj" };
 
-		public TestScene(int width, int height)
+		public MeshTestScene(int width, int height)
 		{
 			Width = width;
 			Height = height;

@@ -25,8 +25,12 @@ namespace GraphicsEngine
 			//var screen = new SimpleConsoleScreen(consoleScreenWidth, consoleScreenHeight, "Graphics Engine Test", ConsoleColor.DarkBlue, ConsoleColor.Cyan);
 
 			var renderer = new ConsoleGraphicsRenderer(screen);
-			var scene = new TestScene(consoleScreenWidth, consoleScreenHeight);
-			var engine = new ConsoleEngine(renderer, scene);
+
+			var randomLinesScene = new RandomLinesScene(consoleScreenWidth, consoleScreenHeight);
+			var randomCharactersScene = new RandomCharactersScene(consoleScreenWidth, consoleScreenHeight);
+			var meshTestScene = new MeshTestScene(consoleScreenWidth, consoleScreenHeight);
+
+			var engine = new ConsoleEngine(renderer, meshTestScene);
 
 			engine.Start();
 
