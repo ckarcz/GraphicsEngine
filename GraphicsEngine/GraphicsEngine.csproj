@@ -49,6 +49,8 @@
     <Compile Include="Common\Extensions\StringExtensions.cs" />
     <Compile Include="Engine\ConsoleEngine.cs" />
     <Compile Include="Engine\InputStateService.cs" />
+    <Compile Include="Graphics\Rasterizer.cs" />
+    <Compile Include="Math\Edge2.cs" />
     <Compile Include="Scenes\RandomCharactersScene2.cs" />
     <Compile Include="Scenes\RandomCharactersScene.cs" />
     <Compile Include="Scenes\RandomLinesScene.cs" />
@@ -71,7 +73,7 @@
     <Compile Include="Graphics\Console\ConsoleCharacterBuffer.cs" />
     <Compile Include="Graphics\Console\ConsoleColorBuffer.cs" />
     <Compile Include="Graphics\Polygon.cs" />
-    <Compile Include="Graphics\Rasterizer.cs" />
+    <Compile Include="Graphics\LazyRasterizer.cs" />
     <Compile Include="Graphics\Triangle.cs" />
     <Compile Include="Graphics\WavefrontObjToMeshConverter.cs" />
     <Compile Include="Engine\IConsoleEngine.cs" />

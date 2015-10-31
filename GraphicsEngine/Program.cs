@@ -1,11 +1,8 @@
 ﻿#region Imports
 
 using System;
-using System.Drawing;
-using System.Windows.Forms;
 using GraphicsEngine.Engine;
 using GraphicsEngine.Graphics.Console;
-using GraphicsEngine.Win32;
 
 #endregion
 

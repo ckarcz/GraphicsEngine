@@ -109,7 +109,7 @@ namespace GraphicsEngine.Engine
 
 		private void Render(ConsoleGraphicsFrame frame)
 		{
-			Rasterizer.DrawStringHorizontal(frame, Transformation.None, new Vector2(-scene.Width / 2, -(scene.Height) / 2) + 1, string.Format("FRAMES RENDERED: {0} AVG FPS: {1} CURRENT FPS: {2}", Renderings, AverageFPS, CurrentFPS));
+			LazyRasterizer.DrawStringHorizontal(frame, Transformation.None, new Vector2(-scene.Width / 2, -(scene.Height) / 2) + 1, string.Format("FRAMES RENDERED: {0} AVG FPS: {1} CURRENT FPS: {2}", Renderings, AverageFPS, CurrentFPS));
 			renderer.Render(frame);
 		}
 	}

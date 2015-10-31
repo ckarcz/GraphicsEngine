@@ -16,14 +16,14 @@ namespace GraphicsEngine.Engine
 	{
 		private static readonly short[] colors = new short[] {Kernel32Console.Colors.FOREGROUND_BLUE, Kernel32Console.Colors.FOREGROUND_CYAN, Kernel32Console.Colors.FOREGROUND_GREEN, Kernel32Console.Colors.FOREGROUND_MAGENTA, Kernel32Console.Colors.FOREGROUND_RED, Kernel32Console.Colors.FOREGROUND_YELLOW, Kernel32Console.Colors.FOREGROUND_GREY};
 		private readonly Random random = new Random(1000);
-		private readonly Rasterizer rasterizer;
+		private readonly LazyRasterizer rasterizer;
 
 		public RandomCharactersScene(int width, int height)
 		{
 			Width = width;
 			Height = height;
 
-			rasterizer = new Rasterizer(Width, Height);
+			rasterizer = new LazyRasterizer(Width, Height);
 		}
 
 		public int Width { get; }

@@ -16,14 +16,14 @@ namespace GraphicsEngine.Engine
 	{
 		private static readonly short[] colors = new short[] {Kernel32Console.Colors.FOREGROUND_BLUE, Kernel32Console.Colors.FOREGROUND_CYAN, Kernel32Console.Colors.FOREGROUND_GREEN, Kernel32Console.Colors.FOREGROUND_MAGENTA, Kernel32Console.Colors.FOREGROUND_RED, Kernel32Console.Colors.FOREGROUND_YELLOW, Kernel32Console.Colors.FOREGROUND_GREY};
 		private readonly Random random = new Random(1000);
-		private readonly Rasterizer rasterizer;
+		private readonly LazyRasterizer rasterizer;
 
 		public RandomLinesScene(int width, int height)
 		{
 			Width = width;
 			Height = height;
 
-			rasterizer = new Rasterizer(Width, Height);
+			rasterizer = new LazyRasterizer(Width, Height);
 		}
 
 		public int Width { get; }
@@ -46,7 +46,7 @@ namespace GraphicsEngine.Engine
 				var randomX2 = random.Next(-Width / 2, Width / 2);
 				var randomY2 = random.Next(-Height / 2, Height / 2);
 				var randomColorIndex = random.Next(0, colors.Length);
-				rasterizer.DrawLine(Transformation.None, new Vector2(randomX1, randomY1), new Vector2(randomX2, randomY2), (short) (colors[randomColorIndex]), Rasterizer.HalfPixelChar);
+				rasterizer.DrawLine(Transformation.None, new Vector2(randomX1, randomY1), new Vector2(randomX2, randomY2), (short) (colors[randomColorIndex]), LazyRasterizer.HalfPixelChar);
 			}
 		}
 

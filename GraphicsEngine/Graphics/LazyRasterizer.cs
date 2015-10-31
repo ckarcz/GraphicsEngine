@@ -1,14 +1,18 @@
-﻿using System;
+﻿#region Imports
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Windows.Media;
 using GraphicsEngine.Graphics.Console;
 using GraphicsEngine.Math;
 using GraphicsEngine.Win32;
 
+#endregion
+
 namespace GraphicsEngine.Graphics
 {
-	public class Rasterizer
+	public class LazyRasterizer
 	{
 		public const byte HalfPixelChar = 219; //						'▄'
 		public const byte ShadePixelChar1 = 176; //							░;
@@ -19,155 +23,175 @@ namespace GraphicsEngine.Graphics
 		private static readonly byte upRightWireFrameChar = 47; //		'\'
 		private static readonly byte verticleWireFrameChar = 124; //	'|'
 		private readonly ConsoleGraphicsFrame frameBuffer;
+		private readonly List<Action> rasterizingActions;
 
 		private static short[] colors = new short[] { Kernel32Console.Colors.FOREGROUND_BLUE, Kernel32Console.Colors.FOREGROUND_CYAN, Kernel32Console.Colors.FOREGROUND_GREEN, Kernel32Console.Colors.FOREGROUND_MAGENTA, Kernel32Console.Colors.FOREGROUND_RED, Kernel32Console.Colors.FOREGROUND_YELLOW, Kernel32Console.Colors.FOREGROUND_GREY };
 
-		public Rasterizer(int width, int height)
+		public LazyRasterizer(int width, int height)
 		{
 			frameBuffer = new ConsoleGraphicsFrame(width, height);
+
+			rasterizingActions = new List<Action>();
 		}
 
-		public ConsoleGraphicsFrame DrawMeshWired(ITransformation transformation, IMesh mesh, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawMeshWired(ITransformation transformation, IMesh mesh, short? colorOverride = null, byte? pixelOverride = null)
 		{
-			DrawMeshWired(frameBuffer, transformation, mesh, colorOverride, pixelOverride);
-			return frameBuffer;
+			var action = new Action(() => DrawMeshWired(frameBuffer, transformation, mesh, colorOverride, pixelOverride));
+			rasterizingActions.Add(action);
 		}
 
-		public ConsoleGraphicsFrame DrawMeshWired(ITransformation transformation, IEnumerable<IMesh> meshes, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawMeshWired(ITransformation transformation, IEnumerable<IMesh> meshes, short? colorOverride = null, byte? pixelOverride = null)
 		{
-			DrawMeshWired(frameBuffer, transformation, meshes, colorOverride, pixelOverride);
-			return frameBuffer;
+			var action = new Action(() => DrawMeshWired(frameBuffer, transformation, meshes, colorOverride, pixelOverride));
+			rasterizingActions.Add(action);
 		}
 
-		public ConsoleGraphicsFrame DrawMeshFilled(ITransformation transformation, IMesh mesh, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawMeshFilled(ITransformation transformation, IMesh mesh, short? colorOverride = null, byte? pixelOverride = null)
 		{
-			DrawMeshFilled(frameBuffer, transformation, mesh, colorOverride, pixelOverride);
-			return frameBuffer;
+			var action = new Action(() => DrawMeshFilled(frameBuffer, transformation, mesh, colorOverride, pixelOverride));
+			rasterizingActions.Add(action);
 		}
 
-		public ConsoleGraphicsFrame DrawMeshFilled(ITransformation transformation, IEnumerable<IMesh> meshes, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawMeshFilled(ITransformation transformation, IEnumerable<IMesh> meshes, short? colorOverride = null, byte? pixelOverride = null)
 		{
-			DrawMeshFilled(frameBuffer, transformation, meshes, colorOverride, pixelOverride);
-			return frameBuffer;
+			var action = new Action(() => DrawMeshFilled(frameBuffer, transformation, meshes, colorOverride, pixelOverride));
+			rasterizingActions.Add(action);
 		}
 
-		public ConsoleGraphicsFrame DrawMeshVertices(ITransformation transformation, IMesh mesh, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawMeshVertices(ITransformation transformation, IMesh mesh, short? colorOverride = null, byte? pixelOverride = null)
 		{
-			DrawMeshVertices(frameBuffer, transformation, mesh, colorOverride, pixelOverride);
-			return frameBuffer;
+			var action = new Action(() => DrawMeshVertices(frameBuffer, transformation, mesh, colorOverride, pixelOverride));
+			rasterizingActions.Add(action);
 		}
 
-		public ConsoleGraphicsFrame DrawMeshVertices(ITransformation transformation, IEnumerable<IMesh> meshes, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawMeshVertices(ITransformation transformation, IEnumerable<IMesh> meshes, short? colorOverride = null, byte? pixelOverride = null)
 		{
-			DrawMeshVertices(frameBuffer, transformation, meshes, colorOverride, pixelOverride);
-			return frameBuffer;
+			var action = new Action(() => DrawMeshVertices(frameBuffer, transformation, meshes, colorOverride, pixelOverride));
+			rasterizingActions.Add(action);
 		}
 
-		public ConsoleGraphicsFrame DrawMeshCenters(ITransformation transformation, IMesh mesh, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawMeshCenters(ITransformation transformation, IMesh mesh, short? colorOverride = null, byte? pixelOverride = null)
 		{
-			DrawMeshCenters(frameBuffer, transformation, mesh, colorOverride, pixelOverride);
-			return frameBuffer;
+			var action = new Action(() => DrawMeshCenters(frameBuffer, transformation, mesh, colorOverride, pixelOverride));
+			rasterizingActions.Add(action);
 		}
 
-		public ConsoleGraphicsFrame DrawMeshCenters(ITransformation transformation, IEnumerable<IMesh> meshes, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawMeshCenters(ITransformation transformation, IEnumerable<IMesh> meshes, short? colorOverride = null, byte? pixelOverride = null)
 		{
-			DrawMeshCenters(frameBuffer, transformation, meshes, colorOverride, pixelOverride);
-			return frameBuffer;
+			var action = new Action(() => DrawMeshCenters(frameBuffer, transformation, meshes, colorOverride, pixelOverride));
+			rasterizingActions.Add(action);
 		}
 
-		public ConsoleGraphicsFrame DrawMeshBoundingBox(ITransformation transformation, IMesh mesh, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawMeshBoundingBox(ITransformation transformation, IMesh mesh, short? colorOverride = null, byte? pixelOverride = null)
 		{
-			DrawMeshBoundingBox(frameBuffer, transformation, mesh, colorOverride, pixelOverride);
-			return frameBuffer;
+			var action = new Action(() => DrawMeshBoundingBox(frameBuffer, transformation, mesh, colorOverride, pixelOverride));
+			rasterizingActions.Add(action);
 		}
 
-		public ConsoleGraphicsFrame DrawMeshBoundingBox(ITransformation transformation, IEnumerable<IMesh> meshes, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawMeshBoundingBox(ITransformation transformation, IEnumerable<IMesh> meshes, short? colorOverride = null, byte? pixelOverride = null)
 		{
-			DrawMeshBoundingBox(frameBuffer, transformation, meshes, colorOverride, pixelOverride);
-			return frameBuffer;
+			var action = new Action(() => DrawMeshBoundingBox(frameBuffer, transformation, meshes, colorOverride, pixelOverride));
+			rasterizingActions.Add(action);
 		}
 
-		public ConsoleGraphicsFrame DrawPolygonWired(ITransformation transformation, IEnumerable<Vector2> vectors, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawPolygonWired(ITransformation transformation, IEnumerable<Vector2> vectors, short? colorOverride = null, byte? pixelOverride = null)
 		{
-			DrawPolygonWired(frameBuffer, transformation, vectors, colorOverride, pixelOverride);
-			return frameBuffer;
+			var action = new Action(() => DrawPolygonWired(frameBuffer, transformation, vectors, colorOverride, pixelOverride));
+			rasterizingActions.Add(action);
 		}
 
-		public ConsoleGraphicsFrame DrawPolygonWired(ITransformation transformation, IEnumerable<Vector3> vectors, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawPolygonWired(ITransformation transformation, IEnumerable<Vector3> vectors, short? colorOverride = null, byte? pixelOverride = null)
 		{
-			DrawPolygonWired(frameBuffer, transformation, vectors, colorOverride, pixelOverride);
-			return frameBuffer;
+			var action = new Action(() => DrawPolygonWired(frameBuffer, transformation, vectors, colorOverride, pixelOverride));
+			rasterizingActions.Add(action);
 		}
 
-		public ConsoleGraphicsFrame DrawPolygonFilled(ITransformation transformation, IEnumerable<Vector2> vectors, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawPolygonFilled(ITransformation transformation, IEnumerable<Vector2> vectors, short? colorOverride = null, byte? pixelOverride = null)
 		{
-			DrawPolygonFilled(frameBuffer, transformation, vectors, colorOverride, pixelOverride);
-			return frameBuffer;
+			var action = new Action(() => DrawPolygonFilled(frameBuffer, transformation, vectors, colorOverride, pixelOverride));
+			rasterizingActions.Add(action);
 		}
 
-		public ConsoleGraphicsFrame DrawPolygonFilled(ITransformation transformation, IEnumerable<Vector3> vectors, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawPolygonFilled(ITransformation transformation, IEnumerable<Vector3> vectors, short? colorOverride = null, byte? pixelOverride = null)
 		{
-			DrawPolygonFilled(frameBuffer, transformation, vectors, colorOverride, pixelOverride);
-			return frameBuffer;
+			var action = new Action(() => DrawPolygonFilled(frameBuffer, transformation, vectors, colorOverride, pixelOverride));
+			rasterizingActions.Add(action);
 		}
 
-		public ConsoleGraphicsFrame DrawAxes(ITransformation transformation, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawAxes(ITransformation transformation, short? colorOverride = null, byte? pixelOverride = null)
 		{
-			DrawAxes(frameBuffer, transformation, colorOverride, pixelOverride);
-			return frameBuffer;
+			var action = new Action(() => DrawAxes(frameBuffer, transformation, colorOverride, pixelOverride));
+			rasterizingActions.Add(action);
 		}
 
-		public ConsoleGraphicsFrame DrawLine(ITransformation transformation, Vector3 point1, Vector3 point2, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawLine(ITransformation transformation, Vector3 point1, Vector3 point2, short? colorOverride = null, byte? pixelOverride = null)
 		{
-			DrawLine(frameBuffer, transformation, point1, point2, colorOverride, pixelOverride);
-			return frameBuffer;
+			var action = new Action(() => DrawLine(frameBuffer, transformation, point1, point2, colorOverride, pixelOverride));
+			rasterizingActions.Add(action);
 		}
 
-		public ConsoleGraphicsFrame DrawLine(ITransformation transformation, Vector2 point1, Vector2 point2, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawLine(ITransformation transformation, Vector2 point1, Vector2 point2, short? colorOverride = null, byte? pixelOverride = null)
 		{
-			DrawLine(frameBuffer, transformation, point1, point2, colorOverride, pixelOverride);
-			return frameBuffer;
+			var action = new Action(() => DrawLine(frameBuffer, transformation, point1, point2, colorOverride, pixelOverride));
+			rasterizingActions.Add(action);
 		}
 
-		public ConsoleGraphicsFrame DrawPoints(ITransformation transformation, IEnumerable<Vector2> points, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawPoints(ITransformation transformation, IEnumerable<Vector2> points, short? colorOverride = null, byte? pixelOverride = null)
 		{
-			DrawPoints(frameBuffer, transformation, points, colorOverride, pixelOverride);
-			return frameBuffer;
+			var action = new Action(() => DrawPoints(frameBuffer, transformation, points, colorOverride, pixelOverride));
+			rasterizingActions.Add(action);
 		}
 
-		public ConsoleGraphicsFrame DrawPoints(ITransformation transformation, IEnumerable<Vector3> points, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawPoints(ITransformation transformation, IEnumerable<Vector3> points, short? colorOverride = null, byte? pixelOverride = null)
 		{
-			DrawPoints(frameBuffer, transformation, points, colorOverride, pixelOverride);
-			return frameBuffer;
+			var action = new Action(() => DrawPoints(frameBuffer, transformation, points, colorOverride, pixelOverride));
+			rasterizingActions.Add(action);
 		}
 
-		public ConsoleGraphicsFrame DrawPoint(ITransformation transformation, Vector2 point, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawPoint(ITransformation transformation, Vector2 point, short? colorOverride = null, byte? pixelOverride = null)
 		{
-			DrawPoint(frameBuffer, transformation, point, colorOverride, pixelOverride);
-			return frameBuffer;
+			var action = new Action(() => DrawPoint(frameBuffer, transformation, point, colorOverride, pixelOverride));
+			rasterizingActions.Add(action);
 		}
 
-		public ConsoleGraphicsFrame DrawPoint(ITransformation transformation, Vector3 point, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawPoint(ITransformation transformation, Vector3 point, short? colorOverride = null, byte? pixelOverride = null)
 		{
-			DrawPoint(frameBuffer, transformation, point, colorOverride, pixelOverride);
-			return frameBuffer;
+			var action = new Action(() => DrawPoint(frameBuffer, transformation, point, colorOverride, pixelOverride));
+			rasterizingActions.Add(action);
 		}
 
-		public ConsoleGraphicsFrame DrawStringHorizontal(ITransformation transformation, Vector2 location, string messageString, short? colorOverride = null)
+		public void DrawStringHorizontal(ITransformation transformation, Vector2 location, string messageString, short? colorOverride = null)
 		{
-			DrawStringHorizontal(frameBuffer, transformation, location, messageString, colorOverride);
-			return frameBuffer;
+			var action = new Action(() => DrawStringHorizontal(frameBuffer, transformation, location, messageString, colorOverride));
+			rasterizingActions.Add(action);
 		}
 
-		public ConsoleGraphicsFrame DrawStringVertical(ITransformation transformation, Vector2 location, string messageString, short? colorOverride = null)
+		public void DrawStringVertical(ITransformation transformation, Vector2 location, string messageString, short? colorOverride = null)
 		{
-			DrawStringHorizontal(frameBuffer, transformation, location, messageString, colorOverride);
-			return frameBuffer;
+			var action = new Action(() => DrawStringHorizontal(frameBuffer, transformation, location, messageString, colorOverride));
+			rasterizingActions.Add(action);
 		}
 
-		public ConsoleGraphicsFrame ClearImage(byte? clearCharacter = null, byte? clearColor = null)
+		public void ClearImage(byte? clearCharacter = null, byte? clearColor = null)
 		{
+			Reset();
 			ClearImage(frameBuffer, clearCharacter, clearColor);
+		}
+
+		public void Reset()
+		{
+			rasterizingActions.Clear();
+		}
+
+		public ConsoleGraphicsFrame Rasterize()
+		{
+			foreach (var rasterizationAction in rasterizingActions)
+			{
+				rasterizationAction();
+			}
+
+			Reset();
+
 			return frameBuffer;
 		}
 
@@ -360,38 +384,7 @@ namespace GraphicsEngine.Graphics
 
 		public static void DrawPolygonFilled(ConsoleGraphicsFrame frame, ITransformation transformation, IEnumerable<Vector2> vectors, short? colorOverride = null, byte? pixelOverride = null)
 		{
-			var transformedVectors = vectors
-				.Select(transformation.Transform)
-				.ToList();
-			var yMax = (int)System.Math.Ceiling(transformedVectors.Max(vector => vector.Y));
-			var yMin = (int)System.Math.Floor(transformedVectors.Min(vector => vector.Y));
-			var edges = GetPolygonEdges(transformedVectors);
-			for (var scanlineY = yMin; scanlineY <= yMax; scanlineY++)
-			{
-				var yEdgeIntersections = edges
-					.Where(edge => edge.IsYValueOnEdge(scanlineY))
-					.Select(edge => edge.GetPointFromY(scanlineY))
-					.ToList();
-				var xSortedIntersections = yEdgeIntersections.OrderBy(vector => vector.X).ToList();
-				var index1 = 0;
-				var index2 = 1;
-				while (index2 < xSortedIntersections.Count)
-				{
-					var point1 = xSortedIntersections[index1];
-					var point2 = xSortedIntersections[index2];
-					var line = new Edge2(point1, point2);
-					var startX = point1.X;
-					var endX = point2.X;
-					for (var x = startX; x <= endX; x++)
-					{
-						var point = new Vector2(x, scanlineY);
-						DrawPoint(frame, Transformation.None, point, colorOverride, pixelOverride);
-					}
-
-					index1 += 2;
-					index2 += 2;
-				}
-			}
+			// TODO
 		}
 
 		public static void DrawPolygonFilled(ConsoleGraphicsFrame frame, ITransformation transformation, IEnumerable<Vector3> vectors, short? colorOverride = null, byte? pixelOverride = null)
@@ -416,7 +409,7 @@ namespace GraphicsEngine.Graphics
 					var point1 = xSortedIntersections[index1];
 					var point2 = xSortedIntersections[index2];
 					var line = new Edge3(point1, point2);
-					var startX = point1.X;
+                    var startX = point1.X;
 					var endX = point2.X;
 					for (var x = startX; x <= endX; x++)
 					{
@@ -425,11 +418,13 @@ namespace GraphicsEngine.Graphics
 						//var point = new Vector2(x, scanlineY);
 						DrawPoint(frame, Transformation.None, point, colorOverride, pixelOverride);
 					}
-
+					
 					index1 += 2;
 					index2 += 2;
 				}
 			}
+
+			//DrawPolygonWired(frame, transformation, vectors, colorOverride, pixelOverride);
 		}
 
 		public static void DrawAxes(ConsoleGraphicsFrame frame, ITransformation transformation, short? colorOverride = null, byte? pixelOverride = null)
@@ -462,8 +457,8 @@ namespace GraphicsEngine.Graphics
 					var offetX = (frame.Width / 2) + currentPoint.X;
 					var offsetY = (frame.Height / 2) - currentPoint.Y;
 
-					var pixelX = (int)offetX;
-					var pixelY = (int)offsetY;
+					var pixelX = (int) offetX;
+					var pixelY = (int) offsetY;
 
 					if (pixelX >= 0 && pixelX < frame.Width && pixelY >= 0 && pixelY < frame.Height && (frame.ZBuffer[pixelX, pixelY] == null || frame.ZBuffer[pixelX, pixelY].Value < currentPoint.Z))
 					{
@@ -471,7 +466,7 @@ namespace GraphicsEngine.Graphics
 						frame.CharacterBuffer[pixelX, pixelY] = pixelChar;
 						if (colorOverride != null)
 						{
-							frame.ColorBuffer[pixelX, pixelY] = (short)(colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
+							frame.ColorBuffer[pixelX, pixelY] = (short) (colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
 						}
 					}
 
@@ -535,8 +530,8 @@ namespace GraphicsEngine.Graphics
 						var offetX = (frame.Width / 2) + currentPoint.X;
 						var offsetY = (frame.Height / 2) - currentPoint.Y;
 
-						var pixelX = (int)offetX;
-						var pixelY = (int)offsetY;
+						var pixelX = (int) offetX;
+						var pixelY = (int) offsetY;
 
 						if (pixelX >= 0 && pixelX < frame.Width && pixelY >= 0 && pixelY < frame.Height && (frame.ZBuffer[pixelX, pixelY] == null || frame.ZBuffer[pixelX, pixelY].Value < currentPoint.Z))
 						{
@@ -544,7 +539,7 @@ namespace GraphicsEngine.Graphics
 							frame.CharacterBuffer[pixelX, pixelY] = pixelChar;
 							if (colorOverride != null)
 							{
-								frame.ColorBuffer[pixelX, pixelY] = (short)(colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
+								frame.ColorBuffer[pixelX, pixelY] = (short) (colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
 							}
 						}
 
@@ -567,8 +562,8 @@ namespace GraphicsEngine.Graphics
 						var offetX = (frame.Width / 2) + currentPoint.X;
 						var offsetY = (frame.Height / 2) - currentPoint.Y;
 
-						var pixelX = (int)offetX;
-						var pixelY = (int)offsetY;
+						var pixelX = (int) offetX;
+						var pixelY = (int) offsetY;
 
 						if (pixelX >= 0 && pixelX < frame.Width && pixelY >= 0 && pixelY < frame.Height && (frame.ZBuffer[pixelX, pixelY] == null || frame.ZBuffer[pixelX, pixelY].Value < currentPoint.Z))
 						{
@@ -576,7 +571,7 @@ namespace GraphicsEngine.Graphics
 							frame.CharacterBuffer[pixelX, pixelY] = pixelChar;
 							if (colorOverride != null)
 							{
-								frame.ColorBuffer[pixelX, pixelY] = (short)(colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
+								frame.ColorBuffer[pixelX, pixelY] = (short) (colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
 							}
 						}
 
@@ -611,15 +606,15 @@ namespace GraphicsEngine.Graphics
 					var offetX = (frame.Width / 2) + currentPoint.X;
 					var offsetY = (frame.Height / 2) - currentPoint.Y;
 
-					var pixelX = (int)offetX;
-					var pixelY = (int)offsetY;
+					var pixelX = (int) offetX;
+					var pixelY = (int) offsetY;
 
 					if (pixelX >= 0 && pixelX < frame.Width && pixelY >= 0 && pixelY < frame.Height)
 					{
 						frame.CharacterBuffer[pixelX, pixelY] = pixelChar;
 						if (colorOverride != null)
 						{
-							frame.ColorBuffer[pixelX, pixelY] = (short)(colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
+							frame.ColorBuffer[pixelX, pixelY] = (short) (colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
 						}
 					}
 
@@ -683,15 +678,15 @@ namespace GraphicsEngine.Graphics
 						var offetX = (frame.Width / 2) + currentPoint.X;
 						var offsetY = (frame.Height / 2) - currentPoint.Y;
 
-						var pixelX = (int)offetX;
-						var pixelY = (int)offsetY;
+						var pixelX = (int) offetX;
+						var pixelY = (int) offsetY;
 
 						if (pixelX >= 0 && pixelX < frame.Width && pixelY >= 0 && pixelY < frame.Height)
 						{
 							frame.CharacterBuffer[pixelX, pixelY] = pixelChar;
 							if (colorOverride != null)
 							{
-								frame.ColorBuffer[pixelX, pixelY] = (short)(colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
+								frame.ColorBuffer[pixelX, pixelY] = (short) (colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
 							}
 						}
 
@@ -714,15 +709,15 @@ namespace GraphicsEngine.Graphics
 						var offetX = (frame.Width / 2) + currentPoint.X;
 						var offsetY = (frame.Height / 2) - currentPoint.Y;
 
-						var pixelX = (int)offetX;
-						var pixelY = (int)offsetY;
+						var pixelX = (int) offetX;
+						var pixelY = (int) offsetY;
 
 						if (pixelX >= 0 && pixelX < frame.Width && pixelY >= 0 && pixelY < frame.Height)
 						{
 							frame.CharacterBuffer[pixelX, pixelY] = pixelChar;
 							if (colorOverride != null)
 							{
-								frame.ColorBuffer[pixelX, pixelY] = (short)(colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
+								frame.ColorBuffer[pixelX, pixelY] = (short) (colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
 							}
 						}
 
@@ -756,15 +751,15 @@ namespace GraphicsEngine.Graphics
 			var offetX = (frame.Width / 2) + point.X;
 			var offsetY = (frame.Height / 2) - point.Y;
 
-			var pixelX = (int)offetX;
-			var pixelY = (int)offsetY;
+			var pixelX = (int) offetX;
+			var pixelY = (int) offsetY;
 
 			if (pixelX >= 0 && pixelX < frame.Width && pixelY >= 0 && pixelY < frame.Height)
 			{
 				frame.CharacterBuffer[pixelX, pixelY] = pixelOverride.HasValue ? pixelOverride.Value : HalfPixelChar;
 				if (colorOverride != null)
 				{
-					frame.ColorBuffer[pixelX, pixelY] = (short)(colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
+					frame.ColorBuffer[pixelX, pixelY] = (short) (colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
 				}
 			}
 		}
@@ -776,8 +771,8 @@ namespace GraphicsEngine.Graphics
 			var offetX = (frame.Width / 2) + point.X;
 			var offsetY = (frame.Height / 2) - point.Y;
 
-			var pixelX = (int)offetX;
-			var pixelY = (int)offsetY;
+			var pixelX = (int) offetX;
+			var pixelY = (int) offsetY;
 
 			if (pixelX >= 0 && pixelX < frame.Width && pixelY >= 0 && pixelY < frame.Height && (frame.ZBuffer[pixelX, pixelY] == null || frame.ZBuffer[pixelX, pixelY].Value < point.Z))
 			{
@@ -785,7 +780,7 @@ namespace GraphicsEngine.Graphics
 				frame.CharacterBuffer[pixelX, pixelY] = pixelOverride.HasValue ? pixelOverride.Value : HalfPixelChar;
 				if (colorOverride != null)
 				{
-					frame.ColorBuffer[pixelX, pixelY] = (short)(colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
+					frame.ColorBuffer[pixelX, pixelY] = (short) (colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
 				}
 			}
 		}
@@ -797,15 +792,15 @@ namespace GraphicsEngine.Graphics
 			var offetX = (frame.Width / 2) + location.X;
 			var offsetY = (frame.Height / 2) - location.Y;
 
-			var currentPixelX = (int)offetX;
-			var constPixelY = (int)offsetY;
+			var currentPixelX = (int) offetX;
+			var constPixelY = (int) offsetY;
 
 			foreach (var messageChar in messageString)
 			{
-				frame.CharacterBuffer[currentPixelX, constPixelY] = (byte)messageChar;
+				frame.CharacterBuffer[currentPixelX, constPixelY] = (byte) messageChar;
 				if (colorOverride != null)
 				{
-					frame.ColorBuffer[currentPixelX, constPixelY] = (short)(colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
+					frame.ColorBuffer[currentPixelX, constPixelY] = (short) (colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
 				}
 				currentPixelX++;
 			}
@@ -818,15 +813,15 @@ namespace GraphicsEngine.Graphics
 			var offetX = (frame.Width / 2) + location.X;
 			var offsetY = (frame.Height / 2) - location.Y;
 
-			var currentPixelY = (int)offsetY;
-			var constPixelX = (int)offetX;
+			var currentPixelY = (int) offsetY;
+			var constPixelX = (int) offetX;
 
 			foreach (var messageChar in messageString)
 			{
-				frame.CharacterBuffer[constPixelX, currentPixelY] = (byte)messageChar;
+				frame.CharacterBuffer[constPixelX, currentPixelY] = (byte) messageChar;
 				if (colorOverride != null)
 				{
-					frame.ColorBuffer[constPixelX, currentPixelY] = (short)(colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
+					frame.ColorBuffer[constPixelX, currentPixelY] = (short) (colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
 				}
 				currentPixelY++;
 			}
@@ -861,32 +856,6 @@ namespace GraphicsEngine.Graphics
 			edges.Add(lastEdge);
 
 			return edges;
-		}
-
-		private static IEnumerable<Edge2> GetPolygonEdges(IEnumerable<Vector2> vectors)
-		{
-			var edges = new List<Edge2>();
-
-			var vectorsEnumerator = vectors.GetEnumerator();
-
-			vectorsEnumerator.MoveNext();
-			var firstPoint = vectorsEnumerator.Current;
-			var point1 = firstPoint;
-			var point2 = firstPoint;
-
-			while (vectorsEnumerator.MoveNext())
-			{
-				point1 = point2;
-				point2 = vectorsEnumerator.Current;
-
-				var edge = new Edge2(point1, point2);
-				edges.Add(edge);
-			}
-
-			var lastEdge = new Edge2(point2, firstPoint);
-			edges.Add(lastEdge);
-
-			return edges;
-		}
+		} 
 	}
 }

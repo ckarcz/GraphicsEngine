@@ -21,7 +21,7 @@ namespace GraphicsEngine.Engine
 		private IEnumerable<IMesh> meshes;
 		private float scaleFactor = 0.5f;
 		private readonly InputStateService inputStateService;
-		private readonly Rasterizer rasterizer;
+		private readonly LazyRasterizer rasterizer;
 		private readonly Transformation transformation;
 		private readonly string[] wavefrontObjectFilePaths = new[] {"Models\\triangle.obj", "Models\\cube.obj", "Models\\sphere.obj", "Models\\conf.obj", "Models\\gourd.obj", "Models\\link.obj", "Models\\monkey.obj", "Models\\bunny.obj", "Models\\f1.obj", "Models\\woman1.obj" };
 
@@ -30,16 +30,13 @@ namespace GraphicsEngine.Engine
 			Width = width;
 			Height = height;
 
-			rasterizer = new Rasterizer(Width, Height);
+			rasterizer = new LazyRasterizer(Width, Height);
 			inputStateService = new InputStateService();
 			transformation = new Transformation();
 
-			currentWavefrontObjectFilePath = "Models\\triangle.obj";
+			currentWavefrontObjectFilePath = "Models\\woman1.obj";
 
 			InitScene(currentWavefrontObjectFilePath);
-
-			//transformation.Scale *= 50;
-			//transformation.Translation = new Vector3(0, -50, 0);
 		}
 
 		public int Width { get; private set; }
@@ -55,12 +52,12 @@ namespace GraphicsEngine.Engine
 		{
 			rasterizer.ClearImage((byte) ' ', (byte) Kernel32Console.Colors.BACKGROUND_BLACK | Kernel32Console.Colors.FOREGROUND_GREY | Kernel32Console.Colors.FOREGROUND_INTENSITY);
 
-			rasterizer.DrawMeshFilled(transformation, meshes, null, (byte)'A');//, Rasterizer.HalfPixelChar);
+			rasterizer.DrawMeshFilled(transformation, meshes);
 
 			rasterizer.DrawMeshCenters(transformation, meshes, Kernel32Console.Colors.FOREGROUND_GREEN);
 			rasterizer.DrawMeshBoundingBox(transformation, meshes, Kernel32Console.Colors.FOREGROUND_MAGENTA);
 
-			//rasterizer.DrawAxes(Transformation.None, Kernel32Console.Colors.FOREGROUND_YELLOW);
+			rasterizer.DrawAxes(Transformation.None, Kernel32Console.Colors.FOREGROUND_YELLOW);
 
 			rasterizer.DrawStringHorizontal(Transformation.None, new Vector2(-Width / 2 + 1, Height / 2 - 2), string.Format("MODEL: '{0}'", currentWavefrontObjectFilePath));
 			rasterizer.DrawStringHorizontal(Transformation.None, new Vector2(-Width / 2 + 1, Height / 2 - 3), string.Format("# POLYGONS: {0}", meshes.Sum(mesh => mesh.Faces.Count())));
