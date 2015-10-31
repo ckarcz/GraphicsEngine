@@ -23,7 +23,7 @@ namespace GraphicsEngine.Graphics
 		private static readonly byte upRightWireFrameChar = 47; //		'\'
 		private static readonly byte verticleWireFrameChar = 124; //	'|'
 		private readonly ConsoleGraphicsFrame frameBuffer;
-		private readonly List<Action> rasterizingActions;
+		private readonly Queue<Action> rasterizingActions;
 
 		private static short[] colors = new short[] { Kernel32Console.Colors.FOREGROUND_BLUE, Kernel32Console.Colors.FOREGROUND_CYAN, Kernel32Console.Colors.FOREGROUND_GREEN, Kernel32Console.Colors.FOREGROUND_MAGENTA, Kernel32Console.Colors.FOREGROUND_RED, Kernel32Console.Colors.FOREGROUND_YELLOW, Kernel32Console.Colors.FOREGROUND_GREY };
 
@@ -31,145 +31,145 @@ namespace GraphicsEngine.Graphics
 		{
 			frameBuffer = new ConsoleGraphicsFrame(width, height);
 
-			rasterizingActions = new List<Action>();
+			rasterizingActions = new Queue<Action>();
 		}
 
 		public void DrawMeshWired(ITransformation transformation, IMesh mesh, short? colorOverride = null, byte? pixelOverride = null)
 		{
 			var action = new Action(() => DrawMeshWired(frameBuffer, transformation, mesh, colorOverride, pixelOverride));
-			rasterizingActions.Add(action);
+			rasterizingActions.Enqueue(action);
 		}
 
 		public void DrawMeshWired(ITransformation transformation, IEnumerable<IMesh> meshes, short? colorOverride = null, byte? pixelOverride = null)
 		{
 			var action = new Action(() => DrawMeshWired(frameBuffer, transformation, meshes, colorOverride, pixelOverride));
-			rasterizingActions.Add(action);
+			rasterizingActions.Enqueue(action);
 		}
 
 		public void DrawMeshFilled(ITransformation transformation, IMesh mesh, short? colorOverride = null, byte? pixelOverride = null)
 		{
 			var action = new Action(() => DrawMeshFilled(frameBuffer, transformation, mesh, colorOverride, pixelOverride));
-			rasterizingActions.Add(action);
+			rasterizingActions.Enqueue(action);
 		}
 
 		public void DrawMeshFilled(ITransformation transformation, IEnumerable<IMesh> meshes, short? colorOverride = null, byte? pixelOverride = null)
 		{
 			var action = new Action(() => DrawMeshFilled(frameBuffer, transformation, meshes, colorOverride, pixelOverride));
-			rasterizingActions.Add(action);
+			rasterizingActions.Enqueue(action);
 		}
 
 		public void DrawMeshVertices(ITransformation transformation, IMesh mesh, short? colorOverride = null, byte? pixelOverride = null)
 		{
 			var action = new Action(() => DrawMeshVertices(frameBuffer, transformation, mesh, colorOverride, pixelOverride));
-			rasterizingActions.Add(action);
+			rasterizingActions.Enqueue(action);
 		}
 
 		public void DrawMeshVertices(ITransformation transformation, IEnumerable<IMesh> meshes, short? colorOverride = null, byte? pixelOverride = null)
 		{
 			var action = new Action(() => DrawMeshVertices(frameBuffer, transformation, meshes, colorOverride, pixelOverride));
-			rasterizingActions.Add(action);
+			rasterizingActions.Enqueue(action);
 		}
 
 		public void DrawMeshCenters(ITransformation transformation, IMesh mesh, short? colorOverride = null, byte? pixelOverride = null)
 		{
 			var action = new Action(() => DrawMeshCenters(frameBuffer, transformation, mesh, colorOverride, pixelOverride));
-			rasterizingActions.Add(action);
+			rasterizingActions.Enqueue(action);
 		}
 
 		public void DrawMeshCenters(ITransformation transformation, IEnumerable<IMesh> meshes, short? colorOverride = null, byte? pixelOverride = null)
 		{
 			var action = new Action(() => DrawMeshCenters(frameBuffer, transformation, meshes, colorOverride, pixelOverride));
-			rasterizingActions.Add(action);
+			rasterizingActions.Enqueue(action);
 		}
 
 		public void DrawMeshBoundingBox(ITransformation transformation, IMesh mesh, short? colorOverride = null, byte? pixelOverride = null)
 		{
 			var action = new Action(() => DrawMeshBoundingBox(frameBuffer, transformation, mesh, colorOverride, pixelOverride));
-			rasterizingActions.Add(action);
+			rasterizingActions.Enqueue(action);
 		}
 
 		public void DrawMeshBoundingBox(ITransformation transformation, IEnumerable<IMesh> meshes, short? colorOverride = null, byte? pixelOverride = null)
 		{
 			var action = new Action(() => DrawMeshBoundingBox(frameBuffer, transformation, meshes, colorOverride, pixelOverride));
-			rasterizingActions.Add(action);
+			rasterizingActions.Enqueue(action);
 		}
 
 		public void DrawPolygonWired(ITransformation transformation, IEnumerable<Vector2> vectors, short? colorOverride = null, byte? pixelOverride = null)
 		{
 			var action = new Action(() => DrawPolygonWired(frameBuffer, transformation, vectors, colorOverride, pixelOverride));
-			rasterizingActions.Add(action);
+			rasterizingActions.Enqueue(action);
 		}
 
 		public void DrawPolygonWired(ITransformation transformation, IEnumerable<Vector3> vectors, short? colorOverride = null, byte? pixelOverride = null)
 		{
 			var action = new Action(() => DrawPolygonWired(frameBuffer, transformation, vectors, colorOverride, pixelOverride));
-			rasterizingActions.Add(action);
+			rasterizingActions.Enqueue(action);
 		}
 
 		public void DrawPolygonFilled(ITransformation transformation, IEnumerable<Vector2> vectors, short? colorOverride = null, byte? pixelOverride = null)
 		{
 			var action = new Action(() => DrawPolygonFilled(frameBuffer, transformation, vectors, colorOverride, pixelOverride));
-			rasterizingActions.Add(action);
+			rasterizingActions.Enqueue(action);
 		}
 
 		public void DrawPolygonFilled(ITransformation transformation, IEnumerable<Vector3> vectors, short? colorOverride = null, byte? pixelOverride = null)
 		{
 			var action = new Action(() => DrawPolygonFilled(frameBuffer, transformation, vectors, colorOverride, pixelOverride));
-			rasterizingActions.Add(action);
+			rasterizingActions.Enqueue(action);
 		}
 
 		public void DrawAxes(ITransformation transformation, short? colorOverride = null, byte? pixelOverride = null)
 		{
 			var action = new Action(() => DrawAxes(frameBuffer, transformation, colorOverride, pixelOverride));
-			rasterizingActions.Add(action);
+			rasterizingActions.Enqueue(action);
 		}
 
 		public void DrawLine(ITransformation transformation, Vector3 point1, Vector3 point2, short? colorOverride = null, byte? pixelOverride = null)
 		{
 			var action = new Action(() => DrawLine(frameBuffer, transformation, point1, point2, colorOverride, pixelOverride));
-			rasterizingActions.Add(action);
+			rasterizingActions.Enqueue(action);
 		}
 
 		public void DrawLine(ITransformation transformation, Vector2 point1, Vector2 point2, short? colorOverride = null, byte? pixelOverride = null)
 		{
 			var action = new Action(() => DrawLine(frameBuffer, transformation, point1, point2, colorOverride, pixelOverride));
-			rasterizingActions.Add(action);
+			rasterizingActions.Enqueue(action);
 		}
 
 		public void DrawPoints(ITransformation transformation, IEnumerable<Vector2> points, short? colorOverride = null, byte? pixelOverride = null)
 		{
 			var action = new Action(() => DrawPoints(frameBuffer, transformation, points, colorOverride, pixelOverride));
-			rasterizingActions.Add(action);
+			rasterizingActions.Enqueue(action);
 		}
 
 		public void DrawPoints(ITransformation transformation, IEnumerable<Vector3> points, short? colorOverride = null, byte? pixelOverride = null)
 		{
 			var action = new Action(() => DrawPoints(frameBuffer, transformation, points, colorOverride, pixelOverride));
-			rasterizingActions.Add(action);
+			rasterizingActions.Enqueue(action);
 		}
 
 		public void DrawPoint(ITransformation transformation, Vector2 point, short? colorOverride = null, byte? pixelOverride = null)
 		{
 			var action = new Action(() => DrawPoint(frameBuffer, transformation, point, colorOverride, pixelOverride));
-			rasterizingActions.Add(action);
+			rasterizingActions.Enqueue(action);
 		}
 
 		public void DrawPoint(ITransformation transformation, Vector3 point, short? colorOverride = null, byte? pixelOverride = null)
 		{
 			var action = new Action(() => DrawPoint(frameBuffer, transformation, point, colorOverride, pixelOverride));
-			rasterizingActions.Add(action);
+			rasterizingActions.Enqueue(action);
 		}
 
 		public void DrawStringHorizontal(ITransformation transformation, Vector2 location, string messageString, short? colorOverride = null)
 		{
 			var action = new Action(() => DrawStringHorizontal(frameBuffer, transformation, location, messageString, colorOverride));
-			rasterizingActions.Add(action);
+			rasterizingActions.Enqueue(action);
 		}
 
 		public void DrawStringVertical(ITransformation transformation, Vector2 location, string messageString, short? colorOverride = null)
 		{
 			var action = new Action(() => DrawStringHorizontal(frameBuffer, transformation, location, messageString, colorOverride));
-			rasterizingActions.Add(action);
+			rasterizingActions.Enqueue(action);
 		}
 
 		public void ClearImage(byte? clearCharacter = null, byte? clearColor = null)
