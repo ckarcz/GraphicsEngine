@@ -31,5 +31,5 @@ https://github.com/ChrisJansson/ObjLoader
 
 # Screenshots:
 
-http://giant.gfycat.com/WeepyGloriousAnaconda.gif
+ http://gfycat.com/DigitalWhichGar
 ![asdfasf](https://github.com/ckarcz/GraphicsEngine/blob/master/colored_wired_woman_demo.gif)
