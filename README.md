@@ -20,7 +20,7 @@ https://github.com/ChrisJansson/ObjLoader
 * Meshes can be rasterized as wired polygons, vertices, or as solids (tad bit buggy).
 * Ability to transform rasterized objects: scaling, translation, and rotations along every axis.
 * 16 bit polychromatic rendering baby! Still a bit to do for the API for the colors and such.
-* Ridimentary polygon hiding algo (zbuffer). (tad bit buggy)
+* Rudimentary polygon hiding algo (zbuffer). (tad bit buggy)
 
 ## To do:
 * Update transformation so objects are scaled and rotated around the objects center, even for object models not centered around (0, 0, 0).
