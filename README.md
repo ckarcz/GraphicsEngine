@@ -25,6 +25,9 @@ https://github.com/ChrisJansson/ObjLoader
 ## To do:
 * Update transformation so objects are scaled and rotated around the objects center, even for object models not centered around (0, 0, 0).
 * Implement a camera (perspective projection).
+* Lighting & shadows.
+* Some Kernel32 Console Abstractions (coloring, etc).
+* Create an asteroids game demo using the engine.
 
 # Screenshots:
 
