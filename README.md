@@ -1,5 +1,5 @@
 # GraphicsEngine
-A 16 bit windows console 3D graphics engine and framework written in C#.
+A 16 bit windows console 3D graphics engine written in C#.
 
 This is a learning project regarding creating the foundations of a 3D graphics engine.
 
@@ -20,12 +20,16 @@ https://github.com/ChrisJansson/ObjLoader
 * Meshes can be rasterized as wired polygons, vertices, or as solids (tad bit buggy).
 * Ability to transform rasterized objects: scaling, translation, and rotations along every axis.
 * 16 bit polychromatic rendering baby! Still a bit to do for the API for the colors and such.
-* Ridimentary polygon hiding algo (zbuffer). (tad bit buggy)
+* Rudimentary polygon hiding algo (zbuffer). (tad bit buggy)
 
 ## To do:
 * Update transformation so objects are scaled and rotated around the objects center, even for object models not centered around (0, 0, 0).
 * Implement a camera (perspective projection).
+* Lighting & shadows.
+* Some Kernel32 Console Abstractions (coloring, etc).
+* Create an asteroids game demo using the engine.
 
 # Screenshots:
 
+ http://gfycat.com/DigitalWhichGar
 ![asdfasf](https://github.com/ckarcz/GraphicsEngine/blob/master/colored_wired_woman_demo.gif)
