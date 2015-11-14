@@ -52,12 +52,14 @@ namespace GraphicsEngine.Engine
 		{
 			rasterizer.ClearImage((byte) ' ', (byte) Kernel32Console.Colors.BACKGROUND_BLACK | Kernel32Console.Colors.FOREGROUND_GREY | Kernel32Console.Colors.FOREGROUND_INTENSITY);
 
-			rasterizer.DrawMeshFilled(transformation, meshes);
+			//rasterizer.DrawMeshFilled(transformation, meshes);//, Kernel32Console.Colors.FOREGROUND_RED, Rasterizer.ShadePixelChar1);
+			rasterizer.DrawMeshVertices(transformation, meshes, Kernel32Console.Colors.FOREGROUND_CYAN, (byte)'X');
+			//rasterizer.DrawMeshWired(transformation, meshes, Kernel32Console.Colors.FOREGROUND_GREEN);
 
-			rasterizer.DrawMeshCenters(transformation, meshes, Kernel32Console.Colors.FOREGROUND_GREEN);
-			rasterizer.DrawMeshBoundingBox(transformation, meshes, Kernel32Console.Colors.FOREGROUND_MAGENTA);
+			//rasterizer.DrawMeshCenters(transformation, meshes, Kernel32Console.Colors.FOREGROUND_GREEN);
+			//rasterizer.DrawMeshBoundingBox(transformation, meshes, Kernel32Console.Colors.FOREGROUND_MAGENTA);
 
-			rasterizer.DrawAxes(Transformation.None, Kernel32Console.Colors.FOREGROUND_YELLOW);
+			//rasterizer.DrawAxes(Transformation.None, Kernel32Console.Colors.FOREGROUND_YELLOW);
 
 			rasterizer.DrawStringHorizontal(Transformation.None, new Vector2(-Width / 2 + 1, Height / 2 - 2), string.Format("MODEL: '{0}'", currentWavefrontObjectFilePath));
 			rasterizer.DrawStringHorizontal(Transformation.None, new Vector2(-Width / 2 + 1, Height / 2 - 3), string.Format("# POLYGONS: {0}", meshes.Sum(mesh => mesh.Faces.Count())));

@@ -26,7 +26,7 @@ namespace GraphicsEngine.Graphics
 		{
 			get
 			{
-				if (Minimums.HasValue && Maximums.HasValue && center == null)
+				if (center == null && Minimums.HasValue && Maximums.HasValue)
 				{
 					center = Minimums.Value.GetMiddle(Maximums.Value);
 				}
@@ -41,7 +41,7 @@ namespace GraphicsEngine.Graphics
 		{
 			get
 			{
-				if (Faces.Any() && Faces.Any(face => face.Points.Any()) && maximums == null)
+				if (maximums == null && Faces.Any() && Faces.Any(face => face.Points.Any()))
 				{
 					var temp = new Vector3(Faces[0][0].X, Faces[0][0].Y, Faces[0][0].Z);
 					foreach (var face in Faces)
@@ -65,7 +65,7 @@ namespace GraphicsEngine.Graphics
 		{
 			get
 			{
-				if (Faces.Any() && Faces.Any(face => face.Points.Any()) && minimums == null)
+				if (minimums == null && Faces.Any() && Faces.Any(face => face.Points.Any()))
 				{
 					var temp = new Vector3(Faces[0][0].X, Faces[0][0].Y, Faces[0][0].Z);
 					foreach (var face in Faces)

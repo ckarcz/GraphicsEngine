@@ -35,9 +35,9 @@ namespace GraphicsEngine.Engine
 
 		public void Draw()
 		{
-			Thread.Sleep(50);
+			//Thread.Sleep(50);
 
-			rasterizer.ClearImage((byte) ' ', (byte) Kernel32Console.Colors.BACKGROUND_BLACK | Kernel32Console.Colors.FOREGROUND_GREY | Kernel32Console.Colors.FOREGROUND_INTENSITY);
+			//rasterizer.ClearImage((byte) ' ', (byte) Kernel32Console.Colors.BACKGROUND_BLACK | Kernel32Console.Colors.FOREGROUND_GREY | Kernel32Console.Colors.FOREGROUND_INTENSITY);
 
 			for (int i = 0; i < 50; i++)
 			{

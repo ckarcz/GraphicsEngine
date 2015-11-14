@@ -2,6 +2,7 @@
 
 using System;
 using System.Threading;
+using System.Windows.Media.Animation;
 using GraphicsEngine.Graphics;
 using GraphicsEngine.Graphics.Console;
 using GraphicsEngine.Math;
@@ -38,8 +39,6 @@ namespace GraphicsEngine.Engine
 			Thread.Sleep(50);
 
 			rasterizer.ClearImage((byte) ' ', (byte) Kernel32Console.Colors.BACKGROUND_BLACK | Kernel32Console.Colors.FOREGROUND_GREY | Kernel32Console.Colors.FOREGROUND_INTENSITY);
-
-			// TODO
 		}
 
 		public ConsoleGraphicsFrame Rasterize()
