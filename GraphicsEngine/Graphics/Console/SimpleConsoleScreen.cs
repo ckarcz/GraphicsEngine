@@ -67,48 +67,42 @@ namespace GraphicsEngine.Graphics.Console
 			System.Console.CursorTop = (Height / 2) + y;
 		}
 
-		public void SetFrame(IConsoleGraphicsFrame consoleGraphicsBuffer)
+		public void SetPixel(int x, int y, byte character, short color)
 		{
-			for (var x = 0; x < Width; x++)
-			{
-				for (var y = 0; y < Height; y++)
-				{
-					characterBuffer[x + y * Width] = consoleGraphicsBuffer.CharacterBuffer[x, y];
-				}
-			}
+			SetPixel(x, y, character);
 		}
 
-		public void SetPixel(int x, int y, short color, byte chr)
+		public void SetPixel(int x, int y, byte character)
 		{
-			throw new NotImplementedException();
+			characterBuffer[x + y * Width] = character;
 		}
 
 		public void SetPixel(int x, int y, short color)
 		{
-			throw new NotImplementedException();
+			throw new NotSupportedException();
 		}
 
 		public short GetPixelColor(int x, int y)
 		{
-			throw new NotImplementedException();
+			throw new NotSupportedException();
 		}
 
-		public byte GetPixelChar(int x, int y)
+		public byte GetPixelCharacter(int x, int y)
 		{
 			return characterBuffer[x + y * Width];
 		}
 
-		public void Draw()
+		public void Write()
 		{
 			System.Console.SetCursorPosition(0, 0);
 			stdOutputStream.Write(characterBuffer, 0, characterBuffer.Length);
 		}
 
-		public void ClearFrame(short color)
+		public void Clear(byte? character = null, short? color = null)
 		{
 			for (int i = 0; i < characterBuffer.Length; i++)
 			{
-				characterBuffer[i] = (byte) ' ';
+				characterBuffer[i] = character ?? (byte) ' ';
 			}
 		}
 	}

@@ -9,6 +9,6 @@ namespace GraphicsEngine.Graphics
 {
 	public interface IWavefrontObjToMeshConverter
 	{
-		IList<IMesh> ConvertToMesh(IWavefrontObj wavefrontObj);
+		IEnumerable<Mesh> ConvertToMesh(IWavefrontObj wavefrontObj);
 	}
 }

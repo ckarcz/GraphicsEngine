@@ -17,10 +17,10 @@ namespace GraphicsEngine.Graphics
 
 		public Mesh()
 		{
-			Faces = new List<IPolygon>();
+			Faces = new List<Polygon>();
 		}
 
-		public IList<IPolygon> Faces { get; }
+		public IList<Polygon> Faces { get; }
 
 		public Vector3? Centers
 		{

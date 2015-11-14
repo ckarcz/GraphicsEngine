@@ -11,18 +11,18 @@ namespace GraphicsEngine.Graphics.Console
 
 		void SetCursor(int x, int y);
 
-		void SetFrame(IConsoleGraphicsFrame consoleGraphicsBuffer);
+		void SetPixel(int x, int y, byte character, short color);
 
-		void SetPixel(int x, int y, short color, byte chr);
+		void SetPixel(int x, int y, byte character);
 
 		void SetPixel(int x, int y, short color);
 
 		short GetPixelColor(int x, int y);
 
-		byte GetPixelChar(int x, int y);
+		byte GetPixelCharacter(int x, int y);
 
-		void Draw();
+		void Write();
 
-		void ClearFrame(short color);
+		void Clear(byte? character = null, short? color = null);
 	}
 }

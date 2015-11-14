@@ -8,6 +8,6 @@ namespace GraphicsEngine.Graphics.Console
 
 		void Render(IConsoleGraphicsFrame frame);
 
-		void Clear();
+		void Clear(byte? character = null, short? color = null);
 	}
 }

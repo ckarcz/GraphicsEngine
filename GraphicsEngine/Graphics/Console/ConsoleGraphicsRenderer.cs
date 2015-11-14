@@ -24,15 +24,22 @@
 
 		public void Render(IConsoleGraphicsFrame frame)
 		{
-			consoleScreen.SetFrame(frame);
-			consoleScreen.Draw();
+			for (int x = 0; x < frame.Width; x++)
+			{
+				for (int y = 0; y < frame.Height; y++)
+				{
+					consoleScreen.SetPixel(x, y, frame.CharacterBuffer[x, y], frame.ColorBuffer[x, y]);
+				}
+			}
+
+			consoleScreen.Write();
 
 			Renderings++;
 		}
 
-		public void Clear()
+		public void Clear(byte? character = null, short? color = null)
 		{
-			System.Console.Clear();
+			consoleScreen.Clear(character, color);
 		}
 	}
 }
