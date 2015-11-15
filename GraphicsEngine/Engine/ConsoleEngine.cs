@@ -48,14 +48,8 @@ namespace GraphicsEngine.Engine
 			while (IsRunning)
 			{
 				scene.Update();
-				Render(scene);
+				scene.Render(renderer);
 			}
-		}
-
-		private void Render(IScene scene)
-		{
-			var frameBuffer = scene.Rasterize();
-			renderer.Render(frameBuffer);
 		}
 	}
 }

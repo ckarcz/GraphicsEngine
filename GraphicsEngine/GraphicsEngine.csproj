@@ -48,9 +48,7 @@
   <ItemGroup>
     <Compile Include="Common\Extensions\StringExtensions.cs" />
     <Compile Include="Engine\ConsoleEngine.cs" />
-    <Compile Include="Engine\ConsoleEngineExecutionContext.cs" />
     <Compile Include="Engine\IConsoleEngine.cs" />
-    <Compile Include="Engine\IConsoleEngineExecutionContext.cs" />
     <Compile Include="Common\SingletonBase.cs" />
     <Compile Include="Engine\InputStateService.cs" />
     <Compile Include="Engine\IScene.cs" />
@@ -60,8 +58,6 @@
     <Compile Include="Graphics\MeshCenterer.cs" />
     <Compile Include="Graphics\MeshNormalizer.cs" />
     <Compile Include="Math\Edge2.cs" />
-    <Compile Include="Scenes\RandomCharactersScene.cs" />
-    <Compile Include="Scenes\RandomLinesScene.cs" />
     <Compile Include="Graphics\ITransformation.cs" />
     <Compile Include="Graphics\Transformation.cs" />
     <Compile Include="Graphics\Kernel32ConsoleWindow.cs" />

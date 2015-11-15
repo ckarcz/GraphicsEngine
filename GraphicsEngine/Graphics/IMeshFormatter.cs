@@ -8,8 +8,8 @@ namespace GraphicsEngine.Graphics
 {
 	public interface IMeshFormatter
 	{
-		IEnumerable<IMesh> Transform(IEnumerable<IMesh> meshes);
+		IEnumerable<IMesh> Format(IEnumerable<IMesh> meshes);
 
-		IMesh Transform(IMesh mesh);
+		IMesh Format(IMesh mesh);
 	}
 }

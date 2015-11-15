@@ -13,14 +13,14 @@ namespace GraphicsEngine.Graphics
 	public class WavefrontObjConverter
 		: IWavefrontObjConverter
 	{
-		public IEnumerable<Mesh> ConvertToMesh(IWavefrontObj wavefrontObj)
+		public IEnumerable<IMesh> ConvertToMesh(IWavefrontObj wavefrontObj)
 		{
 			var meshes = ConvertGroups(wavefrontObj);
 
 			return meshes;
 		}
 
-		private IEnumerable<Mesh> ConvertGroups(IWavefrontObj wavefrontObj)
+		private IEnumerable<IMesh> ConvertGroups(IWavefrontObj wavefrontObj)
 		{
 			var meshes = new List<Mesh>();
 

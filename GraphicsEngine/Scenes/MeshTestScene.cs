@@ -48,7 +48,7 @@ namespace GraphicsEngine.Scenes
 			UpdateTransformation();
 		}
 
-		public IFrameBuffer Rasterize()
+		public void Render(IRenderer renderer)
 		{
 			rasterizer.ClearImage((byte)' ', (byte)Kernel32Console.Colors.BACKGROUND_BLACK | Kernel32Console.Colors.FOREGROUND_GREY | Kernel32Console.Colors.FOREGROUND_INTENSITY);
 
@@ -70,8 +70,8 @@ namespace GraphicsEngine.Scenes
 
 			rasterizer.DrawStringHorizontal(Transformation.None, new Vector2(-Width / 2 + 1, 6), string.Format("MODEL CENTER: {0}", transformation.Transform(meshes.First().Centers.Value)));
 
-			var rasterizedFrame = rasterizer.Rasterize();
-			return rasterizedFrame;
+			var rasterizedFrameBuffer = rasterizer.Rasterize();
+			renderer.Render(rasterizedFrameBuffer);
 		}
 
 		private void InitScene(string wavefrontObjFilePath)
@@ -84,7 +84,7 @@ namespace GraphicsEngine.Scenes
 			wavefrontObjFileStream.Close();
 			var wavefrontObjToMeshConverter = new WavefrontObjConverter();
 			meshes = wavefrontObjToMeshConverter.ConvertToMesh(wavefrontObj);
-			meshes = MeshCenterer.Instance.Transform(meshes);
+			meshes = MeshCenterer.Instance.Format(meshes);
 			currentWavefrontObjectFilePath = wavefrontObjFilePath;
 			transformation.Reset();
 		}

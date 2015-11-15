@@ -11,18 +11,18 @@ namespace GraphicsEngine.Graphics
 	public class MeshCenterer
 		: SingletonBase<MeshCenterer>, IMeshFormatter
 	{
-		public IEnumerable<IMesh> Transform(IEnumerable<IMesh> meshes)
+		public IEnumerable<IMesh> Format(IEnumerable<IMesh> meshes)
 		{
 			var normalizedMeshes = new List<IMesh>();
 			foreach (var mesh in meshes)
 			{
-				var normalizedMesh = Transform(mesh);
+				var normalizedMesh = Format(mesh);
 				normalizedMeshes.Add(normalizedMesh);
 			}
 			return normalizedMeshes;
 		}
 
-		public IMesh Transform(IMesh mesh)
+		public IMesh Format(IMesh mesh)
 		{
 			var meshCenters = mesh.Centers;
 
