@@ -1,11 +1,11 @@
-﻿namespace GraphicsEngine.Graphics.Console
+﻿namespace GraphicsEngine.Graphics
 {
-	public class ConsoleColorBuffer
-		: IConsoleColorBuffer
+	public class ColorBuffer
+		: IColorBuffer
 	{
 		private readonly short[,] consoleColorBuffer;
 
-		public ConsoleColorBuffer(int width, int height)
+		public ColorBuffer(int width, int height)
 		{
 			consoleColorBuffer = new short[width, height];
 			Width = width;

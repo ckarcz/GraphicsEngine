@@ -1,11 +1,11 @@
-﻿namespace GraphicsEngine.Graphics.Console
+﻿namespace GraphicsEngine.Graphics
 {
-	public class ConsoleGraphicsRenderer
-		: IConsoleGraphicsRenderer
+	public class GraphicsRenderer
+		: IGraphicsRenderer
 	{
-		private readonly IConsoleScreen consoleScreen;
+		private readonly IScreen consoleScreen;
 
-		public ConsoleGraphicsRenderer(IConsoleScreen consoleScreen)
+		public GraphicsRenderer(IScreen consoleScreen)
 		{
 			this.consoleScreen = consoleScreen;
 		}
@@ -22,7 +22,7 @@
 
 		public int Renderings { get; private set; }
 
-		public void Render(IConsoleGraphicsFrame frame)
+		public void Render(IGraphicsFrame frame)
 		{
 			for (int x = 0; x < frame.Width; x++)
 			{

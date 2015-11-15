@@ -6,10 +6,10 @@ using GraphicsEngine.Win32;
 
 #endregion
 
-namespace GraphicsEngine.Graphics.Console
+namespace GraphicsEngine.Graphics
 {
 	public class Kernel32ConsoleScreen
-		: IConsoleScreen
+		: IScreen
 	{
 		private Kernel32Console.SMALL_RECT consoleScreenSizeRect;
 		private readonly Kernel32Console.CHAR_INFO[] consoleScreenBuffer;

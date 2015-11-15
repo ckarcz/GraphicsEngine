@@ -2,7 +2,8 @@
 
 using System;
 using GraphicsEngine.Engine;
-using GraphicsEngine.Graphics.Console;
+using GraphicsEngine.Graphics;
+using GraphicsEngine.Scenes;
 
 #endregion
 
@@ -21,7 +22,7 @@ namespace GraphicsEngine
 			var screen = new Kernel32ConsoleScreen(consoleScreenWidth, consoleScreenHeight, "Graphics Engine Test", 0x0000);
 			//var screen = new SimpleConsoleScreen(consoleScreenWidth, consoleScreenHeight, "Graphics Engine Test", ConsoleColor.DarkBlue, ConsoleColor.Cyan);
 
-			var renderer = new ConsoleGraphicsRenderer(screen);
+			var renderer = new GraphicsRenderer(screen);
 
 			var randomLinesScene = new RandomLinesScene(consoleScreenWidth, consoleScreenHeight);
 			var randomCharactersScene = new RandomCharactersScene(consoleScreenWidth, consoleScreenHeight);

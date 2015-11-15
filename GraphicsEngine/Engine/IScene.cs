@@ -1,6 +1,6 @@
 #region Imports
 
-using GraphicsEngine.Graphics.Console;
+using GraphicsEngine.Graphics;
 
 #endregion
 
@@ -13,8 +13,6 @@ namespace GraphicsEngine.Engine
 
 		void Update();
 
-		void Draw();
-
-		ConsoleGraphicsFrame Rasterize();
+		GraphicsFrame Rasterize();
 	}
 }

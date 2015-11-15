@@ -5,10 +5,10 @@ using System.IO;
 
 #endregion
 
-namespace GraphicsEngine.Graphics.Console
+namespace GraphicsEngine.Graphics
 {
 	public class SimpleConsoleScreen
-		: IConsoleScreen
+		: IScreen
 	{
 		private readonly byte[] characterBuffer;
 		private readonly Stream stdOutputStream;

@@ -1,6 +1,6 @@
-﻿namespace GraphicsEngine.Graphics.Console
+﻿namespace GraphicsEngine.Graphics
 {
-	public interface IConsoleCharacterBuffer
+	public interface ICharacterBuffer
 	{
 		byte this[int x, int y] { get; }
 		int Width { get; }

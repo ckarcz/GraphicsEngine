@@ -1,6 +1,6 @@
-﻿namespace GraphicsEngine.Graphics.Console
+﻿namespace GraphicsEngine.Graphics
 {
-	public interface IConsoleColorBuffer
+	public interface IColorBuffer
 	{
 		short this[int x, int y] { get; }
 		int Width { get; }

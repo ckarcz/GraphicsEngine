@@ -1,11 +1,11 @@
-﻿namespace GraphicsEngine.Graphics.Console
+﻿namespace GraphicsEngine.Graphics
 {
-	public class ConsoleCharacterBuffer
-		: IConsoleCharacterBuffer
+	public class CharacterBuffer
+		: ICharacterBuffer
 	{
 		private readonly byte[,] consoleCharacterBuffer;
 
-		public ConsoleCharacterBuffer(int width, int height)
+		public CharacterBuffer(int width, int height)
 		{
 			consoleCharacterBuffer = new byte[width, height];
 			Width = width;

@@ -1,12 +1,12 @@
-namespace GraphicsEngine.Graphics.Console
+namespace GraphicsEngine.Graphics
 {
-	public interface IConsoleGraphicsRenderer
+	public interface IGraphicsRenderer
 	{
 		int Width { get; }
 		int Height { get; }
 		int Renderings { get; }
 
-		void Render(IConsoleGraphicsFrame frame);
+		void Render(IGraphicsFrame frame);
 
 		void Clear(byte? character = null, short? color = null);
 	}

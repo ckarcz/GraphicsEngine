@@ -1,7 +1,6 @@
 #region Imports
 
 using System.Collections.Generic;
-using GraphicsEngine.Graphics.Console;
 using GraphicsEngine.Math;
 
 #endregion
@@ -62,6 +61,6 @@ namespace GraphicsEngine.Graphics
 
 		void ClearImage(byte? clearCharacter = null, byte? clearColor = null);
 
-		ConsoleGraphicsFrame Rasterize();
+		GraphicsFrame Rasterize();
 	}
 }

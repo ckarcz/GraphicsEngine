@@ -1,6 +1,6 @@
-namespace GraphicsEngine.Graphics.Console
+namespace GraphicsEngine.Graphics
 {
-	public interface IConsoleScreen
+	public interface IScreen
 	{
 		string WindowTitle { get; }
 
