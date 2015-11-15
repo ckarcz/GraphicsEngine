@@ -21,11 +21,11 @@ namespace GraphicsEngine.Graphics
 		public static readonly byte UpRightWireFrameChar = 47; //		'\'
 		public static readonly byte VerticleWireFrameChar = 124; //	'|'
 		public static readonly short[] Colors = new short[] {Kernel32Console.Colors.FOREGROUND_BLUE, Kernel32Console.Colors.FOREGROUND_CYAN, Kernel32Console.Colors.FOREGROUND_GREEN, Kernel32Console.Colors.FOREGROUND_MAGENTA, Kernel32Console.Colors.FOREGROUND_RED, Kernel32Console.Colors.FOREGROUND_YELLOW, Kernel32Console.Colors.FOREGROUND_GREY};
-		private readonly GraphicsFrame frameBuffer;
+		private readonly FrameBuffer frameBuffer;
 
 		public Rasterizer(int width, int height)
 		{
-			frameBuffer = new GraphicsFrame(width, height);
+			frameBuffer = new FrameBuffer(width, height);
         }
 
 		public void DrawMeshWired(ITransformation transformation, IMesh mesh, short? colorOverride = null, byte? pixelOverride = null)
@@ -710,7 +710,7 @@ namespace GraphicsEngine.Graphics
 			frameBuffer.Reset(clearCharacter, clearColor);
 		}
 
-		public GraphicsFrame Rasterize()
+		public IFrameBuffer Rasterize()
 		{
 			return frameBuffer;
 		}

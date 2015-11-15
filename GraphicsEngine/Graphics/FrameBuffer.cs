@@ -1,12 +1,12 @@
 ﻿namespace GraphicsEngine.Graphics
 {
-	public class GraphicsFrame
-		: IGraphicsFrame
+	public class FrameBuffer
+		: IFrameBuffer
 	{
 		public const byte DefaultClearCharacter = 32;
 		public const byte DefaultClearColor = 0;
 
-		public GraphicsFrame(int width, int height)
+		public FrameBuffer(int width, int height)
 		{
 			Width = width;
 			Height = height;
@@ -22,12 +22,12 @@
 		public int Width { get; }
 		public int Height { get; }
 
-		ICharacterBuffer IGraphicsFrame.CharacterBuffer
+		ICharacterBuffer IFrameBuffer.CharacterBuffer
 		{
 			get { return CharacterBuffer; }
 		}
 
-		IColorBuffer IGraphicsFrame.ColorBuffer
+		IColorBuffer IFrameBuffer.ColorBuffer
 		{
 			get { return ColorBuffer; }
 		}

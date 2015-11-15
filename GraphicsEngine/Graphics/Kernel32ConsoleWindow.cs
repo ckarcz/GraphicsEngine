@@ -8,8 +8,8 @@ using GraphicsEngine.Win32;
 
 namespace GraphicsEngine.Graphics
 {
-	public class Kernel32ConsoleScreen
-		: IScreen
+	public class Kernel32ConsoleWindow
+		: IConsoleWindow
 	{
 		private Kernel32Console.SMALL_RECT consoleScreenSizeRect;
 		private readonly Kernel32Console.CHAR_INFO[] consoleScreenBuffer;
@@ -18,7 +18,7 @@ namespace GraphicsEngine.Graphics
 		private readonly Kernel32Console.COORD consoleScreenBufferStartCoords;
 		private readonly IntPtr stdOutputHandle;
 
-		public Kernel32ConsoleScreen(int width, int height, string windowTitle, short colors = Kernel32Console.Colors.BACKGROUND_BLACK | Kernel32Console.Colors.FOREGROUND_GREY | Kernel32Console.Colors.FOREGROUND_INTENSITY)
+		public Kernel32ConsoleWindow(int width, int height, string windowTitle, short colors = Kernel32Console.Colors.BACKGROUND_BLACK | Kernel32Console.Colors.FOREGROUND_GREY | Kernel32Console.Colors.FOREGROUND_INTENSITY)
 		{
 			Width = width;
 			Height = height;
@@ -46,7 +46,7 @@ namespace GraphicsEngine.Graphics
 				consoleScreenBuffer[i] = emptyChar;
 			}
 
-			Write();
+			Draw();
 		}
 
 		public string WindowTitle
@@ -60,8 +60,8 @@ namespace GraphicsEngine.Graphics
 			set { Kernel32Console.SetConsoleTitle(value); }
 		}
 
-		public int Width { get; }
-		public int Height { get; }
+		public int Width { get; private set; }
+		public int Height { get; private set; }
 
 		public void ShowCursor(bool showCursor)
 		{
@@ -99,7 +99,7 @@ namespace GraphicsEngine.Graphics
 			return consoleScreenBuffer[x + y * Width].Char.AsciiChar;
 		}
 
-		public void Write()
+		public void Draw()
 		{
 			Kernel32Console.WriteConsoleOutput(stdOutputHandle, consoleScreenBuffer, consoleScreenBufferSizeCoords, consoleScreenBufferStartCoords, ref consoleScreenSizeRect);
 		}

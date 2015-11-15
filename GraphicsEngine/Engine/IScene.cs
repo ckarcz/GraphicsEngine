@@ -13,6 +13,6 @@ namespace GraphicsEngine.Engine
 
 		void Update();
 
-		GraphicsFrame Rasterize();
+		IFrameBuffer Rasterize();
 	}
 }

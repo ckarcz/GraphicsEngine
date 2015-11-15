@@ -1,8 +1,6 @@
 #region Imports
 
-using System;
 using GraphicsEngine.Graphics;
-using GraphicsEngine.Math;
 
 #endregion
 
@@ -11,10 +9,10 @@ namespace GraphicsEngine.Engine
 	public class ConsoleEngine
 		: IConsoleEngine
 	{
-		private readonly IGraphicsRenderer renderer;
+		private readonly IRenderer renderer;
 		private readonly IScene scene;
 
-		public ConsoleEngine(IGraphicsRenderer renderer, IScene scene)
+		public ConsoleEngine(IRenderer renderer, IScene scene)
 		{
 			this.renderer = renderer;
 			this.scene = scene;
@@ -50,14 +48,14 @@ namespace GraphicsEngine.Engine
 			while (IsRunning)
 			{
 				scene.Update();
-				var frame = scene.Rasterize();
-				Render(frame);
+				Render(scene);
 			}
 		}
 
-		private void Render(GraphicsFrame frame)
+		private void Render(IScene scene)
 		{
-			renderer.Render(frame);
+			var frameBuffer = scene.Rasterize();
+			renderer.Render(frameBuffer);
 		}
 	}
 }

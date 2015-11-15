@@ -10,8 +10,8 @@ using GraphicsEngine.Wavefront.Models;
 
 namespace GraphicsEngine.Graphics
 {
-	public class WavefrontObjToMeshConverter
-		: IWavefrontObjToMeshConverter
+	public class WavefrontObjConverter
+		: IWavefrontObjConverter
 	{
 		public IEnumerable<Mesh> ConvertToMesh(IWavefrontObj wavefrontObj)
 		{

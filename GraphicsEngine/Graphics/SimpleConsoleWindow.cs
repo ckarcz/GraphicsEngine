@@ -8,7 +8,7 @@ using System.IO;
 namespace GraphicsEngine.Graphics
 {
 	public class SimpleConsoleScreen
-		: IScreen
+		: IConsoleWindow
 	{
 		private readonly byte[] characterBuffer;
 		private readonly Stream stdOutputStream;
@@ -92,7 +92,7 @@ namespace GraphicsEngine.Graphics
 			return characterBuffer[x + y * Width];
 		}
 
-		public void Write()
+		public void Draw()
 		{
 			System.Console.SetCursorPosition(0, 0);
 			stdOutputStream.Write(characterBuffer, 0, characterBuffer.Length);

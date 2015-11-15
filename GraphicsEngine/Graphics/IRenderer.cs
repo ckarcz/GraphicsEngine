@@ -1,12 +1,12 @@
 namespace GraphicsEngine.Graphics
 {
-	public interface IGraphicsRenderer
+	public interface IRenderer
 	{
 		int Width { get; }
 		int Height { get; }
 		int Renderings { get; }
 
-		void Render(IGraphicsFrame frame);
+		void Render(IFrameBuffer frame);
 
 		void Clear(byte? character = null, short? color = null);
 	}

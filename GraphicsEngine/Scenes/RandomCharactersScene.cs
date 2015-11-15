@@ -32,7 +32,7 @@ namespace GraphicsEngine.Scenes
 		{
 		}
 
-		public GraphicsFrame Rasterize()
+		public IFrameBuffer Rasterize()
 		{
 			//Thread.Sleep(50);
 

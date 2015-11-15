@@ -1,9 +1,8 @@
 namespace GraphicsEngine.Graphics
 {
-	public interface IScreen
+	public interface IConsoleWindow
 	{
 		string WindowTitle { get; }
-
 		int Width { get; }
 		int Height { get; }
 
@@ -21,7 +20,7 @@ namespace GraphicsEngine.Graphics
 
 		byte GetPixelCharacter(int x, int y);
 
-		void Write();
+		void Draw();
 
 		void Clear(byte? character = null, short? color = null);
 	}

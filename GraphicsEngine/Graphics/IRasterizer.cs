@@ -61,6 +61,6 @@ namespace GraphicsEngine.Graphics
 
 		void ClearImage(byte? clearCharacter = null, byte? clearColor = null);
 
-		GraphicsFrame Rasterize();
+		IFrameBuffer Rasterize();
 	}
 }

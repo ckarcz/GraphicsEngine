@@ -19,10 +19,10 @@ namespace GraphicsEngine
 
 			//MessageBox.Show("Top row digits 1-8 switches models.\n\nUp & Down & Left & Right translation.\n[ & ] scale.\n\n, & . & K & L & O & P rotate.");
 
-			var screen = new Kernel32ConsoleScreen(consoleScreenWidth, consoleScreenHeight, "Graphics Engine Test", 0x0000);
+			var screen = new Kernel32ConsoleWindow(consoleScreenWidth, consoleScreenHeight, "Graphics Engine Test", 0x0000);
 			//var screen = new SimpleConsoleScreen(consoleScreenWidth, consoleScreenHeight, "Graphics Engine Test", ConsoleColor.DarkBlue, ConsoleColor.Cyan);
 
-			var renderer = new GraphicsRenderer(screen);
+			var renderer = new Renderer(screen);
 
 			var randomLinesScene = new RandomLinesScene(consoleScreenWidth, consoleScreenHeight);
 			var randomCharactersScene = new RandomCharactersScene(consoleScreenWidth, consoleScreenHeight);

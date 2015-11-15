@@ -1,6 +1,6 @@
 ﻿namespace GraphicsEngine.Graphics
 {
-	public interface IGraphicsFrame
+	public interface IFrameBuffer
 	{
 		int Width { get; }
 		int Height { get; }

@@ -48,7 +48,7 @@ namespace GraphicsEngine.Scenes
 			UpdateTransformation();
 		}
 
-		public GraphicsFrame Rasterize()
+		public IFrameBuffer Rasterize()
 		{
 			rasterizer.ClearImage((byte)' ', (byte)Kernel32Console.Colors.BACKGROUND_BLACK | Kernel32Console.Colors.FOREGROUND_GREY | Kernel32Console.Colors.FOREGROUND_INTENSITY);
 
@@ -82,7 +82,7 @@ namespace GraphicsEngine.Scenes
 			var wavefrontObjFileStream = File.Open(wavefrontObjFilePathString, FileMode.Open, FileAccess.Read);
 			var wavefrontObj = wavefrontObjLoader.LoadWavefrontObj(wavefrontObjFileStream);
 			wavefrontObjFileStream.Close();
-			var wavefrontObjToMeshConverter = new WavefrontObjToMeshConverter();
+			var wavefrontObjToMeshConverter = new WavefrontObjConverter();
 			meshes = wavefrontObjToMeshConverter.ConvertToMesh(wavefrontObj);
 			meshes = MeshCenterer.Instance.Transform(meshes);
 			currentWavefrontObjectFilePath = wavefrontObjFilePath;
@@ -231,5 +231,10 @@ namespace GraphicsEngine.Scenes
 			transformation.Scale = new Vector3(scaleX, scaleY, scaleZ);
 			transformation.Rotation = new Vector3(rotateX, rotateY, rotateZ);
 		}
+	}
+
+	public class RenderableObject
+	{
+		
 	}
 }
