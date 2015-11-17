@@ -39,6 +39,36 @@ namespace GraphicsEngine.Math
 			get { return ((float) System.Math.Sqrt(X * X + Y * Y)); }
 		}
 
+		public float LengthSquared
+		{
+			get { return X * X + Y * Y; }
+		}
+
+		public Vector2 Normalized
+		{
+			get
+			{
+				var copy = this;
+				copy.Normalize();
+				return copy;
+			}
+		}
+
+		public Vector2 Conjugated
+		{
+			get
+			{
+				var copy = this;
+				copy.Conjugate();
+				return copy;
+			}
+		}
+
+		public Vector2 Xy
+		{
+			get { return new Vector2(X, Y); }
+		}
+
 		#endregion Public Properties
 
 		#region Operators
@@ -57,7 +87,7 @@ namespace GraphicsEngine.Math
 
 		public static Vector2 operator -(Vector2 thisVector)
 		{
-			var conjugated = thisVector.GetConjugated();
+			var conjugated = thisVector.Conjugated;
 
 			return conjugated;
 		}
@@ -138,24 +168,14 @@ namespace GraphicsEngine.Math
 
 		#region Public Methods
 
-		public Vector2 Clone()
-		{
-			return new Vector2(X, Y);
-		}
-
 		public Vector2 Normalize()
 		{
-			X /= Length;
-			Y /= Length;
+			var scale = 1.0f / Length;
+
+			X *= scale;
+			Y *= scale;
 
 			return this;
-		}
-
-		public Vector2 GetNormalized()
-		{
-			var normalized = Clone().Normalize();
-
-			return normalized;
 		}
 
 		public Vector2 Conjugate()
@@ -164,13 +184,6 @@ namespace GraphicsEngine.Math
 			Y = -Y;
 
 			return this;
-		}
-
-		public Vector2 GetConjugated()
-		{
-			var copyConjugated = Clone().Conjugate();
-
-			return copyConjugated;
 		}
 
 		public float GetDistance(Vector2 otherVector)
@@ -204,9 +217,32 @@ namespace GraphicsEngine.Math
 			return middleVector;
 		}
 
-		public bool Equals(Vector2 other)
+		public override bool Equals(object obj)
 		{
-			return this == other;
+			if (ReferenceEquals(null, obj))
+			{
+				return false;
+			}
+
+			return obj is Vector2 && Equals((Vector2) obj);
+		}
+
+		public bool Equals(Vector2 otherVector)
+		{
+			return Equals(this, otherVector);
+		}
+
+		public static bool Equals(Vector2 thisVector, Vector2 otherVector)
+		{
+			return thisVector == otherVector;
+		}
+
+		public override int GetHashCode()
+		{
+			unchecked
+			{
+				return (X.GetHashCode() * 397) ^ Y.GetHashCode();
+			}
 		}
 
 		public override string ToString()

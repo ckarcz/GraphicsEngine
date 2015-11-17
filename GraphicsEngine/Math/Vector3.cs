@@ -48,6 +48,31 @@ namespace GraphicsEngine.Math
 			get { return ((float) System.Math.Sqrt(X * X + Y * Y + Z * Z)); }
 		}
 
+		public float LengthSquared
+		{
+			get { return X * X + Y * Y + Z * Z; }
+		}
+
+		public Vector3 Normalized
+		{
+			get
+			{
+				var copy = this;
+				copy.Normalize();
+				return copy;
+			}
+		}
+
+		public Vector3 Conjugated
+		{
+			get
+			{
+				var copy = this;
+				copy.Conjugate();
+				return copy;
+			}
+		}
+
 		#endregion Public Properties
 
 		#region Operators
@@ -68,7 +93,7 @@ namespace GraphicsEngine.Math
 
 		public static Vector3 operator -(Vector3 thisVector)
 		{
-			var conjugated = thisVector.GetConjugated();
+			var conjugated = thisVector.Conjugated;
 
 			return conjugated;
 		}
@@ -157,24 +182,15 @@ namespace GraphicsEngine.Math
 
 		#region Public Methods
 
-		public Vector3 Clone()
-		{
-			return new Vector3(X, Y, Z);
-		}
-
 		public Vector3 Normalize()
 		{
-			X /= Length;
-			Y /= Length;
+			var scale = 1.0f / Length;
+
+			X *= scale;
+			Y *= scale;
+			Z *= scale;
 
 			return this;
-		}
-
-		public Vector3 GetNormalized()
-		{
-			var normalized = Clone().Normalize();
-
-			return normalized;
 		}
 
 		public Vector3 Conjugate()
@@ -183,13 +199,6 @@ namespace GraphicsEngine.Math
 			Y = -Y;
 
 			return this;
-		}
-
-		public Vector3 GetConjugated()
-		{
-			var conjugated = Clone().Conjugate();
-
-			return conjugated;
 		}
 
 		public float GetDistance(Vector3 otherVector)
@@ -233,9 +242,35 @@ namespace GraphicsEngine.Math
 			return result;
 		}
 
-		public bool Equals(Vector3 other)
+		public override bool Equals(object obj)
 		{
-			return this == other;
+			if (ReferenceEquals(null, obj))
+			{
+				return false;
+			}
+
+			return obj is Vector3 && Equals((Vector3) obj);
+		}
+
+		public bool Equals(Vector3 otherVector)
+		{
+			return Equals(this, otherVector);
+		}
+
+		public static bool Equals(Vector3 thisVector, Vector3 otherVector)
+		{
+			return thisVector == otherVector;
+		}
+
+		public override int GetHashCode()
+		{
+			unchecked
+			{
+				var hashCode = X.GetHashCode();
+				hashCode = (hashCode * 397) ^ Y.GetHashCode();
+				hashCode = (hashCode * 397) ^ Z.GetHashCode();
+				return hashCode;
+			}
 		}
 
 		public override string ToString()

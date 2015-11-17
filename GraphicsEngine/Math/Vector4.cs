@@ -45,6 +45,36 @@ namespace GraphicsEngine.Math
 			get { return ((float) System.Math.Sqrt(X * X + Y * Y + Z * Z + W * W)); }
 		}
 
+		public float LengthSquared
+		{
+			get { return X * X + Y * Y + Z * Z + W * W; }
+		}
+
+		public Vector4 Normalized
+		{
+			get
+			{
+				var copy = this;
+				copy.Normalize();
+				return copy;
+			}
+		}
+
+		public Vector4 Conjugated
+		{
+			get
+			{
+				var copy = this;
+				copy.Conjugate();
+				return copy;
+			}
+		}
+
+		public Vector3 Xyz
+		{
+			get { return new Vector3(X, Y, Z); }
+		}
+
 		#endregion Public Properties
 
 		#region Operators
@@ -67,7 +97,7 @@ namespace GraphicsEngine.Math
 
 		public static Vector4 operator -(Vector4 thisVector)
 		{
-			var conjugated = thisVector.GetConjugated();
+			var conjugated = thisVector.Conjugated;
 
 			return conjugated;
 		}
@@ -164,26 +194,16 @@ namespace GraphicsEngine.Math
 
 		#region Public Methods
 
-		public Vector4 Clone()
-		{
-			return new Vector4(X, Y, Z, W);
-		}
-
 		public Vector4 Normalize()
 		{
-			X /= Length;
-			Y /= Length;
-			Z /= Length;
-			W /= Length;
+			var scale = 1.0f / Length;
+
+			X *= scale;
+			Y *= scale;
+			Z *= scale;
+			W *= scale;
 
 			return this;
-		}
-
-		public Vector4 GetNormalized()
-		{
-			var normalized = Clone().Normalize();
-
-			return normalized;
 		}
 
 		public Vector4 Conjugate()
@@ -194,13 +214,6 @@ namespace GraphicsEngine.Math
 			W = -W;
 
 			return this;
-		}
-
-		public Vector4 GetConjugated()
-		{
-			var conjugated = Clone().Conjugate();
-
-			return conjugated;
 		}
 
 		public float GetDistance(Vector4 otherVector)
@@ -234,14 +247,41 @@ namespace GraphicsEngine.Math
 			return middleVector;
 		}
 
-		public Vector3 GetAsVector3()
+		public override bool Equals(object obj)
 		{
-			return new Vector3(X, Y, Z);
+			if (ReferenceEquals(null, obj))
+			{
+				return false;
+			}
+
+			return obj is Vector4 && Equals((Vector4) obj);
 		}
 
-		public bool Equals(Vector4 other)
+		public bool Equals(Vector4 otherVector)
 		{
-			return this == other;
+			return Equals(this, otherVector);
+		}
+
+		public static bool Equals(Vector4 thisVector, Vector4 otherVector)
+		{
+			return thisVector == otherVector;
+		}
+
+		public override int GetHashCode()
+		{
+			unchecked
+			{
+				var hashCode = X.GetHashCode();
+				hashCode = (hashCode * 397) ^ Y.GetHashCode();
+				hashCode = (hashCode * 397) ^ Z.GetHashCode();
+				hashCode = (hashCode * 397) ^ W.GetHashCode();
+				return hashCode;
+			}
+		}
+
+		public override string ToString()
+		{
+			return string.Format("({0}, {1}, {2}, {3})", X, Y, Z, W);
 		}
 
 		#endregion Public Methods

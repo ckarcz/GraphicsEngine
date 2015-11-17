@@ -19,150 +19,6 @@ namespace GraphicsEngine.Math
 
 		#endregion Public Static Properties
 
-		#region Public Methods
-
-		public bool Equals(Matrix other)
-		{
-			return ((M11 == other.M11) && (M22 == other.M22) && (M33 == other.M33) && (M44 == other.M44) && (M12 == other.M12) && (M13 == other.M13) && (M14 == other.M14) && (M21 == other.M21) && (M23 == other.M23) && (M24 == other.M24) && (M31 == other.M31) && (M32 == other.M32) && (M34 == other.M34) && (M41 == other.M41) && (M42 == other.M42) && (M43 == other.M43));
-		}
-
-		public static Matrix CreateScaleMatrix(Vector3 scalingVector)
-		{
-			var result = new Matrix();
-
-			result.M11 = scalingVector.X;
-			result.M12 = 0;
-			result.M13 = 0;
-			result.M14 = 0;
-			result.M21 = 0;
-			result.M22 = scalingVector.Y;
-			result.M23 = 0;
-			result.M24 = 0;
-			result.M31 = 0;
-			result.M32 = 0;
-			result.M33 = scalingVector.Z;
-			result.M34 = 0;
-			result.M41 = 0;
-			result.M42 = 0;
-			result.M43 = 0;
-			result.M44 = 1;
-
-			return result;
-		}
-
-		public static Matrix CreateTranslationMatrix(Vector3 moveVector)
-		{
-			var result = new Matrix();
-
-			result.M11 = 1;
-			result.M12 = 0;
-			result.M13 = 0;
-			result.M14 = 0;
-			result.M21 = 0;
-			result.M22 = 1;
-			result.M23 = 0;
-			result.M24 = 0;
-			result.M31 = 0;
-			result.M32 = 0;
-			result.M33 = 1;
-			result.M34 = 0;
-			result.M41 = moveVector.X;
-			result.M42 = moveVector.Y;
-			result.M43 = moveVector.Z;
-			result.M44 = 1;
-
-			return result;
-		}
-
-		public static Matrix CreateXRotationMatrix(Vector3 rotationVector)
-		{
-			return CreateXRotationMatrix(rotationVector.X);
-		}
-
-		public static Matrix CreateYRotationMatrix(Vector3 rotationVector)
-		{
-			return CreateYRotationMatrix(rotationVector.Y);
-		}
-
-		public static Matrix CreateZRotationMatrix(Vector3 rotationVector)
-		{
-			return CreateZRotationMatrix(rotationVector.Z);
-		}
-
-		public static Matrix CreateXRotationMatrix(float theta)
-		{
-			var result = new Matrix();
-
-			result.M11 = 1;
-			result.M12 = 0;
-			result.M13 = 0;
-			result.M14 = 0;
-			result.M21 = 0;
-			result.M22 = (float) System.Math.Cos(theta);
-			result.M23 = (float) System.Math.Sin(theta);
-			result.M24 = 0;
-			result.M31 = 0;
-			result.M32 = (float) -System.Math.Sin(theta);
-			result.M33 = (float) System.Math.Cos(theta);
-			result.M34 = 0;
-			result.M41 = 0;
-			result.M42 = 0;
-			result.M43 = 0;
-			result.M44 = 1;
-
-			return result;
-		}
-
-		public static Matrix CreateYRotationMatrix(float theta)
-		{
-			var result = new Matrix();
-
-			result.M11 = (float) System.Math.Cos(theta);
-			result.M12 = 0;
-			result.M13 = (float) -System.Math.Sin(theta);
-			result.M14 = 0;
-			result.M21 = 0;
-			result.M22 = 1;
-			result.M23 = 0;
-			result.M24 = 0;
-			result.M31 = (float) System.Math.Sin(theta);
-			result.M32 = 0;
-			result.M33 = (float) System.Math.Cos(theta);
-			result.M34 = 0;
-			result.M41 = 0;
-			result.M42 = 0;
-			result.M43 = 0;
-			result.M44 = 1;
-
-			return result;
-		}
-
-		public static Matrix CreateZRotationMatrix(float theta)
-		{
-			var result = new Matrix();
-
-			result.M11 = (float) System.Math.Cos(theta);
-			result.M12 = (float) System.Math.Sin(theta);
-			result.M13 = 0;
-			result.M14 = 0;
-			result.M21 = (float) -System.Math.Sin(theta);
-			result.M22 = (float) System.Math.Cos(theta);
-			result.M23 = 0;
-			result.M24 = 0;
-			result.M31 = 0;
-			result.M32 = 0;
-			result.M33 = 1;
-			result.M34 = 0;
-			result.M41 = 0;
-			result.M42 = 0;
-			result.M43 = 0;
-			result.M44 = 1;
-
-			return result;
-		}
-
-		#endregion Public Methods
-
 		#region Constructors
 
 		public Matrix(float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24, float m31, float m32, float m33, float m34, float m41, float m42, float m43, float m44)
@@ -599,5 +455,188 @@ namespace GraphicsEngine.Math
 		}
 
 		#endregion Operators
+
+		#region Public Methods
+
+		public static Matrix CreateScaleMatrix(Vector3 scalingVector)
+		{
+			var result = new Matrix();
+
+			result.M11 = scalingVector.X;
+			result.M12 = 0;
+			result.M13 = 0;
+			result.M14 = 0;
+			result.M21 = 0;
+			result.M22 = scalingVector.Y;
+			result.M23 = 0;
+			result.M24 = 0;
+			result.M31 = 0;
+			result.M32 = 0;
+			result.M33 = scalingVector.Z;
+			result.M34 = 0;
+			result.M41 = 0;
+			result.M42 = 0;
+			result.M43 = 0;
+			result.M44 = 1;
+
+			return result;
+		}
+
+		public static Matrix CreateTranslationMatrix(Vector3 moveVector)
+		{
+			var result = new Matrix();
+
+			result.M11 = 1;
+			result.M12 = 0;
+			result.M13 = 0;
+			result.M14 = 0;
+			result.M21 = 0;
+			result.M22 = 1;
+			result.M23 = 0;
+			result.M24 = 0;
+			result.M31 = 0;
+			result.M32 = 0;
+			result.M33 = 1;
+			result.M34 = 0;
+			result.M41 = moveVector.X;
+			result.M42 = moveVector.Y;
+			result.M43 = moveVector.Z;
+			result.M44 = 1;
+
+			return result;
+		}
+
+		public static Matrix CreateXRotationMatrix(Vector3 rotationVector)
+		{
+			return CreateXRotationMatrix(rotationVector.X);
+		}
+
+		public static Matrix CreateYRotationMatrix(Vector3 rotationVector)
+		{
+			return CreateYRotationMatrix(rotationVector.Y);
+		}
+
+		public static Matrix CreateZRotationMatrix(Vector3 rotationVector)
+		{
+			return CreateZRotationMatrix(rotationVector.Z);
+		}
+
+		public static Matrix CreateXRotationMatrix(float theta)
+		{
+			var result = new Matrix();
+
+			result.M11 = 1;
+			result.M12 = 0;
+			result.M13 = 0;
+			result.M14 = 0;
+			result.M21 = 0;
+			result.M22 = (float) System.Math.Cos(theta);
+			result.M23 = (float) System.Math.Sin(theta);
+			result.M24 = 0;
+			result.M31 = 0;
+			result.M32 = (float) -System.Math.Sin(theta);
+			result.M33 = (float) System.Math.Cos(theta);
+			result.M34 = 0;
+			result.M41 = 0;
+			result.M42 = 0;
+			result.M43 = 0;
+			result.M44 = 1;
+
+			return result;
+		}
+
+		public static Matrix CreateYRotationMatrix(float theta)
+		{
+			var result = new Matrix();
+
+			result.M11 = (float) System.Math.Cos(theta);
+			result.M12 = 0;
+			result.M13 = (float) -System.Math.Sin(theta);
+			result.M14 = 0;
+			result.M21 = 0;
+			result.M22 = 1;
+			result.M23 = 0;
+			result.M24 = 0;
+			result.M31 = (float) System.Math.Sin(theta);
+			result.M32 = 0;
+			result.M33 = (float) System.Math.Cos(theta);
+			result.M34 = 0;
+			result.M41 = 0;
+			result.M42 = 0;
+			result.M43 = 0;
+			result.M44 = 1;
+
+			return result;
+		}
+
+		public static Matrix CreateZRotationMatrix(float theta)
+		{
+			var result = new Matrix();
+
+			result.M11 = (float) System.Math.Cos(theta);
+			result.M12 = (float) System.Math.Sin(theta);
+			result.M13 = 0;
+			result.M14 = 0;
+			result.M21 = (float) -System.Math.Sin(theta);
+			result.M22 = (float) System.Math.Cos(theta);
+			result.M23 = 0;
+			result.M24 = 0;
+			result.M31 = 0;
+			result.M32 = 0;
+			result.M33 = 1;
+			result.M34 = 0;
+			result.M41 = 0;
+			result.M42 = 0;
+			result.M43 = 0;
+			result.M44 = 1;
+
+			return result;
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (ReferenceEquals(null, obj))
+			{
+				return false;
+			}
+
+			return obj is Matrix && Equals((Matrix) obj);
+		}
+
+		public bool Equals(Matrix otherMatrix)
+		{
+			return Equals(this, otherMatrix);
+		}
+
+		public static bool Equals(Matrix thisMatrix, Matrix otherMatrix)
+		{
+			return thisMatrix == otherMatrix;
+		}
+
+		public override int GetHashCode()
+		{
+			unchecked
+			{
+				var hashCode = M11.GetHashCode();
+				hashCode = (hashCode * 397) ^ M12.GetHashCode();
+				hashCode = (hashCode * 397) ^ M13.GetHashCode();
+				hashCode = (hashCode * 397) ^ M14.GetHashCode();
+				hashCode = (hashCode * 397) ^ M21.GetHashCode();
+				hashCode = (hashCode * 397) ^ M22.GetHashCode();
+				hashCode = (hashCode * 397) ^ M23.GetHashCode();
+				hashCode = (hashCode * 397) ^ M24.GetHashCode();
+				hashCode = (hashCode * 397) ^ M31.GetHashCode();
+				hashCode = (hashCode * 397) ^ M32.GetHashCode();
+				hashCode = (hashCode * 397) ^ M33.GetHashCode();
+				hashCode = (hashCode * 397) ^ M34.GetHashCode();
+				hashCode = (hashCode * 397) ^ M41.GetHashCode();
+				hashCode = (hashCode * 397) ^ M42.GetHashCode();
+				hashCode = (hashCode * 397) ^ M43.GetHashCode();
+				hashCode = (hashCode * 397) ^ M44.GetHashCode();
+				return hashCode;
+			}
+		}
+
+		#endregion Public Methods
 	}
 }
