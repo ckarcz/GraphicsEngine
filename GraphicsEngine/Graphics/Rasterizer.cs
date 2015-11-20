@@ -20,7 +20,7 @@ namespace GraphicsEngine.Graphics
 		public static readonly byte UpLeftWireFrameChar = 92; //		'/'
 		public static readonly byte UpRightWireFrameChar = 47; //		'\'
 		public static readonly byte VerticleWireFrameChar = 124; //	'|'
-		public static readonly short[] Colors = new short[] {Kernel32Console.Colors.FOREGROUND_BLUE, Kernel32Console.Colors.FOREGROUND_CYAN, Kernel32Console.Colors.FOREGROUND_GREEN, Kernel32Console.Colors.FOREGROUND_MAGENTA, Kernel32Console.Colors.FOREGROUND_RED, Kernel32Console.Colors.FOREGROUND_YELLOW, Kernel32Console.Colors.FOREGROUND_GREY};
+		public static readonly ushort[] Colors = new ushort[] {Kernel32Console.Colors.Foreground.GRAY, Kernel32Console.Colors.Foreground.GREEN, Kernel32Console.Colors.Foreground.MAGENTA, Kernel32Console.Colors.Foreground.RED, Kernel32Console.Colors.Foreground.WHITE, Kernel32Console.Colors.Foreground.YELLOW};
 		private readonly FrameBuffer frameBuffer;
 
 		public Rasterizer(int width, int height)
@@ -28,7 +28,7 @@ namespace GraphicsEngine.Graphics
 			frameBuffer = new FrameBuffer(width, height);
         }
 
-		public void DrawMeshWired(ITransformation transformation, IMesh mesh, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawMeshWired(ITransformation transformation, IMesh mesh, ushort? colorOverride = null, byte? pixelOverride = null)
 		{
 			var i = 0;
 
@@ -41,13 +41,13 @@ namespace GraphicsEngine.Graphics
 					points.Add(point);
 				}
 
-				var color = colorOverride ?? (short) (Colors[i % Colors.Length]);
+				var color = colorOverride ?? (ushort) (Colors[i % Colors.Length]);
 				DrawPolygonWired(transformation, points, color, pixelOverride);
 				i++;
 			}
 		}
 
-		public void DrawMeshWired(ITransformation transformation, IEnumerable<IMesh> meshes, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawMeshWired(ITransformation transformation, IEnumerable<IMesh> meshes, ushort? colorOverride = null, byte? pixelOverride = null)
 		{
 			foreach (var mesh in meshes)
 			{
@@ -55,7 +55,7 @@ namespace GraphicsEngine.Graphics
 			}
 		}
 
-		public void DrawMeshFilled(ITransformation transformation, IMesh mesh, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawMeshFilled(ITransformation transformation, IMesh mesh, ushort? colorOverride = null, byte? pixelOverride = null)
 		{
 			var i = 0;
 
@@ -68,13 +68,13 @@ namespace GraphicsEngine.Graphics
 					points.Add(point);
 				}
 
-				var color = colorOverride ?? (short) (Colors[i % Colors.Length]);
+				var color = colorOverride ?? (ushort) (Colors[i % Colors.Length]);
 				DrawPolygonFilled(transformation, points, color, pixelOverride);
 				i++;
 			}
 		}
 
-		public void DrawMeshFilled(ITransformation transformation, IEnumerable<IMesh> meshes, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawMeshFilled(ITransformation transformation, IEnumerable<IMesh> meshes, ushort? colorOverride = null, byte? pixelOverride = null)
 		{
 			foreach (var mesh in meshes)
 			{
@@ -82,7 +82,7 @@ namespace GraphicsEngine.Graphics
 			}
 		}
 
-		public void DrawMeshVertices(ITransformation transformation, IMesh mesh, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawMeshVertices(ITransformation transformation, IMesh mesh, ushort? colorOverride = null, byte? pixelOverride = null)
 		{
 			foreach (var face in mesh.Faces)
 			{
@@ -90,7 +90,7 @@ namespace GraphicsEngine.Graphics
 			}
 		}
 
-		public void DrawMeshVertices(ITransformation transformation, IEnumerable<IMesh> meshes, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawMeshVertices(ITransformation transformation, IEnumerable<IMesh> meshes, ushort? colorOverride = null, byte? pixelOverride = null)
 		{
 			foreach (var mesh in meshes)
 			{
@@ -98,7 +98,7 @@ namespace GraphicsEngine.Graphics
 			}
 		}
 
-		public void DrawMeshCenters(ITransformation transformation, IMesh mesh, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawMeshCenters(ITransformation transformation, IMesh mesh, ushort? colorOverride = null, byte? pixelOverride = null)
 		{
 			if (mesh.Centers.HasValue && mesh.Minimums.HasValue && mesh.Maximums.HasValue)
 			{
@@ -126,7 +126,7 @@ namespace GraphicsEngine.Graphics
 			}
 		}
 
-		public void DrawMeshCenters(ITransformation transformation, IEnumerable<IMesh> meshes, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawMeshCenters(ITransformation transformation, IEnumerable<IMesh> meshes, ushort? colorOverride = null, byte? pixelOverride = null)
 		{
 			foreach (var mesh in meshes)
 			{
@@ -134,7 +134,7 @@ namespace GraphicsEngine.Graphics
 			}
 		}
 
-		public void DrawMeshBoundingBox(ITransformation transformation, IMesh mesh, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawMeshBoundingBox(ITransformation transformation, IMesh mesh, ushort? colorOverride = null, byte? pixelOverride = null)
 		{
 			if (mesh.Minimums.HasValue && mesh.Maximums.HasValue)
 			{
@@ -167,7 +167,7 @@ namespace GraphicsEngine.Graphics
 			}
 		}
 
-		public void DrawMeshBoundingBox(ITransformation transformation, IEnumerable<IMesh> meshes, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawMeshBoundingBox(ITransformation transformation, IEnumerable<IMesh> meshes, ushort? colorOverride = null, byte? pixelOverride = null)
 		{
 			foreach (var mesh in meshes)
 			{
@@ -175,7 +175,7 @@ namespace GraphicsEngine.Graphics
 			}
 		}
 
-		public void DrawPolygonWired(ITransformation transformation, IEnumerable<Vector2> vectors, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawPolygonWired(ITransformation transformation, IEnumerable<Vector2> vectors, ushort? colorOverride = null, byte? pixelOverride = null)
 		{
 			var vectorsEnumerator = vectors.GetEnumerator();
 
@@ -195,7 +195,7 @@ namespace GraphicsEngine.Graphics
 			DrawLine(transformation, point2, firstPoint, colorOverride, pixelOverride);
 		}
 
-		public void DrawPolygonWired(ITransformation transformation, IEnumerable<Vector3> vectors, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawPolygonWired(ITransformation transformation, IEnumerable<Vector3> vectors, ushort? colorOverride = null, byte? pixelOverride = null)
 		{
 			var vectorsEnumerator = vectors.GetEnumerator();
 
@@ -215,7 +215,7 @@ namespace GraphicsEngine.Graphics
 			DrawLine(transformation, point2, firstPoint, colorOverride, pixelOverride);
 		}
 
-		public void DrawPolygonFilled(ITransformation transformation, IEnumerable<Vector2> vectors, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawPolygonFilled(ITransformation transformation, IEnumerable<Vector2> vectors, ushort? colorOverride = null, byte? pixelOverride = null)
 		{
 			var transformedVectors = vectors
 				.Select(transformation.Transform)
@@ -251,7 +251,7 @@ namespace GraphicsEngine.Graphics
 			}
 		}
 
-		public void DrawPolygonFilled(ITransformation transformation, IEnumerable<Vector3> vectors, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawPolygonFilled(ITransformation transformation, IEnumerable<Vector3> vectors, ushort? colorOverride = null, byte? pixelOverride = null)
 		{
 			var transformedVectors = vectors
 				.Select(transformation.Transform)
@@ -289,13 +289,13 @@ namespace GraphicsEngine.Graphics
 			}
 		}
 
-		public void DrawAxes(ITransformation transformation, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawAxes(ITransformation transformation, ushort? colorOverride = null, byte? pixelOverride = null)
 		{
 			DrawLine(transformation, new Vector2(0, -frameBuffer.Height / 2), new Vector2(0, frameBuffer.Height / 2), colorOverride, pixelOverride);
 			DrawLine(transformation, new Vector2(-frameBuffer.Width / 2, 0), new Vector2(frameBuffer.Width / 2, 0), colorOverride, pixelOverride);
 		}
 
-		public void DrawLine(ITransformation transformation, Vector3 point1, Vector3 point2, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawLine(ITransformation transformation, Vector3 point1, Vector3 point2, ushort? colorOverride = null, byte? pixelOverride = null)
 		{
 			transformation.Transform(ref point1);
 			transformation.Transform(ref point2);
@@ -328,7 +328,7 @@ namespace GraphicsEngine.Graphics
 						frameBuffer.CharacterBuffer[pixelX, pixelY] = pixelChar;
 						if (colorOverride != null)
 						{
-							frameBuffer.ColorBuffer[pixelX, pixelY] = (short) (colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
+							frameBuffer.ColorBuffer[pixelX, pixelY] = colorOverride.Value;
 						}
 					}
 
@@ -401,7 +401,7 @@ namespace GraphicsEngine.Graphics
 							frameBuffer.CharacterBuffer[pixelX, pixelY] = pixelChar;
 							if (colorOverride != null)
 							{
-								frameBuffer.ColorBuffer[pixelX, pixelY] = (short) (colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
+								frameBuffer.ColorBuffer[pixelX, pixelY] = colorOverride.Value;
 							}
 						}
 
@@ -433,7 +433,7 @@ namespace GraphicsEngine.Graphics
 							frameBuffer.CharacterBuffer[pixelX, pixelY] = pixelChar;
 							if (colorOverride != null)
 							{
-								frameBuffer.ColorBuffer[pixelX, pixelY] = (short) (colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
+								frameBuffer.ColorBuffer[pixelX, pixelY] = colorOverride.Value;
 							}
 						}
 
@@ -444,7 +444,7 @@ namespace GraphicsEngine.Graphics
 			}
 		}
 
-		public void DrawLine(ITransformation transformation, Vector2 point1, Vector2 point2, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawLine(ITransformation transformation, Vector2 point1, Vector2 point2, ushort? colorOverride = null, byte? pixelOverride = null)
 		{
 			transformation.Transform(ref point1);
 			transformation.Transform(ref point2);
@@ -476,7 +476,7 @@ namespace GraphicsEngine.Graphics
 						frameBuffer.CharacterBuffer[pixelX, pixelY] = pixelChar;
 						if (colorOverride != null)
 						{
-							frameBuffer.ColorBuffer[pixelX, pixelY] = (short) (colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
+							frameBuffer.ColorBuffer[pixelX, pixelY] = colorOverride.Value;
 						}
 					}
 
@@ -548,7 +548,7 @@ namespace GraphicsEngine.Graphics
 							frameBuffer.CharacterBuffer[pixelX, pixelY] = pixelChar;
 							if (colorOverride != null)
 							{
-								frameBuffer.ColorBuffer[pixelX, pixelY] = (short) (colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
+								frameBuffer.ColorBuffer[pixelX, pixelY] = colorOverride.Value;
 							}
 						}
 
@@ -579,7 +579,7 @@ namespace GraphicsEngine.Graphics
 							frameBuffer.CharacterBuffer[pixelX, pixelY] = pixelChar;
 							if (colorOverride != null)
 							{
-								frameBuffer.ColorBuffer[pixelX, pixelY] = (short) (colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
+								frameBuffer.ColorBuffer[pixelX, pixelY] = colorOverride.Value;
 							}
 						}
 
@@ -590,7 +590,7 @@ namespace GraphicsEngine.Graphics
 			}
 		}
 
-		public void DrawPoints(ITransformation transformation, IEnumerable<Vector2> points, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawPoints(ITransformation transformation, IEnumerable<Vector2> points, ushort? colorOverride = null, byte? pixelOverride = null)
 		{
 			foreach (var point in points)
 			{
@@ -598,7 +598,7 @@ namespace GraphicsEngine.Graphics
 			}
 		}
 
-		public void DrawPoints(ITransformation transformation, IEnumerable<Vector3> points, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawPoints(ITransformation transformation, IEnumerable<Vector3> points, ushort? colorOverride = null, byte? pixelOverride = null)
 		{
 			foreach (var point in points)
 			{
@@ -606,7 +606,7 @@ namespace GraphicsEngine.Graphics
 			}
 		}
 
-		public void DrawPoint(ITransformation transformation, Vector2 point, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawPoint(ITransformation transformation, Vector2 point, ushort? colorOverride = null, byte? pixelOverride = null)
 		{
 			transformation.Transform(ref point);
 
@@ -621,12 +621,12 @@ namespace GraphicsEngine.Graphics
 				frameBuffer.CharacterBuffer[pixelX, pixelY] = pixelOverride.HasValue ? pixelOverride.Value : HalfPixelChar;
 				if (colorOverride != null)
 				{
-					frameBuffer.ColorBuffer[pixelX, pixelY] = (short) (colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
+					frameBuffer.ColorBuffer[pixelX, pixelY] = colorOverride.Value;
 				}
 			}
 		}
 
-		public void DrawPoint(ITransformation transformation, Vector3 point, short? colorOverride = null, byte? pixelOverride = null)
+		public void DrawPoint(ITransformation transformation, Vector3 point, ushort? colorOverride = null, byte? pixelOverride = null)
 		{
 			transformation.Transform(ref point);
 
@@ -642,12 +642,12 @@ namespace GraphicsEngine.Graphics
 				frameBuffer.CharacterBuffer[pixelX, pixelY] = pixelOverride.HasValue ? pixelOverride.Value : HalfPixelChar;
 				if (colorOverride != null)
 				{
-					frameBuffer.ColorBuffer[pixelX, pixelY] = (short) (colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
+					frameBuffer.ColorBuffer[pixelX, pixelY] = colorOverride.Value;
 				}
 			}
 		}
 
-		public void DrawStringHorizontal(ITransformation transformation, Vector2 location, string messageString, short? colorOverride = null)
+		public void DrawStringHorizontal(ITransformation transformation, Vector2 location, string messageString, ushort? colorOverride = null)
 		{
 			transformation.Transform(ref location);
 
@@ -664,14 +664,14 @@ namespace GraphicsEngine.Graphics
 					frameBuffer.CharacterBuffer[pixelX, pixelY] = (byte) messageChar;
 					if (colorOverride != null)
 					{
-						frameBuffer.ColorBuffer[pixelX, pixelY] = (short) (colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
+						frameBuffer.ColorBuffer[pixelX, pixelY] = colorOverride.Value;
 					}
 					pixelX++;
 				}
 			}
 		}
 
-		public void DrawStringVertical(ITransformation transformation, Vector2 location, string messageString, short? colorOverride = null)
+		public void DrawStringVertical(ITransformation transformation, Vector2 location, string messageString, ushort? colorOverride = null)
 		{
 			transformation.Transform(ref location);
 
@@ -688,7 +688,7 @@ namespace GraphicsEngine.Graphics
 					frameBuffer.CharacterBuffer[pixelX, pixelY] = (byte)messageChar;
 					if (colorOverride != null)
 					{
-						frameBuffer.ColorBuffer[pixelX, pixelY] = (short)(colorOverride.Value | Kernel32Console.Colors.FOREGROUND_INTENSITY);
+						frameBuffer.ColorBuffer[pixelX, pixelY] = colorOverride.Value;
 					}
 					pixelY++;
 				}
@@ -700,7 +700,7 @@ namespace GraphicsEngine.Graphics
 			return frameBuffer.CharacterBuffer[x, y];
 		}
 
-		public short? GetPixelColor(int x, int y)
+		public ushort? GetPixelColor(int x, int y)
 		{
 			return frameBuffer.ColorBuffer[x, y];
 		}

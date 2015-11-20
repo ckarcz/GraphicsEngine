@@ -67,7 +67,7 @@ namespace GraphicsEngine.Graphics
 			System.Console.CursorTop = (Height / 2) + y;
 		}
 
-		public void SetPixel(int x, int y, byte character, short color)
+		public void SetPixel(int x, int y, byte character, ushort color)
 		{
 			SetPixel(x, y, character);
 		}
@@ -77,12 +77,12 @@ namespace GraphicsEngine.Graphics
 			characterBuffer[x + y * Width] = character;
 		}
 
-		public void SetPixel(int x, int y, short color)
+		public void SetPixel(int x, int y, ushort color)
 		{
 			throw new NotSupportedException();
 		}
 
-		public short GetPixelColor(int x, int y)
+		public ushort GetPixelColor(int x, int y)
 		{
 			throw new NotSupportedException();
 		}
@@ -98,7 +98,7 @@ namespace GraphicsEngine.Graphics
 			stdOutputStream.Write(characterBuffer, 0, characterBuffer.Length);
 		}
 
-		public void Clear(byte? character = null, short? color = null)
+		public void Clear(byte? character = null, ushort? color = null)
 		{
 			for (int i = 0; i < characterBuffer.Length; i++)
 			{

@@ -18,7 +18,7 @@ namespace GraphicsEngine.Graphics
 		private readonly Kernel32Console.COORD consoleScreenBufferStartCoords;
 		private readonly IntPtr stdOutputHandle;
 
-		public Kernel32ConsoleWindow(int width, int height, string windowTitle, short colors = Kernel32Console.Colors.BACKGROUND_BLACK | Kernel32Console.Colors.FOREGROUND_GREY | Kernel32Console.Colors.FOREGROUND_INTENSITY)
+		public Kernel32ConsoleWindow(int width, int height, string windowTitle, ushort colors = Kernel32Console.Colors.Background.BLACK | Kernel32Console.Colors.Foreground.WHITE)
 		{
 			Width = width;
 			Height = height;
@@ -73,7 +73,7 @@ namespace GraphicsEngine.Graphics
 			Kernel32Console.SetConsoleCursorPosition(stdOutputHandle, new Kernel32Console.COORD(x, y));
 		}
 
-		public void SetPixel(int x, int y, byte character, short color)
+		public void SetPixel(int x, int y, byte character, ushort color)
 		{
 			consoleScreenBuffer[x + y * Width].Attributes = color;
 			consoleScreenBuffer[x + y * Width].Char.AsciiChar = character;
@@ -84,12 +84,12 @@ namespace GraphicsEngine.Graphics
 			consoleScreenBuffer[x + y * Width].Char.AsciiChar = character;
 		}
 
-		public void SetPixel(int x, int y, short color)
+		public void SetPixel(int x, int y, ushort color)
 		{
 			consoleScreenBuffer[x + y * Width].Attributes = color;
 		}
 
-		public short GetPixelColor(int x, int y)
+		public ushort GetPixelColor(int x, int y)
 		{
 			return consoleScreenBuffer[x + y * Width].Attributes;
 		}
@@ -104,11 +104,11 @@ namespace GraphicsEngine.Graphics
 			Kernel32Console.WriteConsoleOutput(stdOutputHandle, consoleScreenBuffer, consoleScreenBufferSizeCoords, consoleScreenBufferStartCoords, ref consoleScreenSizeRect);
 		}
 
-		public void Clear(byte? character = null, short? color = null)
+		public void Clear(byte? character = null, ushort? color = null)
 		{
 			for (var i = 0; i < Width * Height; i++)
 			{
-				consoleScreenBuffer[i].Attributes = color ?? (Kernel32Console.Colors.BACKGROUND_BLACK | Kernel32Console.Colors.FOREGROUND_BLACK);
+				consoleScreenBuffer[i].Attributes = color ?? (Kernel32Console.Colors.Background.BLACK | Kernel32Console.Colors.Foreground.WHITE);
 				consoleScreenBuffer[i].Char.AsciiChar = character ?? (byte) ' ';
 			}
 		}

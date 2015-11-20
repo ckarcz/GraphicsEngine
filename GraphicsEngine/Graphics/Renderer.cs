@@ -37,7 +37,7 @@
 			Renderings++;
 		}
 
-		public void Clear(byte? character = null, short? color = null)
+		public void Clear(byte? character = null, ushort? color = null)
 		{
 			consoleScreen.Clear(character, color);
 		}

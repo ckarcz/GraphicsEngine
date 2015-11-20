@@ -2,10 +2,10 @@
 {
 	public interface IColorBuffer
 	{
-		short this[int x, int y] { get; }
+		ushort this[int x, int y] { get; }
 		int Width { get; }
 		int Height { get; }
 
-		short[,] GetMultiArrayAsCopy();
+		ushort[,] GetMultiArrayAsCopy();
 	}
 }

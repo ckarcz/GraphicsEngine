@@ -3,16 +3,16 @@
 	public class ColorBuffer
 		: IColorBuffer
 	{
-		private readonly short[,] consoleColorBuffer;
+		private readonly ushort[,] consoleColorBuffer;
 
 		public ColorBuffer(int width, int height)
 		{
-			consoleColorBuffer = new short[width, height];
+			consoleColorBuffer = new ushort[width, height];
 			Width = width;
 			Height = height;
 		}
 
-		public short this[int x, int y]
+		public ushort this[int x, int y]
 		{
 			get { return consoleColorBuffer[x, y]; }
 			set { consoleColorBuffer[x, y] = value; }
@@ -21,9 +21,9 @@
 		public int Width { get; private set; }
 		public int Height { get; private set; }
 
-		public short[,] GetMultiArrayAsCopy()
+		public ushort[,] GetMultiArrayAsCopy()
 		{
-			var copy = new short[Width, Height];
+			var copy = new ushort[Width, Height];
 			consoleColorBuffer.CopyTo(copy, 0);
 
 			return copy;

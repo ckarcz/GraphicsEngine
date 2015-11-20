@@ -8,6 +8,6 @@ namespace GraphicsEngine.Graphics
 
 		void Render(IFrameBuffer frame);
 
-		void Clear(byte? character = null, short? color = null);
+		void Clear(byte? character = null, ushort? color = null);
 	}
 }
