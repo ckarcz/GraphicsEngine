@@ -9,8 +9,8 @@ using GraphicsEngine.Win32;
 
 namespace GraphicsEngine.Graphics
 {
-	public class Rasterizer
-		: IRasterizer
+	public class OldRasterizer
+		: IOldRasterizer
 	{
 		public const byte HalfPixelChar = 219; //						'▄'
 		public const byte ShadePixelChar1 = 176; //							'░'
@@ -20,12 +20,12 @@ namespace GraphicsEngine.Graphics
 		public static readonly byte UpLeftWireFrameChar = 92; //		'/'
 		public static readonly byte UpRightWireFrameChar = 47; //		'\'
 		public static readonly byte VerticleWireFrameChar = 124; //	'|'
-		public static readonly ushort[] Colors = new ushort[] {Kernel32Console.Colors.Foreground.GRAY, Kernel32Console.Colors.Foreground.GREEN, Kernel32Console.Colors.Foreground.MAGENTA, Kernel32Console.Colors.Foreground.RED, Kernel32Console.Colors.Foreground.WHITE, Kernel32Console.Colors.Foreground.YELLOW};
-		private readonly FrameBuffer frameBuffer;
+		public static readonly ushort[] Colors = new ushort[] {Kernel32Console.Colors.Foreground.BLUE, Kernel32Console.Colors.Foreground.CYAN, Kernel32Console.Colors.Foreground.GREEN, Kernel32Console.Colors.Foreground.MAGENTA, Kernel32Console.Colors.Foreground.RED, Kernel32Console.Colors.Foreground.WHITE, Kernel32Console.Colors.Foreground.YELLOW /*, Kernel32Console.Colors.Foreground.GRAY, Kernel32Console.Colors.Foreground.DARKBLUE, Kernel32Console.Colors.Foreground.DARKCYAN, Kernel32Console.Colors.Foreground.DARKGRAY, Kernel32Console.Colors.Foreground.DARKGREEN, Kernel32Console.Colors.Foreground.DARKMAGENTA, Kernel32Console.Colors.Foreground.DARKRED, Kernel32Console.Colors.Foreground.DARKYELLOW*/ };
+		private readonly GrahpicsBuffer frameBuffer;
 
-		public Rasterizer(int width, int height)
+		public OldRasterizer(int width, int height)
 		{
-			frameBuffer = new FrameBuffer(width, height);
+			frameBuffer = new GrahpicsBuffer(width, height);
         }
 
 		public void DrawMeshWired(ITransformation transformation, IMesh mesh, ushort? colorOverride = null, byte? pixelOverride = null)
@@ -710,7 +710,7 @@ namespace GraphicsEngine.Graphics
 			frameBuffer.Reset(clearCharacter, clearColor);
 		}
 
-		public IFrameBuffer Rasterize()
+		public IGraphicsBuffer Rasterize()
 		{
 			return frameBuffer;
 		}

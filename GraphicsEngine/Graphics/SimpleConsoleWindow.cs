@@ -2,18 +2,19 @@
 
 using System;
 using System.IO;
+using System.Threading.Tasks;
 
 #endregion
 
 namespace GraphicsEngine.Graphics
 {
-	public class SimpleConsoleScreen
+	public class SimpleConsoleWindow
 		: IConsoleWindow
 	{
 		private readonly byte[] characterBuffer;
 		private readonly Stream stdOutputStream;
 
-		public SimpleConsoleScreen(int width, int height, string windowTitle = null, ConsoleColor backgroundColor = ConsoleColor.Black, ConsoleColor foregroundColor = ConsoleColor.Cyan)
+		public SimpleConsoleWindow(int width, int height, string windowTitle = null, ConsoleColor backgroundColor = ConsoleColor.Black, ConsoleColor foregroundColor = ConsoleColor.Cyan)
 		{
 			stdOutputStream = System.Console.OpenStandardOutput();
 
@@ -47,7 +48,7 @@ namespace GraphicsEngine.Graphics
 			System.Console.CursorVisible = false;
 		}
 
-		public string WindowTitle
+		public string Title
 		{
 			get { return System.Console.Title; }
 			set { System.Console.Title = value; }
@@ -67,32 +68,32 @@ namespace GraphicsEngine.Graphics
 			System.Console.CursorTop = (Height / 2) + y;
 		}
 
-		public void SetPixel(int x, int y, byte character, ushort color)
+		public void Set(int x, int y, byte character, ushort color)
 		{
-			SetPixel(x, y, character);
+			SetCharacter(x, y, character);
 		}
 
-		public void SetPixel(int x, int y, byte character)
+		public void SetCharacter(int x, int y, byte character)
 		{
 			characterBuffer[x + y * Width] = character;
 		}
 
-		public void SetPixel(int x, int y, ushort color)
+		public void SetColor(int x, int y, ushort color)
 		{
 			throw new NotSupportedException();
 		}
 
-		public ushort GetPixelColor(int x, int y)
+		public ushort GetColor(int x, int y)
 		{
 			throw new NotSupportedException();
 		}
 
-		public byte GetPixelCharacter(int x, int y)
+		public byte GetCharacter(int x, int y)
 		{
 			return characterBuffer[x + y * Width];
 		}
 
-		public void Draw()
+		public void Update()
 		{
 			System.Console.SetCursorPosition(0, 0);
 			stdOutputStream.Write(characterBuffer, 0, characterBuffer.Length);
@@ -100,10 +101,10 @@ namespace GraphicsEngine.Graphics
 
 		public void Clear(byte? character = null, ushort? color = null)
 		{
-			for (int i = 0; i < characterBuffer.Length; i++)
+			Parallel.For(0, characterBuffer.Length, i =>
 			{
 				characterBuffer[i] = character ?? (byte) ' ';
-			}
+			});
 		}
 	}
 }

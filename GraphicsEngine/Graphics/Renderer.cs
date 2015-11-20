@@ -1,45 +1,59 @@
-﻿namespace GraphicsEngine.Graphics
+﻿using GraphicsEngine.Win32;
+
+namespace GraphicsEngine.Graphics
 {
 	public class Renderer
 		: IRenderer
 	{
-		private readonly IConsoleWindow consoleScreen;
+		private readonly IConsoleWindow _consoleWindow;
 
-		public Renderer(IConsoleWindow consoleScreen)
+		public Renderer(IConsoleWindow consoleWindow)
 		{
-			this.consoleScreen = consoleScreen;
+			this._consoleWindow = consoleWindow;
 		}
 
 		public int Width
 		{
-			get { return consoleScreen.Width; }
+			get { return _consoleWindow.Width; }
 		}
 
 		public int Height
 		{
-			get { return consoleScreen.Height; }
+			get { return _consoleWindow.Height; }
 		}
 
 		public int Renderings { get; private set; }
 
-		public void Render(IFrameBuffer frame)
+		public void Render(IGraphicsBuffer frame)
 		{
-			for (int x = 0; x < frame.Width; x++)
-			{
-				for (int y = 0; y < frame.Height; y++)
-				{
-					consoleScreen.SetPixel(x, y, frame.CharacterBuffer[x, y], frame.ColorBuffer[x, y]);
-				}
-			}
-
-			consoleScreen.Draw();
+			ClearConsoleWindow();
+			SetConsoleWindowFrame(frame);
+			UpdateConsoleWindow();
 
 			Renderings++;
 		}
 
-		public void Clear(byte? character = null, ushort? color = null)
+		private void SetConsoleWindowFrame(IGraphicsBuffer frame)
 		{
-			consoleScreen.Clear(character, color);
+			if (frame != null)
+			{
+				for (int x = 0; x < frame.Width; x++)
+				{
+					for (int y = 0; y < frame.Height; y++)
+					{
+						_consoleWindow.Set(x, y, frame.CharacterBuffer[x, y], frame.ColorBuffer[x, y]);
+					}
+				}
+			}
+		}
+
+		private void UpdateConsoleWindow()
+		{
+			_consoleWindow.Update();
+		}
+		private void ClearConsoleWindow()
+		{
+			_consoleWindow.Clear();
 		}
 	}
 }

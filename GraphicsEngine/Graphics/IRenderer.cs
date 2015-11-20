@@ -6,8 +6,6 @@ namespace GraphicsEngine.Graphics
 		int Height { get; }
 		int Renderings { get; }
 
-		void Render(IFrameBuffer frame);
-
-		void Clear(byte? character = null, ushort? color = null);
+		void Render(IGraphicsBuffer frame);
 	}
 }

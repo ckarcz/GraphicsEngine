@@ -2,6 +2,7 @@
 
 using System;
 using System.Text;
+using System.Threading.Tasks;
 using GraphicsEngine.Win32;
 
 #endregion
@@ -18,12 +19,12 @@ namespace GraphicsEngine.Graphics
 		private readonly Kernel32Console.COORD consoleScreenBufferStartCoords;
 		private readonly IntPtr stdOutputHandle;
 
-		public Kernel32ConsoleWindow(int width, int height, string windowTitle, ushort colors = Kernel32Console.Colors.Background.BLACK | Kernel32Console.Colors.Foreground.WHITE)
+		public Kernel32ConsoleWindow(int width, int height, string title, ushort colors = Kernel32Console.Colors.Background.BLACK | Kernel32Console.Colors.Foreground.WHITE)
 		{
 			Width = width;
 			Height = height;
-			WindowTitle = windowTitle;
-			stdOutputHandle = Kernel32Console.GetStdHandle(Kernel32Console.STD_OUTPUT_HANDLE);
+			Title = title;
+			stdOutputHandle = Kernel32Console.GetStdHandle(Kernel32Console.Constants.STD_OUTPUT_HANDLE);
 
 			consoleScreenBufferSizeCoords = new Kernel32Console.COORD(Width, Height);
 			consoleScreenBufferStartCoords = new Kernel32Console.COORD(0, 0);
@@ -46,10 +47,10 @@ namespace GraphicsEngine.Graphics
 				consoleScreenBuffer[i] = emptyChar;
 			}
 
-			Draw();
+			Update();
 		}
 
-		public string WindowTitle
+		public string Title
 		{
 			get
 			{
@@ -73,44 +74,44 @@ namespace GraphicsEngine.Graphics
 			Kernel32Console.SetConsoleCursorPosition(stdOutputHandle, new Kernel32Console.COORD(x, y));
 		}
 
-		public void SetPixel(int x, int y, byte character, ushort color)
+		public void Set(int x, int y, byte character, ushort color)
 		{
 			consoleScreenBuffer[x + y * Width].Attributes = color;
 			consoleScreenBuffer[x + y * Width].Char.AsciiChar = character;
 		}
 
-		public void SetPixel(int x, int y, byte character)
+		public void SetCharacter(int x, int y, byte character)
 		{
 			consoleScreenBuffer[x + y * Width].Char.AsciiChar = character;
 		}
 
-		public void SetPixel(int x, int y, ushort color)
+		public void SetColor(int x, int y, ushort color)
 		{
 			consoleScreenBuffer[x + y * Width].Attributes = color;
 		}
 
-		public ushort GetPixelColor(int x, int y)
+		public ushort GetColor(int x, int y)
 		{
 			return consoleScreenBuffer[x + y * Width].Attributes;
 		}
 
-		public byte GetPixelCharacter(int x, int y)
+		public byte GetCharacter(int x, int y)
 		{
 			return consoleScreenBuffer[x + y * Width].Char.AsciiChar;
 		}
 
-		public void Draw()
+		public void Update()
 		{
 			Kernel32Console.WriteConsoleOutput(stdOutputHandle, consoleScreenBuffer, consoleScreenBufferSizeCoords, consoleScreenBufferStartCoords, ref consoleScreenSizeRect);
 		}
 
 		public void Clear(byte? character = null, ushort? color = null)
 		{
-			for (var i = 0; i < Width * Height; i++)
+			Parallel.For(0, consoleScreenBuffer.Length, i =>
 			{
 				consoleScreenBuffer[i].Attributes = color ?? (Kernel32Console.Colors.Background.BLACK | Kernel32Console.Colors.Foreground.WHITE);
-				consoleScreenBuffer[i].Char.AsciiChar = character ?? (byte) ' ';
-			}
+				consoleScreenBuffer[i].Char.AsciiChar = character ?? (byte)' ';
+			});
 		}
 	}
 }

@@ -21,7 +21,7 @@ namespace GraphicsEngine.Scenes
 		private IEnumerable<IMesh> meshes;
 		private float scaleFactor = 0.5f;
 		private readonly InputStateService inputStateService;
-		private readonly IRasterizer rasterizer;
+		private readonly IOldRasterizer rasterizer;
 		private readonly Transformation transformation;
 		private readonly string[] wavefrontObjectFilePaths = new[] {"Models\\triangle.obj", "Models\\cube.obj", "Models\\sphere.obj", "Models\\conf.obj", "Models\\gourd.obj", "Models\\link.obj", "Models\\monkey.obj", "Models\\bunny.obj", "Models\\f1.obj", "Models\\woman1.obj" };
 
@@ -30,7 +30,7 @@ namespace GraphicsEngine.Scenes
 			Width = width;
 			Height = height;
 
-			rasterizer = new Rasterizer(Width, Height);
+			rasterizer = new OldRasterizer(Width, Height);
 			inputStateService = new InputStateService();
 			transformation = new Transformation();
 
@@ -52,14 +52,14 @@ namespace GraphicsEngine.Scenes
 		{
 			rasterizer.ClearImage((byte)' ', (byte)Kernel32Console.Colors.Background.BLACK | Kernel32Console.Colors.Foreground.WHITE);
 
-			//rasterizer.DrawMeshFilled(transformation, meshes);//, Kernel32Console.Colors.FOREGROUND_CYAN, Rasterizer.ShadePixelChar1);
+			rasterizer.DrawMeshFilled(transformation, meshes);//, Kernel32Console.Colors.FOREGROUND_CYAN, Rasterizer.ShadePixelChar1);
 			//rasterizer.DrawMeshVertices(transformation, meshes, Kernel32Console.Colors.FOREGROUND_CYAN, (byte)'X');
-			rasterizer.DrawMeshWired(transformation, meshes, Kernel32Console.Colors.Foreground.CYAN);
+			//rasterizer.DrawMeshWired(transformation, meshes, Kernel32Console.Colors.Foreground.CYAN);
 
-			rasterizer.DrawMeshCenters(transformation, meshes, Kernel32Console.Colors.Foreground.RED);
+			//rasterizer.DrawMeshCenters(transformation, meshes, Kernel32Console.Colors.Foreground.RED);
 			//rasterizer.DrawMeshBoundingBox(transformation, meshes, Kernel32Console.Colors.FOREGROUND_MAGENTA);
 
-			rasterizer.DrawAxes(Transformation.None, Kernel32Console.Colors.Foreground.YELLOW);
+			//rasterizer.DrawAxes(Transformation.None, Kernel32Console.Colors.Foreground.YELLOW);
 
 			rasterizer.DrawStringHorizontal(Transformation.None, new Vector2(-Width / 2 + 1, Height / 2 - 2), string.Format("MODEL: '{0}'", currentWavefrontObjectFilePath));
 			rasterizer.DrawStringHorizontal(Transformation.None, new Vector2(-Width / 2 + 1, Height / 2 - 3), string.Format("# POLYGONS: {0}", meshes.Sum(mesh => mesh.Faces.Count())));
@@ -231,10 +231,5 @@ namespace GraphicsEngine.Scenes
 			transformation.Scale = new Vector3(scaleX, scaleY, scaleZ);
 			transformation.Rotation = new Vector3(rotateX, rotateY, rotateZ);
 		}
-	}
-
-	public class RenderableObject
-	{
-		
 	}
 }

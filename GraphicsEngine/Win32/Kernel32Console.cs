@@ -14,15 +14,11 @@ namespace GraphicsEngine.Win32
 {
 	internal static class Kernel32Console
 	{
-		public const int STD_INPUT_HANDLE = unchecked((int)(-10));
-		public const int STD_OUTPUT_HANDLE = unchecked((int)(-11));
-		public const int STD_ERROR_HANDLE = unchecked((int)(-12));
-
 		public static class Constants
 		{
-			public const uint STD_INPUT_HANDLE = 0xFFFFFFF6;
-			public const uint STD_OUTPUT_HANDLE = 0xFFFFFFF5;
-			public const uint STD_ERROR_HANDLE = 0xFFFFFFF4;
+			public const int STD_INPUT_HANDLE = unchecked((int)(-10));
+			public const int STD_OUTPUT_HANDLE = unchecked((int)(-11));
+			public const int STD_ERROR_HANDLE = unchecked((int)(-12));
 			public const ushort FOREGROUND_BLUE = 0x0001;
 			public const ushort FOREGROUND_GREEN = 0x0002;
 			public const ushort FOREGROUND_RED = 0x0004;
