@@ -7,8 +7,8 @@ using GraphicsEngine.Wavefront.Loaders;
 
 namespace GraphicsEngine.Graphics
 {
-	public interface IWavefrontObjToMeshConverter
+	public interface IWavefrontObjConverter
 	{
-		IList<IMesh> ConvertToMesh(IWavefrontObj wavefrontObj);
+		IEnumerable<IMesh> ConvertToMesh(IWavefrontObj wavefrontObj);
 	}
 }

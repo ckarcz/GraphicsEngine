@@ -14,41 +14,62 @@ namespace GraphicsEngine.Win32
 {
 	internal static class Kernel32Console
 	{
-		public const int STD_INPUT_HANDLE = unchecked((int)(-10));
-		public const int STD_OUTPUT_HANDLE = unchecked((int)(-11));
-		public const int STD_ERROR_HANDLE = unchecked((int)(-12));
-
-		public static class Colors
+		public static class Constants
 		{
-			public const short FOREGROUND_BLACK = 0x0000;
-			public const short FOREGROUND_BLUE = 0x0001;
-			public const short FOREGROUND_GREEN = 0x0002;
-			public const short FOREGROUND_CYAN = 0x0003;
-			public const short FOREGROUND_RED = 0x0004;
-			public const short FOREGROUND_MAGENTA = 0x0005;
-			public const short FOREGROUND_YELLOW = 0x0006;
-			public const short FOREGROUND_GREY = 0x0007;
-			public const short FOREGROUND_INTENSITY = 0x0008;
-
-			public const short BACKGROUND_BLACK = 0x0000;
-			public const short BACKGROUND_BLUE = 0x0010;
-			public const short BACKGROUND_GREEN = 0x0020;
-			public const short BACKGROUND_CYAN = 0x0030;
-			public const short BACKGROUND_RED = 0x0040;
-			public const short BACKGROUND_MAGENTA = 0x0050;
-			public const short BACKGROUND_YELLOW = 0x0060;
-			public const short BACKGROUND_GREY = 0x0070;
-			public const short BACKGROUND_INTENSITY = 0x0080;
+			public const int STD_INPUT_HANDLE = unchecked((int)(-10));
+			public const int STD_OUTPUT_HANDLE = unchecked((int)(-11));
+			public const int STD_ERROR_HANDLE = unchecked((int)(-12));
+			public const ushort FOREGROUND_BLUE = 0x0001;
+			public const ushort FOREGROUND_GREEN = 0x0002;
+			public const ushort FOREGROUND_RED = 0x0004;
+			public const ushort FOREGROUND_INTENSITY = 0x0008;
+			public const ushort BACKGROUND_BLUE = 0x0010;
+			public const ushort BACKGROUND_GREEN = 0x0020;
+			public const ushort BACKGROUND_RED = 0x0040;
+			public const ushort BACKGROUND_INTENSITY = 0x0080;
 		}
 
-		public const ushort COMMON_LVB_LEADING_BYTE = 0x0100;
-		public const ushort COMMON_LVB_TRAILING_BYTE = 0x0200;
-		public const ushort COMMON_LVB_GRID_HORIZONTAL = 0x0400;
-		public const ushort COMMON_LVB_GRID_LVERTICAL = 0x0800;
-		public const ushort COMMON_LVB_GRID_RVERTICAL = 0x1000;
-		public const ushort COMMON_LVB_REVERSE_VIDEO = 0x4000;
-		public const ushort COMMON_LVB_UNDERSCORE = 0x8000;
-		public const ushort COMMON_LVB_SBCSDBCS = 0x0300;
+		public static class DefaultColors
+		{
+			public static class Foreground
+			{
+				public const ushort BLACK = 0;
+				public const ushort DARKBLUE = Constants.FOREGROUND_BLUE;
+				public const ushort DARKGREEN = Constants.FOREGROUND_GREEN;
+				public const ushort DARKCYAN = Constants.FOREGROUND_GREEN | Constants.FOREGROUND_BLUE;
+				public const ushort DARKRED = Constants.FOREGROUND_RED;
+				public const ushort DARKMAGENTA = Constants.FOREGROUND_RED | Constants.FOREGROUND_BLUE;
+				public const ushort DARKYELLOW = Constants.FOREGROUND_RED | Constants.FOREGROUND_GREEN;
+				public const ushort DARKGRAY = Constants.FOREGROUND_RED | Constants.FOREGROUND_GREEN | Constants.FOREGROUND_BLUE;
+				public const ushort GRAY = Constants.FOREGROUND_INTENSITY;
+				public const ushort BLUE = Constants.FOREGROUND_INTENSITY | Constants.FOREGROUND_BLUE;
+				public const ushort GREEN = Constants.FOREGROUND_INTENSITY | Constants.FOREGROUND_GREEN;
+				public const ushort CYAN = Constants.FOREGROUND_INTENSITY | Constants.FOREGROUND_GREEN | Constants.FOREGROUND_BLUE;
+				public const ushort RED = Constants.FOREGROUND_INTENSITY | Constants.FOREGROUND_RED;
+				public const ushort MAGENTA = Constants.FOREGROUND_INTENSITY | Constants.FOREGROUND_RED | Constants.FOREGROUND_BLUE;
+				public const ushort YELLOW = Constants.FOREGROUND_INTENSITY | Constants.FOREGROUND_RED | Constants.FOREGROUND_GREEN;
+				public const ushort WHITE = Constants.FOREGROUND_INTENSITY | Constants.FOREGROUND_RED | Constants.FOREGROUND_GREEN | Constants.FOREGROUND_BLUE;
+			}
+			public static class Background
+			{
+				public const ushort BLACK = 0;
+				public const ushort DARKBLUE = Constants.BACKGROUND_BLUE;
+				public const ushort DARKGREEN = Constants.BACKGROUND_GREEN;
+				public const ushort DARKCYAN = Constants.BACKGROUND_GREEN | Constants.BACKGROUND_BLUE;
+				public const ushort DARKRED = Constants.BACKGROUND_RED;
+				public const ushort DARKMAGENTA = Constants.BACKGROUND_RED | Constants.BACKGROUND_BLUE;
+				public const ushort DARKYELLOW = Constants.BACKGROUND_RED | Constants.BACKGROUND_GREEN;
+				public const ushort DARKGRAY = Constants.BACKGROUND_RED | Constants.BACKGROUND_GREEN | Constants.BACKGROUND_BLUE;
+				public const ushort GRAY = Constants.BACKGROUND_INTENSITY;
+				public const ushort BLUE = Constants.BACKGROUND_INTENSITY | Constants.BACKGROUND_BLUE;
+				public const ushort GREEN = Constants.BACKGROUND_INTENSITY | Constants.BACKGROUND_GREEN;
+				public const ushort CYAN = Constants.BACKGROUND_INTENSITY | Constants.BACKGROUND_GREEN | Constants.BACKGROUND_BLUE;
+				public const ushort RED = Constants.BACKGROUND_INTENSITY | Constants.BACKGROUND_RED;
+				public const ushort MAGENTA = Constants.BACKGROUND_INTENSITY | Constants.BACKGROUND_RED | Constants.BACKGROUND_BLUE;
+				public const ushort YELLOW = Constants.BACKGROUND_INTENSITY | Constants.BACKGROUND_RED | Constants.BACKGROUND_GREEN;
+				public const ushort WHITE = Constants.BACKGROUND_INTENSITY | Constants.BACKGROUND_RED | Constants.BACKGROUND_GREEN | Constants.BACKGROUND_BLUE;
+			}
+		}
 
 		[DllImport("kernel32.dll", EntryPoint = "ReadConsoleInputW", CharSet = CharSet.Unicode)]
 		public static extern bool ReadConsoleInput(
@@ -236,7 +257,7 @@ namespace GraphicsEngine.Win32
 			public uint cbSize;
 			public COORD dwSize;
 			public COORD dwCursorPosition;
-			public short wAttributes;
+			public ushort wAttributes;
 			public SMALL_RECT srWindow;
 			public COORD dwMaximumWindowSize;
 			public ushort wPopupAttributes;
@@ -336,7 +357,7 @@ namespace GraphicsEngine.Win32
 		[StructLayout(LayoutKind.Explicit)]
 		public struct CHAR_INFO
 		{
-			public CHAR_INFO(CHAR_UNION character, short attributes)
+			public CHAR_INFO(CHAR_UNION character, ushort attributes)
 			{
 				Char = character;
 				Attributes = attributes;
@@ -346,7 +367,7 @@ namespace GraphicsEngine.Win32
 			public CHAR_UNION Char;
 
 			[FieldOffset(2)]
-			public short Attributes;
+			public ushort Attributes;
 		}
 
 		[StructLayout(LayoutKind.Sequential)]

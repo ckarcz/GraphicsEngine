@@ -1,11 +1,16 @@
-﻿using System;
-using System.Net.Configuration;
+﻿#region Imports
+
+using System;
+
+#endregion
 
 namespace GraphicsEngine.Math
 {
 	public struct Edge2
 		: IEquatable<Edge2>
 	{
+		#region Constructors
+
 		public Edge2(Vector2 start, Vector2 end)
 			: this()
 		{
@@ -13,8 +18,12 @@ namespace GraphicsEngine.Math
 			End = end;
 		}
 
-		public Vector2 Start { get; set; }
-		public Vector2 End { get; set; }
+		#endregion Constructors
+
+		#region Public Properties
+
+		public Vector2 Start { get; }
+		public Vector2 End { get; }
 
 		public Vector2 Direction
 		{
@@ -26,6 +35,10 @@ namespace GraphicsEngine.Math
 			get { return Start.GetDistance(End); }
 		}
 
+		#endregion Public Properties
+
+		#region Operators
+
 		public static bool operator ==(Edge2 thisEdge, Edge2 otherEdge)
 		{
 			return ((thisEdge.Start == otherEdge.Start) &&
@@ -34,9 +47,13 @@ namespace GraphicsEngine.Math
 
 		public static bool operator !=(Edge2 thisEdge, Edge2 otherEdge)
 		{
-			return ((thisEdge.Start != otherEdge.Start) &&
+			return ((thisEdge.Start != otherEdge.Start) ||
 					(thisEdge.End != otherEdge.End));
 		}
+
+		#endregion Operators
+
+		#region Public Methods
 
 		public bool IsXValueOnEdge(float xGiven)
 		{
@@ -74,14 +91,39 @@ namespace GraphicsEngine.Math
 			return Start + ((End - Start) * t);
 		}
 
-		public bool Equals(Edge2 other)
+		public override bool Equals(object obj)
 		{
-			return this == other;
+			if (ReferenceEquals(null, obj))
+			{
+				return false;
+			}
+
+			return obj is Edge2 && Equals((Edge2) obj);
+		}
+
+		public bool Equals(Edge2 otherEdge)
+		{
+			return Equals(this, otherEdge);
+		}
+
+		public static bool Equals(Edge3 thisEdge, Edge3 otherEdge)
+		{
+			return thisEdge == otherEdge;
+		}
+
+		public override int GetHashCode()
+		{
+			unchecked
+			{
+				return (Start.GetHashCode() * 397) ^ End.GetHashCode();
+			}
 		}
 
 		public override string ToString()
 		{
 			return string.Format("{0}<->{1}", Start, End);
 		}
+
+		#endregion Public Methods
 	}
 }

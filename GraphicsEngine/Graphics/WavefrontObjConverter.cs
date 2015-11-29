@@ -10,19 +10,19 @@ using GraphicsEngine.Wavefront.Models;
 
 namespace GraphicsEngine.Graphics
 {
-	public class WavefrontObjToMeshConverter
-		: IWavefrontObjToMeshConverter
+	public class WavefrontObjConverter
+		: IWavefrontObjConverter
 	{
-		public IList<IMesh> ConvertToMesh(IWavefrontObj wavefrontObj)
+		public IEnumerable<IMesh> ConvertToMesh(IWavefrontObj wavefrontObj)
 		{
 			var meshes = ConvertGroups(wavefrontObj);
 
 			return meshes;
 		}
 
-		private IList<IMesh> ConvertGroups(IWavefrontObj wavefrontObj)
+		private IEnumerable<IMesh> ConvertGroups(IWavefrontObj wavefrontObj)
 		{
-			var meshes = new List<IMesh>();
+			var meshes = new List<Mesh>();
 
 			foreach (var group in wavefrontObj.Groups)
 			{
@@ -33,7 +33,7 @@ namespace GraphicsEngine.Graphics
 			return meshes;
 		}
 
-		private IMesh ConvertGroup(IWavefrontObj wavefrontObj, Group group)
+		private Mesh ConvertGroup(IWavefrontObj wavefrontObj, Group group)
 		{
 			var mesh = new Mesh();
 

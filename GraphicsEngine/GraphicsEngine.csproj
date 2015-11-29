@@ -42,46 +42,48 @@
     <Reference Include="System.Drawing" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\Extensions\StringExtensions.cs" />
     <Compile Include="Engine\ConsoleEngine.cs" />
+    <Compile Include="Engine\IConsoleEngine.cs" />
+    <Compile Include="Common\Patterns\SingletonBase.cs" />
     <Compile Include="Engine\InputStateService.cs" />
-    <Compile Include="Graphics\BaseRasterizer.cs" />
-    <Compile Include="Graphics\IRasterizer.cs" />
+    <Compile Include="Engine\IScene.cs" />
+    <Compile Include="Graphics\Colour.cs" />
+    <Compile Include="Graphics\ColourPalette.cs" />
     <Compile Include="Graphics\Rasterizer.cs" />
+    <Compile Include="Graphics\IMeshFormatter.cs" />
+    <Compile Include="Graphics\IRasterizer.cs" />
+    <Compile Include="Graphics\MeshCenterer.cs" />
+    <Compile Include="Graphics\MeshNormalizer.cs" />
     <Compile Include="Math\Edge2.cs" />
-    <Compile Include="Scenes\RandomCharactersScene2.cs" />
-    <Compile Include="Scenes\RandomCharactersScene.cs" />
-    <Compile Include="Scenes\RandomLinesScene.cs" />
     <Compile Include="Graphics\ITransformation.cs" />
     <Compile Include="Graphics\Transformation.cs" />
-    <Compile Include="Graphics\Console\Kernel32ConsoleScreen.cs" />
-    <Compile Include="Graphics\Console\IConsoleGraphicsRenderer.cs" />
-    <Compile Include="Graphics\Console\IConsoleScreen.cs" />
-    <Compile Include="Graphics\Console\SimpleConsoleScreen.cs" />
+    <Compile Include="Graphics\Kernel32ConsoleWindow.cs" />
+    <Compile Include="Graphics\IRenderer.cs" />
+    <Compile Include="Graphics\IConsoleWindow.cs" />
+    <Compile Include="Graphics\SimpleConsoleWindow.cs" />
     <Compile Include="Graphics\IMesh.cs" />
-    <Compile Include="Graphics\Console\IConsoleGraphicsFrame.cs" />
-    <Compile Include="Graphics\Console\IConsoleCharacterBuffer.cs" />
-    <Compile Include="Graphics\Console\IConsoleColorBuffer.cs" />
+    <Compile Include="Graphics\IGraphicsBuffer.cs" />
+    <Compile Include="Graphics\ICharacterBuffer.cs" />
+    <Compile Include="Graphics\IColorBuffer.cs" />
     <Compile Include="Graphics\IPolygon.cs" />
-    <Compile Include="Graphics\IWavefrontObjToMeshConverter.cs" />
+    <Compile Include="Graphics\IWavefrontObjConverter.cs" />
     <Compile Include="Graphics\Mesh.cs" />
-    <Compile Include="Graphics\Console\ConsoleGraphicsFrame.cs" />
-    <Compile Include="Graphics\Console\ConsoleGraphicsRenderer.cs" />
-    <Compile Include="Graphics\Console\ConsoleCharacterBuffer.cs" />
-    <Compile Include="Graphics\Console\ConsoleColorBuffer.cs" />
+    <Compile Include="Graphics\GrahpicsBuffer.cs" />
+    <Compile Include="Graphics\Renderer.cs" />
+    <Compile Include="Graphics\CharacterBuffer.cs" />
+    <Compile Include="Graphics\ColorBuffer.cs" />
     <Compile Include="Graphics\Polygon.cs" />
-    <Compile Include="Graphics\LazyRasterizer.cs" />
-    <Compile Include="Graphics\WavefrontObjToMeshConverter.cs" />
-    <Compile Include="Engine\IConsoleEngine.cs" />
-    <Compile Include="Engine\IScene.cs" />
+    <Compile Include="Graphics\WavefrontObjConverter.cs" />
     <Compile Include="Math\MathUtil.cs" />
+    <Compile Include="Math\MathUtility.cs" />
     <Compile Include="Math\Matrix.cs" />
     <Compile Include="Math\Quaternion.cs" />
     <Compile Include="Math\Edge3.cs" />
+    <Compile Include="Math\Rectangle.cs" />
     <Compile Include="Math\Vector2.cs" />
     <Compile Include="Math\Vector3.cs" />
     <Compile Include="Math\Vector4.cs" />
@@ -175,6 +177,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

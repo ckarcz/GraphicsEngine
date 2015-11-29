@@ -2,18 +2,19 @@
 
 using System;
 using System.IO;
+using System.Threading.Tasks;
 
 #endregion
 
-namespace GraphicsEngine.Graphics.Console
+namespace GraphicsEngine.Graphics
 {
-	public class SimpleConsoleScreen
-		: IConsoleScreen
+	public class SimpleConsoleWindow
+		: IConsoleWindow
 	{
 		private readonly byte[] characterBuffer;
 		private readonly Stream stdOutputStream;
 
-		public SimpleConsoleScreen(int width, int height, string windowTitle = null, ConsoleColor backgroundColor = ConsoleColor.Black, ConsoleColor foregroundColor = ConsoleColor.Cyan)
+		public SimpleConsoleWindow(int width, int height, string windowTitle = null, ConsoleColor backgroundColor = ConsoleColor.Black, ConsoleColor foregroundColor = ConsoleColor.Cyan)
 		{
 			stdOutputStream = System.Console.OpenStandardOutput();
 
@@ -47,7 +48,7 @@ namespace GraphicsEngine.Graphics.Console
 			System.Console.CursorVisible = false;
 		}
 
-		public string WindowTitle
+		public string Title
 		{
 			get { return System.Console.Title; }
 			set { System.Console.Title = value; }
@@ -67,49 +68,43 @@ namespace GraphicsEngine.Graphics.Console
 			System.Console.CursorTop = (Height / 2) + y;
 		}
 
-		public void SetFrame(IConsoleGraphicsFrame consoleGraphicsBuffer)
+		public void Set(int x, int y, byte character, ushort color)
 		{
-			for (var x = 0; x < Width; x++)
-			{
-				for (var y = 0; y < Height; y++)
-				{
-					characterBuffer[x + y * Width] = consoleGraphicsBuffer.CharacterBuffer[x, y];
-				}
-			}
+			SetCharacter(x, y, character);
 		}
 
-		public void SetPixel(int x, int y, short color, byte chr)
+		public void SetCharacter(int x, int y, byte character)
 		{
-			throw new NotImplementedException();
+			characterBuffer[x + y * Width] = character;
 		}
 
-		public void SetPixel(int x, int y, short color)
+		public void SetColor(int x, int y, ushort color)
 		{
-			throw new NotImplementedException();
+			throw new NotSupportedException();
 		}
 
-		public short GetPixelColor(int x, int y)
+		public ushort GetColor(int x, int y)
 		{
-			throw new NotImplementedException();
+			throw new NotSupportedException();
 		}
 
-		public byte GetPixelChar(int x, int y)
+		public byte GetCharacter(int x, int y)
 		{
 			return characterBuffer[x + y * Width];
 		}
 
-		public void Draw()
+		public void Update()
 		{
 			System.Console.SetCursorPosition(0, 0);
 			stdOutputStream.Write(characterBuffer, 0, characterBuffer.Length);
 		}
 
-		public void ClearFrame(short color)
+		public void Clear(byte? character = null, ushort? color = null)
 		{
-			for (int i = 0; i < characterBuffer.Length; i++)
+			Parallel.For(0, characterBuffer.Length, i =>
 			{
-				characterBuffer[i] = (byte) ' ';
-			}
+				characterBuffer[i] = character ?? (byte) ' ';
+			});
 		}
 	}
 }
