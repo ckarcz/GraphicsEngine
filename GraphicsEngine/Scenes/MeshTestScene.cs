@@ -23,7 +23,7 @@ namespace GraphicsEngine.Scenes
 		private IEnumerable<IMesh> meshes;
 		private float scaleFactor = 0.5f;
 		private readonly InputStateService inputStateService;
-		private readonly IOldRasterizer rasterizer;
+		private readonly IRasterizer rasterizer;
 		private readonly Transformation transformation;
 		private readonly string[] wavefrontObjectFilePaths = new[] {"Models\\triangle.obj", "Models\\cube.obj", "Models\\sphere.obj", "Models\\conf.obj", "Models\\gourd.obj", "Models\\link.obj", "Models\\monkey.obj", "Models\\bunny.obj", "Models\\f1.obj", "Models\\woman1.obj" };
 
@@ -32,7 +32,7 @@ namespace GraphicsEngine.Scenes
 			Width = width;
 			Height = height;
 
-			rasterizer = new OldRasterizer(Width, Height);
+			rasterizer = new Rasterizer(Width, Height);
 			inputStateService = new InputStateService();
 			transformation = new Transformation();
 

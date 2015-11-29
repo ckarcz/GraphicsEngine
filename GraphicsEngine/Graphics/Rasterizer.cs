@@ -9,8 +9,8 @@ using GraphicsEngine.Win32;
 
 namespace GraphicsEngine.Graphics
 {
-	public class OldRasterizer
-		: IOldRasterizer
+	public class Rasterizer
+		: IRasterizer
 	{
 		public const byte HalfPixelChar = 219; //						'▄'
 		public const byte ShadePixelChar1 = 176; //							'░'
@@ -23,7 +23,7 @@ namespace GraphicsEngine.Graphics
 		public static readonly ushort[] Colors = new ushort[] {Kernel32Console.DefaultColors.Foreground.BLUE, Kernel32Console.DefaultColors.Foreground.CYAN, Kernel32Console.DefaultColors.Foreground.GREEN, Kernel32Console.DefaultColors.Foreground.MAGENTA, Kernel32Console.DefaultColors.Foreground.RED, Kernel32Console.DefaultColors.Foreground.WHITE, Kernel32Console.DefaultColors.Foreground.YELLOW /*, Kernel32Console.DefaultColors.Foreground.GRAY, Kernel32Console.DefaultColors.Foreground.DARKBLUE, Kernel32Console.DefaultColors.Foreground.DARKCYAN, Kernel32Console.DefaultColors.Foreground.DARKGRAY, Kernel32Console.DefaultColors.Foreground.DARKGREEN, Kernel32Console.DefaultColors.Foreground.DARKMAGENTA, Kernel32Console.DefaultColors.Foreground.DARKRED, Kernel32Console.DefaultColors.Foreground.DARKYELLOW*/ };
 		private readonly GrahpicsBuffer frameBuffer;
 
-		public OldRasterizer(int width, int height)
+		public Rasterizer(int width, int height)
 		{
 			frameBuffer = new GrahpicsBuffer(width, height);
         }

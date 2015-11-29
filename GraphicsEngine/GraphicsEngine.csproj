@@ -51,10 +51,11 @@
     <Compile Include="Common\Patterns\SingletonBase.cs" />
     <Compile Include="Engine\InputStateService.cs" />
     <Compile Include="Engine\IScene.cs" />
-    <Compile Include="Graphics\NewClasses.cs" />
-    <Compile Include="Graphics\OldRasterizer.cs" />
+    <Compile Include="Graphics\Colour.cs" />
+    <Compile Include="Graphics\ColourPalette.cs" />
+    <Compile Include="Graphics\Rasterizer.cs" />
     <Compile Include="Graphics\IMeshFormatter.cs" />
-    <Compile Include="Graphics\IOldRasterizer.cs" />
+    <Compile Include="Graphics\IRasterizer.cs" />
     <Compile Include="Graphics\MeshCenterer.cs" />
     <Compile Include="Graphics\MeshNormalizer.cs" />
     <Compile Include="Math\Edge2.cs" />

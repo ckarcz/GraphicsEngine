@@ -1,118 +1,13 @@
-﻿#region Imports
+#region Imports
 
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing.Imaging;
-using GraphicsEngine.Math;
 
 #endregion
 
 namespace GraphicsEngine.Graphics
 {
-	public interface IDrawDevice
-	{
-		//ColourPalette DefaultColourPalette { get; }
-		//ColourPalette CurrentColourPalette { get; }
-
-		//void SetColourPalette(ColourPalette palette);
-
-		void Draw(IRenderable renderable);
-	}
-
-	public class ConsoleDrawDevice
-		: IDrawDevice
-	{
-		private readonly IConsoleWindow _consoleWindow;
-		private readonly IRasterizer _rasterizer;
-
-		public ConsoleDrawDevice(IRasterizer rasterizer, IConsoleWindow consoleWindow)
-		{
-			_rasterizer = rasterizer;
-			_consoleWindow = consoleWindow;
-		}
-
-		public void Draw(IRenderable renderable)
-		{
-			ClearConsoleWindow();
-			RasterizeToConsoleWindow(renderable);
-			UpdateConsoleWindow();
-		}
-
-		private void RasterizeToConsoleWindow(IRenderable renderable)
-		{
-			if (renderable != null)
-			{
-				var image = _rasterizer.Rasterize(renderable);
-
-				//var imageMinX = image.LocationX;
-				//var imageMinY = image.LocationY;
-				//var imageMaxX = image.LocationX + image.Width;
-				//var imageMaxY = image.LocationY + image.Height;
-
-				//for (int x = imageMinX; x < imageMaxX; x++)
-				//{
-				//	for (int y = imageMinY; y < imageMaxY; y++)
-				//	{
-				//		var character = image.GraphicsBuffer.CharacterBuffer[x, y];
-				//		var color = image.GraphicsBuffer.ColorBuffer[x, y];
-				//		_consoleWindow.Set(x, y, character, color);
-				//	}
-				//}
-			}
-		}
-
-		private void UpdateConsoleWindow()
-		{
-			_consoleWindow.Update();
-		}
-
-		private void ClearConsoleWindow()
-		{
-			_consoleWindow.Clear();
-		}
-	}
-
-	public interface IRasterizer
-	{
-		IRasterizedImage Rasterize(IRenderable renderable);
-	}
-
-	public interface IRasterizedImage
-	{
-		IGraphicsBuffer GraphicsBuffer { get; }
-	}
-
-	public interface IRenderable
-	{
-		IEnumerable<RenderablePoint> Points { get; }
-	}
-
-	public class SimpleRenderable
-		: IRenderable
-	{
-		public IEnumerable<RenderablePoint> Points { get; set; }
-	}
-
-	public class ZSortedRenderable
-		: IRenderable
-	{
-		public IEnumerable<RenderablePoint> Points { get; set; }
-	}
-	
-	public struct RenderablePoint
-		: IEquatable<RenderablePoint>
-	{
-		public byte Character;
-		public ushort Color;
-		public Vector3 Position;
-
-		public bool Equals(RenderablePoint other)
-		{
-			throw new NotImplementedException();
-		}
-	}
-
 	public class ColourPalette
 		: IEnumerable<ColourPalette.Entry>
 	{
@@ -227,8 +122,8 @@ namespace GraphicsEngine.Graphics
 		}
 	}
 
-	public sealed class WindowsDefaultColourPalette
-		: ColourPalette
+	public sealed class DefaultConsoleColourPalette
+	: ColourPalette
 	{
 		public static readonly Entry Black = new Entry(0, new Colour(0, 0, 0));
 		public static readonly Entry DarkBlue = new Entry(1, new Colour(0, 0, 128));
@@ -247,7 +142,7 @@ namespace GraphicsEngine.Graphics
 		public static readonly Entry Yellow = new Entry(14, new Colour(255, 255, 0));
 		public static readonly Entry White = new Entry(15, new Colour(255, 255, 255));
 
-		public WindowsDefaultColourPalette()
+		public DefaultConsoleColourPalette()
 			: base(16)
 		{
 			this[Black.Index] = Black;
@@ -266,52 +161,6 @@ namespace GraphicsEngine.Graphics
 			this[Magenta.Index] = Magenta;
 			this[Yellow.Index] = Yellow;
 			this[White.Index] = White;
-		}
-	}
-
-	public struct Colour
-		: IEquatable<Colour>
-	{
-		public Colour(int r, int g, int b)
-		{
-			R = r;
-			B = b;
-			G = g;
-		}
-
-		public int R { get; }
-		public int G { get; }
-		public int B { get; }
-
-		public bool Equals(Colour other)
-		{
-			return (R == other.R) && (G == other.G) && (B == other.B);
-		}
-
-		public override bool Equals(object obj)
-		{
-			if (ReferenceEquals(null, obj))
-			{
-				return false;
-			}
-
-			return obj is Colour && Equals((Colour) obj);
-		}
-
-		public override int GetHashCode()
-		{
-			unchecked
-			{
-				var hashCode = R;
-				hashCode = (hashCode * 397) ^ G;
-				hashCode = (hashCode * 397) ^ B;
-				return hashCode;
-			}
-		}
-
-		public override string ToString()
-		{
-			return string.Format("({0}, {1}, {2})", R, G, B);
 		}
 	}
 }

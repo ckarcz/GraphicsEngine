@@ -7,7 +7,7 @@ using GraphicsEngine.Math;
 
 namespace GraphicsEngine.Graphics
 {
-	public interface IOldRasterizer
+	public interface IRasterizer
 	{
 		void DrawMeshWired(ITransformation transformation, IMesh mesh, ushort? colorOverride = null, byte? pixelOverride = null);
 
