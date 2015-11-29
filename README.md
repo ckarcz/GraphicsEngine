@@ -1,5 +1,5 @@
 # GraphicsEngine
-A 16 bit windows console 3D graphics engine written in C#.
+A windows console 3D graphics engine written in C#.
 
 This is a learning project regarding creating the foundations of a 3D graphics engine.
 
