@@ -19,7 +19,7 @@ namespace GraphicsEngine.Graphics
 		private readonly Kernel32Console.COORD consoleScreenBufferStartCoords;
 		private readonly IntPtr stdOutputHandle;
 
-		public Kernel32ConsoleWindow(int width, int height, string title, ushort colors = Kernel32Console.Colors.Background.BLACK | Kernel32Console.Colors.Foreground.WHITE)
+		public Kernel32ConsoleWindow(int width, int height, string title, ushort colors = Kernel32Console.DefaultColors.Background.BLACK | Kernel32Console.DefaultColors.Foreground.WHITE)
 		{
 			Width = width;
 			Height = height;
@@ -109,7 +109,7 @@ namespace GraphicsEngine.Graphics
 		{
 			Parallel.For(0, consoleScreenBuffer.Length, i =>
 			{
-				consoleScreenBuffer[i].Attributes = color ?? (Kernel32Console.Colors.Background.BLACK | Kernel32Console.Colors.Foreground.WHITE);
+				consoleScreenBuffer[i].Attributes = color ?? (Kernel32Console.DefaultColors.Background.BLACK | Kernel32Console.DefaultColors.Foreground.WHITE);
 				consoleScreenBuffer[i].Char.AsciiChar = character ?? (byte)' ';
 			});
 		}

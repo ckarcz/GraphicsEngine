@@ -1,4 +1,4 @@
-namespace GraphicsEngine.Common
+namespace GraphicsEngine.Common.Patterns
 {
 	public abstract class SingletonBase<T>
 		where T : SingletonBase<T>, new()

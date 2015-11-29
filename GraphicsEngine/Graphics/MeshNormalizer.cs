@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using GraphicsEngine.Common;
+using GraphicsEngine.Common.Patterns;
 using GraphicsEngine.Math;
 
 #endregion

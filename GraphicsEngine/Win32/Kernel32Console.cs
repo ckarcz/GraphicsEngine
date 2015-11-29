@@ -29,7 +29,7 @@ namespace GraphicsEngine.Win32
 			public const ushort BACKGROUND_INTENSITY = 0x0080;
 		}
 
-		public static class Colors
+		public static class DefaultColors
 		{
 			public static class Foreground
 			{

@@ -1,6 +1,8 @@
 #region Imports
 
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Input;
@@ -50,16 +52,16 @@ namespace GraphicsEngine.Scenes
 
 		public void Render(IRenderer renderer)
 		{
-			rasterizer.ClearImage((byte)' ', (byte)Kernel32Console.Colors.Background.BLACK | Kernel32Console.Colors.Foreground.WHITE);
+			rasterizer.ClearImage((byte)' ', (byte)((Kernel32Console.DefaultColors.Foreground.BLACK << 4) | Kernel32Console.DefaultColors.Foreground.WHITE));
 
-			rasterizer.DrawMeshFilled(transformation, meshes);//, Kernel32Console.Colors.FOREGROUND_CYAN, Rasterizer.ShadePixelChar1);
-			//rasterizer.DrawMeshVertices(transformation, meshes, Kernel32Console.Colors.FOREGROUND_CYAN, (byte)'X');
-			//rasterizer.DrawMeshWired(transformation, meshes, Kernel32Console.Colors.Foreground.CYAN);
+			rasterizer.DrawMeshFilled(transformation, meshes);//, Kernel32Console.DefaultColors.FOREGROUND_CYAN, Rasterizer.ShadePixelChar1);
+			//rasterizer.DrawMeshVertices(transformation, meshes, Kernel32Console.DefaultColors.FOREGROUND_CYAN, (byte)'X');
+			//rasterizer.DrawMeshWired(transformation, meshes, Kernel32Console.DefaultColors.Foreground.CYAN);
 
-			//rasterizer.DrawMeshCenters(transformation, meshes, Kernel32Console.Colors.Foreground.RED);
-			//rasterizer.DrawMeshBoundingBox(transformation, meshes, Kernel32Console.Colors.FOREGROUND_MAGENTA);
+			//rasterizer.DrawMeshCenters(transformation, meshes, Kernel32Console.DefaultColors.Foreground.RED);
+			//rasterizer.DrawMeshBoundingBox(transformation, meshes, Kernel32Console.DefaultColors.FOREGROUND_MAGENTA);
 
-			//rasterizer.DrawAxes(Transformation.None, Kernel32Console.Colors.Foreground.YELLOW);
+			//rasterizer.DrawAxes(Transformation.None, Kernel32Console.DefaultColors.Foreground.YELLOW);
 
 			rasterizer.DrawStringHorizontal(Transformation.None, new Vector2(-Width / 2 + 1, Height / 2 - 2), string.Format("MODEL: '{0}'", currentWavefrontObjectFilePath));
 			rasterizer.DrawStringHorizontal(Transformation.None, new Vector2(-Width / 2 + 1, Height / 2 - 3), string.Format("# POLYGONS: {0}", meshes.Sum(mesh => mesh.Faces.Count())));

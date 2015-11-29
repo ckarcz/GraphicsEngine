@@ -49,7 +49,7 @@
     <Compile Include="Common\Extensions\StringExtensions.cs" />
     <Compile Include="Engine\ConsoleEngine.cs" />
     <Compile Include="Engine\IConsoleEngine.cs" />
-    <Compile Include="Common\SingletonBase.cs" />
+    <Compile Include="Common\Patterns\SingletonBase.cs" />
     <Compile Include="Engine\InputStateService.cs" />
     <Compile Include="Engine\IScene.cs" />
     <Compile Include="Graphics\NewClasses.cs" />
