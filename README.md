@@ -1,6 +1,8 @@
 # GraphicsEngine
 A windows console 3D graphics engine written in C#.
 
+⚠️ This is a very rudimentary learning project! See inspirations below on much better implementations.
+
 This is a learning project regarding creating the foundations of a 3D graphics engine.
 
 **Much inspiration was taken from these guys:**
